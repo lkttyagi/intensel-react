@@ -1,0 +1,8 @@
+.ui.button{
+	background-color:#4e73df;
+}
+.error-msg {
+  color: red;
+  margin: 5px 0;
+  font-weight: bold;
+}
