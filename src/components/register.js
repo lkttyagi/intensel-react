@@ -6,6 +6,7 @@ import signup from '../assets/signup.png';
 import logo from '../assets/logo.png';
 import {connect} from 'react-redux';
 import {auth} from '../actions';
+import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
 
 
@@ -98,6 +99,7 @@ onLoadRecaptcha(){
 			<Form>
 				<Form.Group widths='equal'>
 					<Form.Field 
+
 					 id="form-input-control-first-name"
 					 control={Input}
 					 label='First Name'
@@ -105,6 +107,8 @@ onLoadRecaptcha(){
 					 value={this.state.first_name}
 					 onChange={e=>this.setState({first_name:e.target.value})}
 					 />
+					 <span class="enter"></span>
+
 					<Form.Field 
 					 id="form-input-control-last-name"
 					 control={Input}
@@ -170,7 +174,7 @@ onLoadRecaptcha(){
             
         />
 
-				<Button disabled={!this.state.formValid} onClick={this.onSubmit} primary>Register</Button>
+				<Button style={{backgroundColor:'#015edc'}} disabled={!this.state.formValid} onClick={this.onSubmit} primary>Register</Button>
 			</Form>
 
 			<br/>

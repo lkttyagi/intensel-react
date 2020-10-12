@@ -111,7 +111,7 @@ p {
   margin: 0px; }
 
 .bg_cover {
-  background:url('../images/banner-bg.svg');
+  background:url('../images/banner-bg.png');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;

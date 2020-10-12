@@ -1,3 +1,6 @@
+import { history } from '../_helpers/history';  
+
+
 export const loadUser = () => {
   return (dispatch, getState) => {
     dispatch({type:"USER_LOADING"});
@@ -91,7 +94,7 @@ export const register = (first_name,last_name,username,email, password ,confirm_
       .then(res => {
         if (res.status === 200 || res.status === 201) {
           dispatch({type: 'REGISTRATION_SUCCESSFUL', data: res.data });
-          
+          history.push('/login');
           return res.data;
         } else if (res.status === 403 || res.status === 401) {
           dispatch({type: "AUTHENTICATION_ERROR", data: res.data});
