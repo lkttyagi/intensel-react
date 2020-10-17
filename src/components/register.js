@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'; 
 import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header} from 'semantic-ui-react';
-import './register.css';
+
 import signup from '../assets/signup.png';
 import logo from '../assets/logo.png';
 import {connect} from 'react-redux';

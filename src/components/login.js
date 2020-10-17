@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'; 
 import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header} from 'semantic-ui-react';
-import './register.css';
+
 import login from '../assets/login.jpg';
 import logo from '../assets/logo.png';
 import {connect} from 'react-redux';
@@ -94,7 +94,7 @@ onLoadRecaptcha(){
             onloadCallback={this.onLoadRecaptcha}
             
         />
-				<Button style={{backgroundColor:'#015edc'}}onClick={this.onSubmit} primary>Login</Button>
+				<Button style={{backgroundColor:'#015edc'}} onClick={this.onSubmit} primary>Login</Button>
 			</Form>
 			<br/>
 				Don't have an Account ? <a href="/register">Create an Account</a>
