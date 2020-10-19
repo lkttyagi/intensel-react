@@ -330,12 +330,13 @@ class Location extends Component{
 			<Grid.Column width="2"></Grid.Column>
 			<Grid.Column width="14">
 				{cards}
-			
+			<Button primary style={{borderRadius:0,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
+
 			</Grid.Column>
+
 			</Grid.Row>
 			</Grid>
 
-			<Button primary style={{borderRadius:0,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 			</div>
 
 			)
