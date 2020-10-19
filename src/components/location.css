@@ -2,9 +2,16 @@
   display: flex !important;
 }
 
+.map{
+	height:500px;
+}
+.cards{
+	height:400px;
+}
+
 #viewDiv{
 	padding:0;
 	margin:0;
-	height:600px;
+	height:100%;
 	width:100%;
 }

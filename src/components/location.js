@@ -320,13 +320,13 @@ class Location extends Component{
 			</Grid.Row>
 			<Grid.Row>
 			<Grid.Column width="2"></Grid.Column>
-			<Grid.Column width="14">
+			<Grid.Column width="14" className="map">
 				<div id="viewDiv"></div>
 			
 			</Grid.Column>
 
 			</Grid.Row>
-			<Grid.Row>
+			<Grid.Row className="cards">
 			<Grid.Column width="2"></Grid.Column>
 			<Grid.Column width="14">
 				{cards}
