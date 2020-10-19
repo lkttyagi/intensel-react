@@ -6,7 +6,7 @@ import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
 
 const buttonRef = React.createRef();
-var cards=[];
+let mapcards=[];
 class Location extends Component{
 	constructor(props){
 		super(props);
@@ -25,9 +25,10 @@ class Location extends Component{
 		}
 	}
 	handleFileLoad = data =>{
-		
-		this.setState({locations:data})
-		console.log("data",this.state.locations)
+	for(let i=1;i<data.length-1;i++){	
+		mapcards.push(data[i].data);
+	}
+	this.setState({locations:mapcards},()=>console.log(this.state.locations))
 	}
 	handelOnError =(err,file,inputElem,reason) =>{
 		console.log(err);
@@ -40,7 +41,7 @@ class Location extends Component{
 	componentDidMount(){
 		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search'], { css: true })
     .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search]) => {
-
+    let that =this;
     const defaultSym = {
         type: "simple-fill",
         outline: {
@@ -143,7 +144,10 @@ class Location extends Component{
 
        view.on("click", function(event){
        	console.log(event.mapPoint.latitude,event.mapPoint.longitude);
-        createGraphic(event.mapPoint.latitude,event.mapPoint.longitude)
+        createGraphic(event.mapPoint.latitude,event.mapPoint.longitude);
+        mapcards.push(['Asset',event.mapPoint.latitude,event.mapPoint.longitude])
+        that.setState({locations:mapcards},()=>console.log(that.state.locations))
+
     });
                function createGraphic(lat, long){
           // First create a point geometry 
@@ -169,33 +173,53 @@ class Location extends Component{
           view.graphics.add(pointGraphic);
         }
          });
-
+    
+    	
+    this.handleMaplocation();	
 		
+	}
+	componentDidUpdate(prevProps,prevState){
+		if(prevState.locations !== mapcards){
+			this.setState({locations:mapcards},()=>console.log("jdnkjjjjjjjjjjj",this.state.locations))
+		}
 	}
 	componentWillUnmount(){
 		if(this.view){
 			this.view.destroy();
 		}
 	}
+	
+	handleMaplocation(){
+		if(mapcards.length>0){
+			for(let i=0;i<mapcards.length;i++){
+			   this.state.locations.push(mapcards[i])
+			   console.log("locations",this.state.locations);
+		}
+		}
+
+	}
+
 
 
 
 	render(){
-
+		var cards=[];
 		
-		if(this.state.locations.length>1){
-		for(let i=1;i<this.state.locations.length-1;i++){
+		if(mapcards.length>0){
+			console.log("mapcardsssssssss",mapcards);
+		for(let i=0;i<this.state.locations.length;i++){
 				cards.push(
 					<div>
-					<p>Selected Locations:</p>
+					
 					<Label style={{fontSize:'16px'}}>
 					<Icon name="warehouse"/>
-					{this.state.locations[i].data[0]},{this.state.locations[i].data[1]},{this.state.locations[i].data[2]}
+					{this.state.locations[i][0]},{this.state.locations[i][1]},{this.state.locations[i][2]}
 				</Label>
 				</div>)
 			}
 		}
-		console.log("cards",cards);
+		
+				
 
 		
 		
