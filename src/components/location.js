@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
 import SideNavbar from './sidebar';
-import {Header,Icon,Menu,Button,Grid,Radio,Image,Form,Input,Modal} from 'semantic-ui-react';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal} from 'semantic-ui-react';
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
 
 const buttonRef = React.createRef();
-
+var cards=[];
 class Location extends Component{
 	constructor(props){
 		super(props);
@@ -38,8 +38,8 @@ class Location extends Component{
 	handleMap =() =>this.setState({upload:'map'});
 
 	componentDidMount(){
-		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic'], { css: true })
-    .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic]) => {
+		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search'], { css: true })
+    .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search]) => {
 
     const defaultSym = {
         type: "simple-fill",
@@ -135,6 +135,12 @@ class Location extends Component{
         center: [114.1838,22.2797],
         zoom: 17
       });
+
+      var search = new Search({
+    view: view
+    });
+    view.ui.add(search, "top-right");
+
        view.on("click", function(event){
        	console.log(event.mapPoint.latitude,event.mapPoint.longitude);
         createGraphic(event.mapPoint.latitude,event.mapPoint.longitude)
@@ -177,6 +183,19 @@ class Location extends Component{
 	render(){
 
 		
+		if(this.state.locations.length>1){
+		for(let i=1;i<this.state.locations.length-1;i++){
+				cards.push(
+					<div>
+					<p>Selected Locations:</p>
+					<Label style={{fontSize:'16px'}}>
+					<Icon name="warehouse"/>
+					{this.state.locations[i].data[0]},{this.state.locations[i].data[1]},{this.state.locations[i].data[2]}
+				</Label>
+				</div>)
+			}
+		}
+		console.log("cards",cards);
 
 		
 		
@@ -219,7 +238,7 @@ class Location extends Component{
                 borderRadius: 0,
                 marginLeft: 0,
                 marginRight: 0,
-                width: '30%',
+                width: '15%',
                 paddingLeft: 0,
                 paddingRight: 0,
                 border:0,
@@ -227,7 +246,7 @@ class Location extends Component{
                 color:'white'
               }}
             >
-              Browse
+              <Icon name="upload"/>
             </button>
             <div
               style={{
@@ -258,7 +277,7 @@ class Location extends Component{
               }}
               
             >
-              Remove
+              <Icon name="delete"/>
             </button>
           </aside>
         )}
@@ -271,6 +290,7 @@ class Location extends Component{
 			<Grid.Column width="2"></Grid.Column>
 			<Grid.Column width="14">
 						<Header as="h1" textAlign="center">OR</Header>
+						
 						<p>Select on Map using Marker</p>
 			</Grid.Column>
 			</Grid.Row>
@@ -278,13 +298,22 @@ class Location extends Component{
 			<Grid.Column width="2"></Grid.Column>
 			<Grid.Column width="14">
 				<div id="viewDiv"></div>
-				
+			
 			</Grid.Column>
 
 			</Grid.Row>
+			<Grid.Row>
+			<Grid.Column width="2"></Grid.Column>
+			<Grid.Column width="14">
+				{cards}
+			
+			</Grid.Column>
+			</Grid.Row>
 			</Grid>
+
 			<Button primary style={{borderRadius:0,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 			</div>
+
 			)
 	}
 }

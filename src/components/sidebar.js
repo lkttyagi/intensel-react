@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import { Header,Icon,Image,Menu,Segment,Sidebar } from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import Profile from '../assets/profile.png';
- 
+import './sidebar.css';
 
 class SideNavbar extends Component{
 	render(){
@@ -14,26 +14,28 @@ class SideNavbar extends Component{
 				
 				vertical
 				visible
-				width='thin'>
-				<Menu.Item as='a'>
+				width='medium'>
+				<Menu.Item>
 				 <Image src={logo} size='small'/>		
 				
 				</Menu.Item>
-				<Menu.Item as='b'>
+				<Menu.Item>
 					<Image src={Profile} size="mini"/>
 				
 				</Menu.Item>
-				<Menu.Item as='c'>
-					
-				My Assets
+				<Menu.Item inline>
+					<Icon name="folder"/>My Assets
 				</Menu.Item>
-				<Menu.Item as='d'>
+				<Menu.Item>
+				<Icon name="dashboard"/>
 				Dashboard
 				</Menu.Item>
-				<Menu.Item as='d'>
+				<Menu.Item>
+				<Icon name="file"/>
 				Projects
 				</Menu.Item>
-				<Menu.Item as='d'>
+				<Menu.Item>
+				<Icon name="home"/>
 				Main
 				</Menu.Item>
 				
