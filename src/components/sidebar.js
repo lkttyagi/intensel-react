@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Header,Icon,Image,Menu,Segment,Sidebar } from 'semantic-ui-react';
+import { Header,Grid,Icon,Image,Menu,Segment,Sidebar } from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import Profile from '../assets/profile.png';
 import './sidebar.css';
@@ -14,30 +14,27 @@ class SideNavbar extends Component{
 				
 				vertical
 				visible
-				width='medium'>
+				width='wide'>
 				<Menu.Item>
-				 <Image src={logo} size='small'/>		
 				
 				</Menu.Item>
+				<br/><br/><br/><br/><br/><br/>
 				<Menu.Item>
-					<Image src={Profile} size="mini"/>
+					<a><Icon name="folder" size="large"/>My assets</a>
+				</Menu.Item>
+				<Menu.Item>
+				<a><Icon name="dashboard" size="large"/>
+				Dashboard</a>
+				</Menu.Item>
+				<Menu.Item>
+				<a><Icon name="file" size="large"/>
+				Projects</a>
+				</Menu.Item>
+				<Menu.Item>
+				<a><Icon name="home" size="large"/>
+				Main</a>
+				</Menu.Item>
 				
-				</Menu.Item>
-				<Menu.Item inline>
-					<Icon name="folder"/>My Assets
-				</Menu.Item>
-				<Menu.Item>
-				<Icon name="dashboard"/>
-				Dashboard
-				</Menu.Item>
-				<Menu.Item>
-				<Icon name="file"/>
-				Projects
-				</Menu.Item>
-				<Menu.Item>
-				<Icon name="home"/>
-				Main
-				</Menu.Item>
 				
 				</Sidebar>
 			)

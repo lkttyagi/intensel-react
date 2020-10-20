@@ -1,4 +1,42 @@
-.item{
-	padding:2rem 2rem;
+.ui.menu .item{
+	padding:1.2rem 1.4rem !important;
 	border:0px;
+	font-size:17px;
+	font-family:Roboto;
+	text-align:justify-all;
+	float:right;
+	transition: none
+
+}
+.ui.vertical.menu .item:before{
+	height:0px !important;
+}
+.ui.menu .item a{
+	text-align: left;
+	color:rgba(0,0,0,0.7);
+	padding-left:10px;
+	width:150px;
+	font-family:'Roboto';
+	font-weight:600;
+
+}
+
+.ui.menu .item a:hover{
+	color:#1d99e8;
+	
+	
+}
+.ui.menu .item a i{
+	margin-right:10px;
+	text-align:justify;
+}
+.ui.left.visible.sidebar,
+.ui.right.visible.sidebar{
+	box-shadow:none !important;
+	border:1px solid white; 
+}
+
+.ui.visible.left.overlay.sidebar{
+	margin-top:79.28px !important;
+
 }

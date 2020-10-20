@@ -4,6 +4,8 @@ import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal} from 's
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
+import logo from '../assets/logo.png';
+
 
 const buttonRef = React.createRef();
 let mapcards=[];
@@ -42,99 +44,17 @@ class Location extends Component{
 		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search'], { css: true })
     .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search]) => {
     let that =this;
-    const defaultSym = {
-        type: "simple-fill",
-        outline: {
-            
-            color: [255, 255, 255, 0.5],
-            width: "0.5px"
-        }
-    };
-    const renderer = {
-        type: "simple",
-        symbol: defaultSym,
-        
-        visualVariables: [
-            {
-            type: "color",
-            field: "FL8570",
-            stops: [
-                {
-                value: 0.22,
-                color: "#FFFFCC",
-                label: "0 - 0.22"
-                },
-                {
-                value: 0.609,
-                color: "#FFEDA0",
-                label: "0.22 - 0.609"
-                },
-                {
-                value: 0.929,
-                color: "#FED976",
-                label: "0.609 - 0.929"
-                },
-                {
-                value: 1.25,
-                color: "#FEB24C",
-                label: "0.929 - 1.25"
-                },
-                {
-                value: 1.64,
-                color: "#FD8D3C",
-                label: "1.25 - 1.64"
-                },
-                {
-                value: 2.19,
-                color: "#FC4E2A",
-                label: "1.64 - 2.19"
-                },
-                {
-                value: 2.9,
-                color: "#E31A1C",
-                label: "2.19 - 2.9"
-                },
-                {
-                value: 4,
-                color: "#BD0026",
-                label: "2.9 - 4"
-                },
-                {
-                value: 6,
-                color: "#940025",
-                label: "4 - 6"
-                },
-                {
-                value: 8,
-                color: "#67001F",
-                label: "6 - 8"
-                }
-            ]
-            }
-        ]
-    };    
-    const povLayer = new FeatureLayer({
-        url: "https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/Hong_Kong_Shapefile/FeatureServer/0",
-        renderer: renderer,
-        title: "Flood in Hong Kong",
-        popupTemplate: {
-            
-            title: "{name}, {Type}",
-            content:
-            "Flood Value {FL8570}",
-        }
-    });
-
+    
       const map = new ArcGISMap({
         basemap: 'streets-vector',
-        layers: [povLayer]	
+        
       });
 
       const view = new MapView({
         container:'viewDiv',
         map: map,
         center: [114.1838,22.2797],
-        zoom: 17
+        zoom: 16
       });
 
       var search = new Search({
@@ -160,7 +80,7 @@ class Location extends Component{
           // Create a symbol for drawing the point
           var markerSymbol = {
             type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-            color: [0, 0, 0]
+            color: [255, 0, 0]
           };
 
           // Create a graphic and add the geometry and symbol to it
@@ -209,13 +129,13 @@ class Location extends Component{
 			console.log("mapcardsssssssss",mapcards);
 		for(let i=0;i<this.state.locations.length;i++){
 				cards.push(
-					<div>
+					<Grid.Column width="2">
 					
-					<Label style={{fontSize:'16px'}}>
-					<Icon name="warehouse"/>
-					{this.state.locations[i][0]},{this.state.locations[i][1]},{this.state.locations[i][2]}
+					<Label style={{fontSize:'14px',backgroundColor:'white',borderRadius:'10px',border:'1px solid black',margin:'5px'}}>
+					<Icon name="home" size="large"/>{this.state.locations[i][0]}<br/><br/><br/>
+					<Icon name="map marker" size="large"/>Lat {this.state.locations[i][1]}<br/><p style={{float:'right',fontSize:'14px',fontWeight:'bold'}}>Long {this.state.locations[i][2]}</p>
 				</Label>
-				</div>)
+				</Grid.Column>)
 			}
 		}
 		
@@ -225,19 +145,38 @@ class Location extends Component{
 		
 		return(
 			<div>
-			<SideNavbar/>
 			<Menu style={{minHeight:'4.35em',margin:'0rem 0'}}>
+				<Menu.Item>
+			    <Image src={logo} size='small' style={{marginLeft:'150px'}}/>		
+			    </Menu.Item>
 				<Menu.Item
 				 name="logout"
 				 position="right"
 				 />
 			</Menu>
-			<Grid style={{height:'100vh'}} padded>
-			<Grid.Row verticalAlign='middle'>
-			<Grid.Column width="6"></Grid.Column>
-			<Grid.Column width="6">
-			<Header as="h1" textAlign="center">Add Assets</Header>
+
+			<SideNavbar/>
+			
+		<Grid  padded>
+			<Grid.Row className="mapRow" style={{height:'650px'}}>
+			
+			<Grid.Column width="4"></Grid.Column>
+			<Grid.Column width="11" className="map">
 			<br/>
+			<Header as="h2" textAlign="center">Add Assets</Header>
+			<p>Select on Map using Marker</p>
+				<div id="viewDiv"></div>
+			
+			</Grid.Column>
+
+			</Grid.Row>
+				
+			<Grid.Row>
+			<Grid.Column width="7"></Grid.Column>
+			<Grid.Column width="6">
+			
+			<br/>
+			
 			<p>Upload CSV File </p>
 			 <CSVReader
         ref={buttonRef}
@@ -253,25 +192,11 @@ class Location extends Component{
               display: 'flex',
               flexDirection: 'row',
               marginBottom: 10
+
             }}
           >
-            <button
-              type='button'
-              onClick={this.handleOpenDialog}
-              style={{
-                borderRadius: 0,
-                marginLeft: 0,
-                marginRight: 0,
-                width: '15%',
-                paddingLeft: 0,
-                paddingRight: 0,
-                border:0,
-                backgroundColor:'#015edc',
-                color:'white'
-              }}
-            >
-              <Icon name="upload"/>
-            </button>
+            
+              
             <div
               style={{
                 borderWidth: 1,
@@ -281,27 +206,30 @@ class Location extends Component{
                 lineHeight: 2.5,
                 marginTop: 0,
                 marginBottom: 0,
-                paddingLeft: 13,
+                paddingLeft: 5,
                 paddingTop: 3,
-                width: '60%'
+                width: '60%',
+                borderRadius:5
               }}
             >
               {file && file.name}
             </div>
             <button
+              type='button'
+              onClick={this.handleOpenDialog}
               style={{
-                borderRadius: 0,
+                borderRadius: 5,
                 marginLeft: 0,
                 marginRight: 0,
-                paddingLeft: 20,
-                paddingRight: 20,
+                width: '15%',
+                paddingLeft: 0,
+                paddingRight: 0,
                 border:0,
-                backgroundColor:'red',
+                backgroundColor:'#1d99e8',
                 color:'white'
               }}
-              
             >
-              <Icon name="delete"/>
+              <Icon name="upload"/>
             </button>
           </aside>
         )}
@@ -311,26 +239,22 @@ class Location extends Component{
 			</Grid.Row>
 			<Grid.Row>
 
-			<Grid.Column width="2"></Grid.Column>
-			<Grid.Column width="14">
-						<Header as="h1" textAlign="center">OR</Header>
+			<Grid.Column width="4"></Grid.Column>
+			<Grid.Column width="12">
 						
-						<p>Select on Map using Marker</p>
+						
+						
 			</Grid.Column>
 			</Grid.Row>
-			<Grid.Row>
-			<Grid.Column width="2"></Grid.Column>
-			<Grid.Column width="14" className="map">
-				<div id="viewDiv"></div>
 			
-			</Grid.Column>
-
-			</Grid.Row>
 			<Grid.Row className="cards">
-			<Grid.Column width="2"></Grid.Column>
-			<Grid.Column width="14">
+			<Grid.Column width="4"></Grid.Column>
+			<Grid.Column width="10">
+			<Grid.Row>
+
 				{cards}
-			<Button primary style={{borderRadius:0,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
+			</Grid.Row>	
+			<Button primary style={{borderRadius:5,backgroundColor:'#1d99e8',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 
 			</Grid.Column>
 
