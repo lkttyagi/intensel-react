@@ -58,7 +58,7 @@
 }
  .cont .card .front .img-cont img {
 	 width: 100%;
-	 transform: translatey(-140px);
+	 height:200px;
 }
  .cont .card .front .content-cont {
 	 flex: 1;
