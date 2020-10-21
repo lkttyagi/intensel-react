@@ -5,6 +5,7 @@ import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
 import logo from '../assets/logo.png';
+import home from '../assets/home.png';
 
 
 const buttonRef = React.createRef();
@@ -18,7 +19,8 @@ class Location extends Component{
 	state={
 		upload:'',
 		file:false,
-		locations:''
+		locations:'',
+		
 	};
 
 	handleOpenDialog =(e) =>{
@@ -61,12 +63,33 @@ class Location extends Component{
     view: view
     });
     view.ui.add(search, "top-right");
-
+       
        view.on("click", function(event){
+       	
        	console.log(event.mapPoint.latitude,event.mapPoint.longitude);
         createGraphic(event.mapPoint.latitude,event.mapPoint.longitude);
-        mapcards.push(['Asset',event.mapPoint.latitude,event.mapPoint.longitude])
-        that.setState({locations:mapcards},()=>console.log(that.state.locations))
+        search.clear();
+        
+        if(search.activeSource){
+        	var geocoder = search.activeSource.locator;
+        	var params = {
+        		location:event.mapPoint
+        	};
+
+        	geocoder.locationToAddress(params)
+        		.then(function(response){
+        			
+        		 var address=response.address;
+        		 mapcards.push([address,event.mapPoint.latitude,event.mapPoint.longitude])
+        		 console.log("mapcard",mapcards)
+        		        that.setState({locations:mapcards},()=>console.log("locations",that.state.locations))
+	
+        				
+        		},function(err){
+        			console.log("errror",err);
+        		});
+        }
+        
 
     });
                function createGraphic(lat, long){
@@ -102,6 +125,7 @@ class Location extends Component{
 		if(prevState.locations !== mapcards){
 			this.setState({locations:mapcards},()=>console.log("jdnkjjjjjjjjjjj",this.state.locations))
 		}
+
 	}
 	componentWillUnmount(){
 		if(this.view){
@@ -129,11 +153,20 @@ class Location extends Component{
 			console.log("mapcardsssssssss",mapcards);
 		for(let i=0;i<this.state.locations.length;i++){
 				cards.push(
-					<Grid.Column width="2">
+					<Grid.Column width="2" className="cont">
 					
-					<Label style={{fontSize:'14px',backgroundColor:'white',borderRadius:'10px',border:'1px solid black',margin:'5px'}}>
-					<Icon name="home" size="large"/>{this.state.locations[i][0]}<br/><br/><br/>
-					<Icon name="map marker" size="large"/>Lat {this.state.locations[i][1]}<br/><p style={{float:'right',fontSize:'14px',fontWeight:'bold'}}>Long {this.state.locations[i][2]}</p>
+					<Label className="card">
+					<div className="front">
+						<div className="img-cont">
+							<Image src={home} alt=""/>
+						</div>
+						<div className="content-cont">
+							<Header as="h3" textAlign="center">{this.state.locations[i][0]}</Header>
+						</div>
+					</div>
+					<div className="back">
+						<Header as="h3"><Icon name="map marker" size="large"/><br/>Lat {this.state.locations[i][1]}<br/>Long {this.state.locations[i][2]}</Header>
+					</div>
 				</Label>
 				</Grid.Column>)
 			}
@@ -247,7 +280,7 @@ class Location extends Component{
 			</Grid.Column>
 			</Grid.Row>
 			
-			<Grid.Row className="cards">
+			<Grid.Row>
 			<Grid.Column width="4"></Grid.Column>
 			<Grid.Column width="10">
 			<Grid.Row>
