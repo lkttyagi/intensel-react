@@ -23,6 +23,7 @@
 
 .ui.menu .item a:hover{
 	color:#1d99e8;
+	transform:scale(1.2);
 	
 	
 }
@@ -39,4 +40,7 @@
 .ui.visible.left.overlay.sidebar{
 	margin-top:79.28px !important;
 
+}
+.ui.wide.left.sidebar{
+	width:20%!important;
 }

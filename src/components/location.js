@@ -1,12 +1,13 @@
 import React,{Component} from 'react';
 import SideNavbar from './sidebar';
-import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal} from 'semantic-ui-react';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup} from 'semantic-ui-react';
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
 import logo from '../assets/logo.png';
 import home from '../assets/home.png';
-
+import add from '../assets/images/add.png';
+import search from '../assets/search.png';
 
 const buttonRef = React.createRef();
 let mapcards=[];
@@ -142,6 +143,12 @@ class Location extends Component{
 		}
 
 	}
+	handleRemoveFile = (e) => {
+    // Note that the ref is set async, so it might be null at some point
+    if (buttonRef.current) {
+      buttonRef.current.removeFile(e)
+    }
+  }
 
 
 
@@ -158,14 +165,14 @@ class Location extends Component{
 					<Label className="card">
 					<div className="front">
 						<div className="img-cont">
-							<Image src={home} alt=""/>
+							<Image src={home} alt="" style={{float:'center'}} verticalAlign="middle"/>
 						</div>
 						<div className="content-cont">
-							<Header as="h3" textAlign="center">{this.state.locations[i][0]}</Header>
+							<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}>{this.state.locations[i][0]}</p>
 						</div>
 					</div>
 					<div className="back">
-						<Header as="h3"><Icon name="map marker" size="large"/><br/>Lat {this.state.locations[i][1]}<br/>Long {this.state.locations[i][2]}</Header>
+						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/><br/>Lat {this.state.locations[i][1]}<br/>Long {this.state.locations[i][2]}</p>
 					</div>
 				</Label>
 				</Grid.Column>)
@@ -180,7 +187,7 @@ class Location extends Component{
 			<div>
 			<Menu style={{minHeight:'4.35em',margin:'0rem 0'}}>
 				<Menu.Item>
-			    <Image src={logo} size='small' style={{marginLeft:'150px'}}/>		
+			    <Image src={logo} size='small' style={{marginLeft:'30%'}}/>		
 			    </Menu.Item>
 				<Menu.Item
 				 name="logout"
@@ -196,7 +203,7 @@ class Location extends Component{
 			<Grid.Column width="4"></Grid.Column>
 			<Grid.Column width="11" className="map">
 			<br/>
-			<Header as="h2" textAlign="center">Add Assets</Header>
+			<Header as="h2"><Image src={add} size="medium" style={{marginTop:'-0.5rem'}}/>Add Assets<Popup content="Use the marker to select location on map ans see the assets added below." trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/></Header>
 			<p>Select on Map using Marker</p>
 				<div id="viewDiv"></div>
 			
@@ -210,7 +217,7 @@ class Location extends Component{
 			
 			<br/>
 			
-			<p>Upload CSV File </p>
+			<p>Upload CSV File<Popup content="Upload location in csv file with column names in order name;latitude;longitude" trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/> </p>
 			 <CSVReader
         ref={buttonRef}
         onFileLoad={this.handleFileLoad}
@@ -246,6 +253,7 @@ class Location extends Component{
               }}
             >
               {file && file.name}
+             <button style={{float:'right',backgroundColor:'white',border:'0px',fontSize:'30px',color:'grey'}} onClick={this.handleRemoveFile}><Image src={search} style={{padding:'8px',opacity:'0.5'}}color='grey' size='mini'/></button>
             </div>
             <button
               type='button'
@@ -258,7 +266,7 @@ class Location extends Component{
                 paddingLeft: 0,
                 paddingRight: 0,
                 border:0,
-                backgroundColor:'#1d99e8',
+                backgroundColor:'#015edc',
                 color:'white'
               }}
             >
@@ -282,12 +290,12 @@ class Location extends Component{
 			
 			<Grid.Row>
 			<Grid.Column width="4"></Grid.Column>
-			<Grid.Column width="10">
+			<Grid.Column width="12">
 			<Grid.Row>
 
 				{cards}
 			</Grid.Row>	
-			<Button primary style={{borderRadius:5,backgroundColor:'#1d99e8',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
+			<Button primary style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 
 			</Grid.Column>
 
