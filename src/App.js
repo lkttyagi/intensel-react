@@ -7,7 +7,7 @@ import Location from './components/location';
 import Home from './components/home';
 import store from './store';
 import { loadReCaptcha } from 'react-recaptcha-google'; 
-
+import Project  from './components/project';
 
 
 
@@ -28,6 +28,7 @@ class App extends Component{
             <Route path="/login" component={Login}/>
             <Route path="/register" component={Register}/>
             <Route path="/location" component={Location}/>
+            <Route path="/project" component={Project}/>
           </Switch>
         </div>
       </BrowserRouter>

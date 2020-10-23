@@ -172,7 +172,7 @@ class Location extends Component{
 						</div>
 					</div>
 					<div className="back">
-						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/><br/>Lat {this.state.locations[i][1]}<br/>Long {this.state.locations[i][2]}</p>
+						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/>Lat {this.state.locations[i][1]}<br/>Long {this.state.locations[i][2]}</p>
 					</div>
 				</Label>
 				</Grid.Column>)
@@ -308,4 +308,4 @@ class Location extends Component{
 	}
 }
 
-export default Location
+export default Location;

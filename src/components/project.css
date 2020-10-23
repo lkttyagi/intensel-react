@@ -1,0 +1,17 @@
+input{
+	background-color:rgb(241,242,246)!important;
+	border:0px!important;
+	color:rgb(47,53,66)!important;
+}
+.ui.selection.dropdown{
+	background-color:rgb(241,242,246)!important;
+	border:0px!important;
+}
+label{
+	color:rgb(164,176,190)!important;
+	margin-bottom:16px!important;
+
+}
+input:hover{
+	transform:scale(1.2);
+}
