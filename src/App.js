@@ -8,8 +8,8 @@ import Home from './components/home';
 import store from './store';
 import { loadReCaptcha } from 'react-recaptcha-google'; 
 import Project  from './components/project';
-
-
+import Dashboard from './components/dashboard';
+import Asset from './components/assets';
 
 class App extends Component{
 
@@ -29,6 +29,8 @@ class App extends Component{
             <Route path="/register" component={Register}/>
             <Route path="/location" component={Location}/>
             <Route path="/project" component={Project}/>
+            <Route path="/dashboard" component={Dashboard}/>
+            <Route path="/myassets" component={Asset}/>
           </Switch>
         </div>
       </BrowserRouter>

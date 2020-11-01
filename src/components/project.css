@@ -15,3 +15,12 @@ label{
 input:hover{
 	transform:scale(1.2);
 }
+
+
+.modal {
+    height: auto;
+    top: auto;
+    left: auto;
+    bottom: auto;
+    right: auto;
+}

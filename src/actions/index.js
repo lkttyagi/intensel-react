@@ -1,3 +1,3 @@
 import * as auth from './auth';
-
-export {auth}
+import * as location from './location';
+export {auth,location}

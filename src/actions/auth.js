@@ -57,7 +57,9 @@ export const login = (formdata) => {
       .then(res => {
         if (res.status === 200) {
           dispatch({type: 'LOGIN_SUCCESSFUL', data: res.data });
-          
+          localStorage.setItem('jwt',res.data.token);
+
+          localStorage.setItem('user_id',res.data.user['id'])
           return res.data;
           
         } else if (res.status === 403 || res.status === 401) {

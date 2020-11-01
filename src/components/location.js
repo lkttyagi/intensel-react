@@ -8,6 +8,8 @@ import logo from '../assets/logo.png';
 import home from '../assets/home.png';
 import add from '../assets/images/add.png';
 import search from '../assets/search.png';
+import {connect} from 'react-redux';	
+import {location} from '../actions';
 
 const buttonRef = React.createRef();
 let mapcards=[];
@@ -20,9 +22,19 @@ class Location extends Component{
 	state={
 		upload:'',
 		file:false,
-		locations:'',
+		locations:[],
 		
 	};
+
+	onSubmit = (e) =>{
+		e.preventDefault();
+		let formdata = new FormData();
+		
+		formdata.append("value",JSON.stringify(this.state.locations))
+		console.log("final data",formdata.get("location"))
+		this.props.addLocations(formdata)
+
+	}
 
 	handleOpenDialog =(e) =>{
 		if(buttonRef.current){
@@ -295,7 +307,7 @@ class Location extends Component{
 
 				{cards}
 			</Grid.Row>	
-			<Button primary style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
+			<Button primary onClick={this.onSubmit}style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 
 			</Grid.Column>
 
@@ -308,4 +320,20 @@ class Location extends Component{
 	}
 }
 
-export default Location;
+const mapStateToProps = state =>{
+	
+	return{
+		errors:state.location.errors,
+		location:state.location
+	}
+
+}
+const mapDispatchToPros = dispatch =>{
+	return{
+		addLocations:(formdata)=>{
+			dispatch(location.addLocations(formdata));
+		}
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToPros)(Location);

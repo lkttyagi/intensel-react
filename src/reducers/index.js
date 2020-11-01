@@ -1,6 +1,7 @@
 import auth from './auth';
+import location from './location';
 
 const dashboard = combineReducers({
-	auth
+	auth,location
 })
 export default dashboard;
