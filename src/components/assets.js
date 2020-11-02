@@ -5,6 +5,8 @@ import './project.css';
 import {connect} from 'react-redux';
 import {location} from '../actions';
 import SideNavbar from './sidebar';
+import {asset} from '../actions';
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -30,8 +32,25 @@ class Asset extends Component{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
 	}
+	handleStatus=(e,{value})=>{
+		this.setState({status:value},()=>console.log(this.state.status))
+	}
 	handleOpen =() => this.setState({modalOpen:true})
 	handleClose =() => this.setState({modalOpen:false})
+
+
+	onSubmit = e =>{
+		e.preventDefault();
+		let formdata = new FormData();
+		formdata.append("name",this.state.name);
+		formdata.append("description",this.state.description);
+		formdata.append("status",this.state.status);
+		formdata.append("assets",this.state.assets)
+		console.log(formdata.get('status'),formdata.get('name'),formdata.get('description'),formdata.get('assets'))
+
+		this.props.addAssets(formdata)
+	}	
+	
 
 	render(){
 		const {value} =this.state;
@@ -48,7 +67,7 @@ class Asset extends Component{
         <Table.Cell>{asset.longitude}</Table.Cell>
       </Table.Row>
       ))}
-		console.log(Allassets);
+		
 
 		let options=[];
 		for(let i=0;i<assets.length;i++){
@@ -151,9 +170,9 @@ class Asset extends Component{
 					control={Select}
 					label="Status"
 					options={StatusOptions}
-					value={this.state.status}
+					value={value}
 					placeholder='Select Project Status'
-					onChange={e=>this.setState({status:e.target.value})}
+					onChange={this.handleStatus}
 
 				/>
 				<label>Assets</label>
@@ -173,14 +192,18 @@ class Asset extends Component{
 const mapStateToProps = state =>{
 	return {
 		errors:state.location.errors,
-		location:state.location.location
+		location:state.location.location,
+		asset:state.asset
 	}
 }
 const mapDispatchToProps = dispatch =>{
 	return{
 		getLocations:()=>{
 			dispatch(location.getLocations());
+		},
+		addAssets:(formdata)=>{
+			dispatch(asset.addAssets(formdata));
 		}
 	}
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Asset);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Asset));

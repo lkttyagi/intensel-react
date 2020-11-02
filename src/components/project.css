@@ -12,7 +12,7 @@ label{
 	margin-bottom:16px!important;
 
 }
-input:hover{
+#form-input-control-project:hover{
 	transform:scale(1.2);
 }
 

@@ -10,6 +10,8 @@ import add from '../assets/images/add.png';
 import search from '../assets/search.png';
 import {connect} from 'react-redux';	
 import {location} from '../actions';
+import {withRouter} from 'react-router-dom';
+
 
 const buttonRef = React.createRef();
 let mapcards=[];
@@ -336,4 +338,4 @@ const mapDispatchToPros = dispatch =>{
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToPros)(Location);
+export default withRouter(connect(mapStateToProps,mapDispatchToPros)(Location));

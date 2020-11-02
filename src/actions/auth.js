@@ -60,6 +60,7 @@ export const login = (formdata) => {
           localStorage.setItem('jwt',res.data.token);
 
           localStorage.setItem('user_id',res.data.user['id'])
+          history.push('/location');
           return res.data;
           
         } else if (res.status === 403 || res.status === 401) {

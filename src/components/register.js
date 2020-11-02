@@ -9,7 +9,7 @@ import {auth} from '../actions';
 import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
 
-
+import {withRouter} from 'react-router-dom';
 
 function ValidationMessage(props) {
   if (!props.valid) {
@@ -207,4 +207,4 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Register);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Register));

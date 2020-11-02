@@ -6,7 +6,7 @@ import login from '../assets/login.jpg';
 import logo from '../assets/logo.png';
 import {connect} from 'react-redux';
 import {auth} from '../actions';
-
+import { withRouter } from 'react-router-dom';
 
 class Login extends Component{
 	state={
@@ -127,4 +127,4 @@ const mapDispatchToProps = dispatch => {
     }
   };
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Login));

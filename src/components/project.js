@@ -5,7 +5,7 @@ import './project.css';
 import {connect} from 'react-redux';
 import {location} from '../actions';
 import SideNavbar from './sidebar';
-
+import {withRouter} from 'react-router-dom';
 
 const StatusOptions=[
 	{key:'active',value:'active',text:'Active'},
@@ -69,8 +69,9 @@ class Project extends Component{
 			<Form>
 				
 				<Form.Field 
-					 id="form-input-control-name"
+					 id="form-input-control-project"
 					 control={Input}
+
 					 label='Project Name'
 					 
 					 value={this.state.name}
@@ -79,7 +80,7 @@ class Project extends Component{
 				
 				<Form.Group widths='equal'>
 				<Form.Field 
-					 id="form-input-control-description"
+					 id="form-input-control-project"
 					 control={Input}
 					 label='Description'
 					 
@@ -130,4 +131,4 @@ const mapDispatchToProps = dispatch =>{
 		}
 	}
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Project);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Project));

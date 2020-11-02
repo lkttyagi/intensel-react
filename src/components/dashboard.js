@@ -6,6 +6,7 @@ import home from '../assets/home.png';
 import add from '../assets/images/add.png';
 import search from '../assets/search.png';
 import 	{ loadModules } from 'esri-loader';
+import { withRouter } from 'react-router-dom';
 
 
 
@@ -161,4 +162,4 @@ class Dashboard extends Component{
  }
 } 
 
-export default Dashboard;
+export default withRouter(Dashboard);

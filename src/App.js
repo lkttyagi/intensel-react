@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {BrowserRouter,Route,Switch} from 'react-router-dom';
+import {Router,Route,Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import Register from './components/register';
 import Login from './components/login';
@@ -10,6 +10,8 @@ import { loadReCaptcha } from 'react-recaptcha-google';
 import Project  from './components/project';
 import Dashboard from './components/dashboard';
 import Asset from './components/assets';
+import  {withRouter} from 'react-router';
+import {history} from './_helpers/history';
 
 class App extends Component{
 
@@ -21,19 +23,20 @@ class App extends Component{
   render(){
     return(
       <Provider store={store}>
-      <BrowserRouter>
-        <div>
-          <Switch>
+      <Router  history={history}>
+        <Switch>
+          
+            
+            <Route  path="/login" component={Login}/>
+            <Route exact path="/register" component={Register}/>
+            <Route exact path="/location" component={Location}/>
+            <Route exact path="/project" component={Project}/>
+            <Route exact path="/dashboard" component={Dashboard}/>
+            <Route exact path="/myassets" component={Asset}/>
             <Route exact path="/" component={Home}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/register" component={Register}/>
-            <Route path="/location" component={Location}/>
-            <Route path="/project" component={Project}/>
-            <Route path="/dashboard" component={Dashboard}/>
-            <Route path="/myassets" component={Asset}/>
-          </Switch>
-        </div>
-      </BrowserRouter>
+          
+        </Switch>
+      </Router>
       </Provider>
       )
   }
