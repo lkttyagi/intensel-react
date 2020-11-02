@@ -25,7 +25,7 @@ export const addAssets = (formdata) =>{
 			.then(res =>{
 				if(res.status===201){
 					dispatch({type:'ADD_ASSET',location:res.data});
-					
+					history.push('/project')
 					return res.data;
 				}
 				else if (res.status ===401 || res.status===403){

@@ -20,18 +20,18 @@ class SideNavbar extends Component{
 				</Menu.Item>
 				<br/><br/><br/><br/><br/><br/>
 				<Menu.Item>
-					<a><Icon name="folder" size="large"/>My assets</a>
+					<a href="/myassets"><Icon name="folder" size="large"/>My assets</a>
 				</Menu.Item>
 				<Menu.Item>
-				<a><Icon name="dashboard" size="large"/>
+				<a href="/dashboard"><Icon name="dashboard" size="large"/>
 				Dashboard</a>
 				</Menu.Item>
 				<Menu.Item>
-				<a><Icon name="file" size="large"/>
+				<a href="/project"><Icon name="file" size="large"/>
 				Projects</a>
 				</Menu.Item>
 				<Menu.Item>
-				<a><Icon name="home" size="large"/>
+				<a href="/"><Icon name="home" size="large"/>
 				Main</a>
 				</Menu.Item>
 				

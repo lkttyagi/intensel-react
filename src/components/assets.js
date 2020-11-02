@@ -18,16 +18,24 @@ const StatusOptions=[
 
 
 class Asset extends Component{
+	
 	state={
 		name:'',
 		description:'',
 		status:'',
 		assets:[],
 		modalOpen:false,
+		fetchAssets:[]
 	}
+
 	componentDidMount(){
 		this.props.getLocations();
 	}
+	componentDidUpdate(prevProps,prevState){
+      if(prevProps.location !== this.props.location){
+        this.setState({fetchAssets:this.props.location})
+      }
+    }
 	handleAssets=(e,{value})=>{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
@@ -53,11 +61,13 @@ class Asset extends Component{
 	
 
 	render(){
+		
 		const {value} =this.state;
 		let user_id = localStorage.getItem('user_id')
-		const assets = this.props.location.filter(location=>location.users_id==user_id)
+		console.log("locations",this.state.fetchAssets);
+		const assets = this.state.fetchAssets.filter(location=>location.users_id==user_id)
 		var Allassets="";
-		if(this.props.location){
+		if(this.state.fetchAssets){
 		Allassets=assets.map((asset,index)=>(
 	<Table.Row key={index}>
         <Table.Cell>
