@@ -5,7 +5,7 @@ export const getLocations = () =>{
 		if(token){
 			headers['Authorization']=`Token ${token}`;	
 		}
-		fetch('http://intensel.pythonanywhere.com/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://intensel.pythonanywhere.com/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

@@ -11,7 +11,7 @@ export const addAssets = (formdata) =>{
 		console.log('form',formdata);
 
 
-		fetch('http://intensel.pythonanywhere.com/api/portfolio/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://intensel.pythonanywhere.com/api/portfolio/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
@@ -47,7 +47,7 @@ export const getAssets = () =>{
 		let headers={}
 		
 		
-		fetch('http://intensel.pythonanywhere.com/api/portfolio/',{headers,})
+		fetch('https://intensel.pythonanywhere.com/api/portfolio/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

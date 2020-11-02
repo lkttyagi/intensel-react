@@ -11,7 +11,7 @@ export const addLocations = (formdata) =>{
 		}
 		
 
-		fetch('http://intensel.pythonanywhere.com/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://intensel.pythonanywhere.com/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
@@ -47,7 +47,7 @@ export const getLocations = () =>{
 		let headers={}
 		
 		
-		fetch('http://intensel.pythonanywhere.com/api/asset/',{headers,})
+		fetch('https://intensel.pythonanywhere.com/api/asset/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
