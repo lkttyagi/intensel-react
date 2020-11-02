@@ -17,9 +17,95 @@ class Dashboard extends Component{
 		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search'], { css: true })
     .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search]) => {
     let that =this;
+    	 const defaultSym = {
+        type: "simple-fill", // autocasts as new SimpleFillSymbol()
+        outline: {
+            // autocasts as new SimpleLineSymbol()
+            color: [255, 255, 255, 0.5],
+            width: "0.5px"
+        }
+    }
+    const renderer = {
+        type: "simple", // autocasts as new SimpleRenderer()
+        symbol: defaultSym,
+        // label: "Flood at RCP 85 shapefile projection",
+        visualVariables: [
+            {
+            type: "color",
+            field: "FL8570",
+            stops: [
+                {
+                value: 0.22,
+                color: "#FFFFCC",
+                label: "0 - 0.22"
+                },
+                {
+                value: 0.609,
+                color: "#FFEDA0",
+                label: "0.22 - 0.609"
+                },
+                {
+                value: 0.929,
+                color: "#FED976",
+                label: "0.609 - 0.929"
+                },
+                {
+                value: 1.25,
+                color: "#FEB24C",
+                label: "0.929 - 1.25"
+                },
+                {
+                value: 1.64,
+                color: "#FD8D3C",
+                label: "1.25 - 1.64"
+                },
+                {
+                value: 2.19,
+                color: "#FC4E2A",
+                label: "1.64 - 2.19"
+                },
+                {
+                value: 2.9,
+                color: "#E31A1C",
+                label: "2.19 - 2.9"
+                },
+                {
+                value: 4,
+                color: "#BD0026",
+                label: "2.9 - 4"
+                },
+                {
+                value: 6,
+                color: "#940025",
+                label: "4 - 6"
+                },
+                {
+                value: 8,
+                color: "#67001F",
+                label: "6 - 8"
+                }
+            ]
+            }
+        ]
+    };
+    // Adding shapefile as a feature layer
+    const povLayer = new FeatureLayer({
+        url: "https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/Hong_Kong_Shapefile/FeatureServer/0",
+        renderer: renderer,
+        title: "Flood in Hong Kong",
+        popupTemplate: {
+            // autocasts as new PopupTemplate()
+            title: "{name}, {Type}",
+            content:
+            "Flood Value {FL8570}",
+        }
+    });
+
+
     
       const map = new ArcGISMap({
         basemap: 'streets-vector',
+        layers:[povLayer]
         
       });
 
