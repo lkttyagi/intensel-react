@@ -7,12 +7,14 @@ import logo from '../assets/logo.png';
 import {connect} from 'react-redux';
 import {auth} from '../actions';
 import { withRouter } from 'react-router-dom';
+import Spinner from './loader';
 
 class Login extends Component{
 	state={
 		username:'',
 		password:'',
-		company_code:''
+		company_code:'',
+		loading:false
 	}
 
 		componentDidMount(){
@@ -34,12 +36,16 @@ onLoadRecaptcha(){
 		formdata.append("username",this.state.username);
 		formdata.append("password",this.state.password);
 		formdata.append("company_code",this.state.company_code);
+		this.setState({loading:true},()=>{this.props.login(formdata)});
+
 		
-		this.props.login(formdata)
-		console.log("eroor",this.props.error);
+		
+		
+	
 	}	
 	
 	render(){
+		console.log(this.props.errors)
 		return(
 		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
 		<Grid.Row>	
@@ -51,8 +57,8 @@ onLoadRecaptcha(){
 		 	<Image src={logo} size='medium' centered/>
 		 	<Header as='h2' textAlign='center'>Welcome to Intensel</Header>
 		 	<h5>Please fill in details to Login</h5>
-		 	{ (this.props.errors.length > 0  && this.props.errors[0].field.length > 7) ?  <div className="row" style={{textAlign:"center"}}>
-                  <span style={{color:'red'}}>{'Either username or password is incorrect'}</span>
+		 	{ (this.props.errors.length>0) ?  <div className="row" style={{textAlign:"center"}}>
+                  <span style={{color:'red'}}>{this.props.errors[0].message}</span>
                 </div> : null}
 		 	<br/>
 			<Form>
@@ -93,8 +99,9 @@ onLoadRecaptcha(){
             sitekey="your_site_key"
             onloadCallback={this.onLoadRecaptcha}
             
-        />
-				<Button style={{backgroundColor:'#015edc'}} onClick={this.onSubmit} primary>Login</Button>
+        />		
+        		{(this.state.loading && this.props.errors.length<1)?<Button style={{backgroundColor:'#015edc'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#015edc'}} onClick={this.onSubmit} primary>Login</Button>}
 			</Form>
 			<br/>
 				Don't have an Account ? <a href="/register">Create an Account</a>
@@ -114,9 +121,11 @@ const mapStateToProps = state => {
       return {field, message: state.auth.errors[field]};
     });
   }
+
   return {
     errors,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
+    user:state.auth.user
   };
 }
 

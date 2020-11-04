@@ -55,9 +55,9 @@ export const login = (formdata) => {
         }
       })
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           dispatch({type: 'LOGIN_SUCCESSFUL', data: res.data });
-          localStorage.setItem('jwt',res.data.token);
+          
 
           localStorage.setItem('user_id',res.data.user['id'])
           history.push('/location');

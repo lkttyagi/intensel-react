@@ -11,6 +11,8 @@ import search from '../assets/search.png';
 import {connect} from 'react-redux';	
 import {location} from '../actions';
 import {withRouter} from 'react-router-dom';
+import {company} from '../actions';
+import 	Suggestion from './suggestion';
 
 
 const buttonRef = React.createRef();
@@ -25,8 +27,15 @@ class Location extends Component{
 		upload:'',
 		file:false,
 		locations:[],
+		query:'',
+		company:[],
 		
 	};
+	handleInputChange=()=>{
+		this.setState({
+			query:this.search.value
+		})
+	}
 
 	onSubmit = (e) =>{
 		e.preventDefault();
@@ -97,7 +106,8 @@ class Location extends Component{
         		 var address=response.address;
         		 mapcards.push([address,event.mapPoint.latitude,event.mapPoint.longitude])
         		 console.log("mapcard",mapcards)
-        		        that.setState({locations:mapcards},()=>console.log("locations",that.state.locations))
+        		 that.setState({locations:mapcards},()=>console.log("locations",this.state.locations))
+
 	
         				
         		},function(err){
@@ -133,12 +143,13 @@ class Location extends Component{
          });
     
     	
-    this.handleMaplocation();	
+    	this.props.getCompany();
 		
 	}
 	componentDidUpdate(prevProps,prevState){
-		if(prevState.locations !== mapcards){
-			this.setState({locations:mapcards},()=>console.log("jdnkjjjjjjjjjjj",this.state.locations))
+		
+		if(prevProps.company !== this.props.company){
+			this.setState({company:this.props.company})
 		}
 
 	}
@@ -148,26 +159,28 @@ class Location extends Component{
 		}
 	}
 	
-	handleMaplocation(){
-		if(mapcards.length>0){
-			for(let i=0;i<mapcards.length;i++){
-			   this.state.locations.push(mapcards[i])
-			   console.log("locations",this.state.locations);
-		}
-		}
-
-	}
+	
 	handleRemoveFile = (e) => {
     // Note that the ref is set async, so it might be null at some point
     if (buttonRef.current) {
       buttonRef.current.removeFile(e)
     }
   }
+  handleRemoveLocation = (index) =>{
+  		var array = [...this.state.locations];
+  		
+  		if(index!==-1){
+  			array.splice(index,1);
+  			this.setState({locations:array});
+  			mapcards.splice(index,1);
+  		}
+  }
 
 
 
 
 	render(){
+		console.log("company",this.props.company);
 		var cards=[];
 		
 		if(mapcards.length>0){
@@ -179,16 +192,24 @@ class Location extends Component{
 					<Label className="card">
 					<div className="front">
 						<div className="img-cont">
+
 							<Image src={home} alt="" style={{float:'center'}} verticalAlign="middle"/>
 						</div>
 						<div className="content-cont">
 							<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}>{this.state.locations[i][0]}</p>
+
 						</div>
+
 					</div>
 					<div className="back">
+						<button style={{float:'right',backgroundColor:'white',border:'0px',fontSize:'10px',color:'grey',marginLeft:'55%'}} onClick={()=>this.handleRemoveLocation(i)}><Image src={search} style={{float:'right',padding:'8px',opacity:'0.5'}}color='grey' size='mini'/></button>
+
 						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/>Lat {this.state.locations[i][1]}<br/>Long {this.state.locations[i][2]}</p>
+
 					</div>
+
 				</Label>
+
 				</Grid.Column>)
 			}
 		}
@@ -226,7 +247,7 @@ class Location extends Component{
 			</Grid.Row>
 				
 			<Grid.Row>
-			<Grid.Column width="7"></Grid.Column>
+			<Grid.Column width="4"></Grid.Column>
 			<Grid.Column width="6">
 			
 			<br/>
@@ -291,6 +312,20 @@ class Location extends Component{
       </CSVReader>
 			
 			</Grid.Column>
+			<Grid.Column width="5">
+			<br/>
+
+				<p>Search for Company</p>
+				
+				<Form.Field
+					control={Input}
+					placeholder="Search for ...."
+					ref={input=>this.search=input}
+					onChange={this.handleInputChange}
+					style={{width:'100%',fontSize:'1.3em'}}
+					/>
+				<Suggestion company={this.state.company}/>
+			</Grid.Column>
 			</Grid.Row>
 			<Grid.Row>
 
@@ -326,7 +361,8 @@ const mapStateToProps = state =>{
 	
 	return{
 		errors:state.location.errors,
-		location:state.location
+		location:state.location,
+		company:state.company.company
 	}
 
 }
@@ -334,6 +370,9 @@ const mapDispatchToPros = dispatch =>{
 	return{
 		addLocations:(formdata)=>{
 			dispatch(location.addLocations(formdata));
+		},
+		getCompany:()=>{
+			dispatch(company.getCompanies());
 		}
 	}
 }
