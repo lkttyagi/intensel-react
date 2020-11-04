@@ -2,7 +2,7 @@ import React from 'react'
 
 const Suggestions = (props) => {
   const options = props.company.map(r => (
-    <li key={r.id}>
+    <li key={r.name}>
       {r.name}
     </li>
   ))

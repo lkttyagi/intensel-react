@@ -31,10 +31,18 @@ class Location extends Component{
 		company:[],
 		
 	};
-	handleInputChange=()=>{
-		this.setState({
-			query:this.search.value
-		})
+	handleInputChange=(e)=>{
+	
+		 this.setState({
+      query:e.target.value
+    }, () => {
+      if (this.state.query && this.state.query.length > 1) {
+        if (this.state.query.length % 2 === 0) {
+          this.getData();
+        }
+      } else if (!this.state.query) {
+      }
+    })
 	}
 
 	onSubmit = (e) =>{
@@ -106,7 +114,7 @@ class Location extends Component{
         		 var address=response.address;
         		 mapcards.push([address,event.mapPoint.latitude,event.mapPoint.longitude])
         		 console.log("mapcard",mapcards)
-        		 that.setState({locations:mapcards},()=>console.log("locations",this.state.locations))
+        		 that.setState({locations:mapcards},()=>console.log("locations",that.state.locations))
 
 	
         				
@@ -143,7 +151,7 @@ class Location extends Component{
          });
     
     	
-    	this.props.getCompany();
+    	
 		
 	}
 	componentDidUpdate(prevProps,prevState){
@@ -157,6 +165,12 @@ class Location extends Component{
 		if(this.view){
 			this.view.destroy();
 		}
+	}
+
+	async getData(){
+		const res = await fetch('data.json');
+        const data = await res.json();
+        return this.setState({company:data});
 	}
 	
 	
@@ -180,7 +194,7 @@ class Location extends Component{
 
 
 	render(){
-		console.log("company",this.props.company);
+		console.log("company",this.state.company);
 		var cards=[];
 		
 		if(mapcards.length>0){
@@ -320,8 +334,8 @@ class Location extends Component{
 				<Form.Field
 					control={Input}
 					placeholder="Search for ...."
-					ref={input=>this.search=input}
-					onChange={this.handleInputChange}
+					value={this.state.query}
+					onChange={this.handleInputChange}	
 					style={{width:'100%',fontSize:'1.3em'}}
 					/>
 				<Suggestion company={this.state.company}/>

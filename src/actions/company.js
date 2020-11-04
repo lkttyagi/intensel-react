@@ -3,10 +3,11 @@ export const getCompanies = () =>{
 		let headers={}
 		
 		
-		fetch('https://company-mined-data.s3.ap-south-1.amazonaws.com/company_data.json',{headers,})
+		fetch('data.json',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
+						console.log(data);
 						return { status:res.status , data};
 					})
 				}
