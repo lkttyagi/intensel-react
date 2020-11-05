@@ -9,8 +9,8 @@ import home from '../assets/home.png';
 import add from '../assets/images/add.png';
 import search from '../assets/search.png';
 import {connect} from 'react-redux';	
-import {location} from '../actions';
-import {withRouter} from 'react-router-dom';
+import {locus} from '../actions';
+
 import {company} from '../actions';
 import 	Suggestion from './suggestion';
 
@@ -374,8 +374,8 @@ class Location extends Component{
 const mapStateToProps = state =>{
 	
 	return{
-		errors:state.location.errors,
-		location:state.location,
+		errors:state.locus.errors,
+		locus:state.locus,
 		company:state.company.company
 	}
 
@@ -383,7 +383,7 @@ const mapStateToProps = state =>{
 const mapDispatchToPros = dispatch =>{
 	return{
 		addLocations:(formdata)=>{
-			dispatch(location.addLocations(formdata));
+			dispatch(locus.addLocations(formdata));
 		},
 		getCompany:()=>{
 			dispatch(company.getCompanies());
@@ -391,4 +391,4 @@ const mapDispatchToPros = dispatch =>{
 	}
 }
 
-export default withRouter(connect(mapStateToProps,mapDispatchToPros)(Location));
+export default connect(mapStateToProps,mapDispatchToPros)(Location);

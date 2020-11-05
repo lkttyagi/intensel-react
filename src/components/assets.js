@@ -3,10 +3,10 @@ import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Sele
 import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
-import {location} from '../actions';
+import {locus} from '../actions';
 import SideNavbar from './sidebar';
 import {asset} from '../actions';
-import { withRouter } from 'react-router-dom';
+
 
 
 
@@ -201,19 +201,19 @@ class Asset extends Component{
 
 const mapStateToProps = state =>{
 	return {
-		errors:state.location.errors,
-		location:state.location.location,
+		errors:state.locus.errors,
+		locus:state.locus.locus,
 		asset:state.asset
 	}
 }
 const mapDispatchToProps = dispatch =>{
 	return{
 		getLocations:()=>{
-			dispatch(location.getLocations());
+			dispatch(locus.getLocations());
 		},
 		addAssets:(formdata)=>{
 			dispatch(asset.addAssets(formdata));
 		}
 	}
 }
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Asset));
+export default connect(mapStateToProps,mapDispatchToProps)(Asset);

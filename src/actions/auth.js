@@ -109,3 +109,7 @@ export const register = (first_name,last_name,username,email, password ,confirm_
       })
   }
 }
+
+export const isUserAuthenticated =() =>{
+  return localStorage.getItem('token')!==null
+}

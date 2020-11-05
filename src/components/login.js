@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'; 
 import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header} from 'semantic-ui-react';
-
+import { Redirect } from 'react-router-dom';
 import login from '../assets/login.jpg';
 import logo from '../assets/logo.png';
 import {connect} from 'react-redux';
 import {auth} from '../actions';
-import { withRouter } from 'react-router-dom';
+
 import Spinner from './loader';
 
 class Login extends Component{
@@ -45,6 +45,9 @@ onLoadRecaptcha(){
 	}	
 	
 	render(){
+		if(auth.isUserAuthenticated){
+				return <Redirect to="/location"/>
+			}
 		console.log(this.props.errors)
 		return(
 		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
@@ -136,4 +139,4 @@ const mapDispatchToProps = dispatch => {
     }
   };
 }
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Login));
+export default connect(mapStateToProps,mapDispatchToProps)(Login);

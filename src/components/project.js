@@ -3,9 +3,9 @@ import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Sele
 import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
-import {location} from '../actions';
+import {locus} from '../actions';
 import SideNavbar from './sidebar';
-import {withRouter} from 'react-router-dom';
+
 
 const StatusOptions=[
 	{key:'active',value:'active',text:'Active'},
@@ -120,15 +120,15 @@ class Project extends Component{
 
 const mapStateToProps = state =>{
 	return {
-		errors:state.location.errors,
-		location:state.location.location
+		errors:state.locus.errors,
+		locus:state.locus.locus
 	}
 }
 const mapDispatchToProps = dispatch =>{
 	return{
 		getLocations:()=>{
-			dispatch(location.getLocations());
+			dispatch(locus.getLocations());
 		}
 	}
 }
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Project));
+export default connect(mapStateToProps,mapDispatchToProps)(Project);

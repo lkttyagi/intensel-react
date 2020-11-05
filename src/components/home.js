@@ -1,12 +1,12 @@
 import React,{Component} from 'react';
 import logo from '../assets/logo.png';
-
+import {auth} from '../actions';
 import '../assets/css/animate.css';
 import '../assets/css/LineIcons.2.0.css';
 import '../assets/css/style.css';
 import '../assets/css/bootstrap-4.5.0.min.css';
 import '../assets/css/default.css';
-
+import {Redirect} from 'react-router-dom';
 import hero from '../assets/images/header-hero.png';
 import shape from '../assets/images/services-shape.svg';
 import shape1 from '../assets/images/services-shape-1.svg';
@@ -15,6 +15,9 @@ import shape3 from '../assets/images/services-shape-3.svg';
 
 class Home extends Component{
 	render(){
+        if(auth.isUserAuthenticated){
+                return <Redirect to="/location"/>
+            }
 		return(
 			<div>
 				  <header className="header-area">

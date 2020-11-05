@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Router,Route,Switch} from 'react-router-dom';
+import {withRouter,Router,Route,Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import Register from './components/register';
 import Login from './components/login';
@@ -10,10 +10,10 @@ import { loadReCaptcha } from 'react-recaptcha-google';
 import Project  from './components/project';
 import Dashboard from './components/dashboard';
 import Asset from './components/assets';
-import  {withRouter} from 'react-router';
+import PrivateRoute from './private-route';
 import {history} from './_helpers/history';
 
-class App extends Component{
+class RootContainerComponent extends Component{
 
  
 
@@ -22,24 +22,36 @@ class App extends Component{
 
   render(){
     return(
-      <Provider store={store}>
-      <Router  history={history}>
+      
+      <Router  history={history} forceRefresh={true}>
         <Switch>
           
-            
-            <Route  path="/login" component={Login}/>
-            <Route exact path="/register" component={Register}/>
-            <Route exact path="/location" component={Location}/>
-            <Route exact path="/project" component={Project}/>
-            <Route exact path="/dashboard" component={Dashboard}/>
-            <Route exact path="/myassets" component={Asset}/>
             <Route exact path="/" component={Home}/>
           
+            <Route  path="/login" component={Login}/>
+            <Route  path="/register" component={Register}/>
+            <PrivateRoute path="/location" component={Location}/>
+            <PrivateRoute  path="/project" component={Project}/>
+            <PrivateRoute  path="/dashboard" component={Dashboard}/>
+            <PrivateRoute  path="/myassets" component={Asset}/>
+            
         </Switch>
       </Router>
-      </Provider>
+      
       )
   }
 }
 
-export default App;
+let RootContainer=RootContainerComponent
+
+class App extends Component{
+  render(){
+    return(
+      <Provider store={store}>
+        <RootContainer/>
+      </Provider>
+    )
+  }
+}
+
+export default  withRouter(App);

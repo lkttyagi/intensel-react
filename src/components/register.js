@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'; 
 import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header} from 'semantic-ui-react';
-
+import  {Redirect } from 'react-router-dom';
 import signup from '../assets/signup.png';
 import logo from '../assets/logo.png';
 import {connect} from 'react-redux';
@@ -9,7 +9,7 @@ import {auth} from '../actions';
 import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
 
-import {withRouter} from 'react-router-dom';
+
 
 function ValidationMessage(props) {
   if (!props.valid) {
@@ -84,6 +84,9 @@ onLoadRecaptcha(){
 	}
 	
 	render(){
+			if(auth.isUserAuthenticated){
+				return <Redirect to="/location"/>
+			}
 		return(
 		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
 		<Grid.Row>	
@@ -207,4 +210,4 @@ const mapDispatchToProps = dispatch => {
   };
 }
 
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Register));
+export default connect(mapStateToProps,mapDispatchToProps)(Register);

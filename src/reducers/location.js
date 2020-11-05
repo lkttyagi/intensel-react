@@ -1,17 +1,17 @@
 const initialState ={
-	location:[],
+	locus:[],
 	errors:{}
 };
 
-export default function location(state=initialState,action){
+export default function locus(state=initialState,action){
 	switch(action.type){
 		case 'ADD_LOCATION':
-			return {...state,location:action.location};
+			return {...state,locus:action.locus};
 		case 'FETCH_LOCATION':
-			return {...state,location:action.location};
+			return {...state,locus:action.locus};
 		case 'AUTHENTICATION_ERROR':
 		case 'LOCATION_FAIL':
-			return {...state,errors:action.data,location:null};
+			return {...state,errors:action.data,locus:null};
 		default:
 			return state;
 	}

@@ -26,7 +26,7 @@ export const addLocations = (formdata) =>{
 			})
 			.then(res =>{
 				if(res.status===200){
-					dispatch({type:'ADD_LOCATION',location:res.data});
+					dispatch({type:'ADD_LOCATION',locus:res.data});
 					history.push('/myassets');
 					return res.data;
 				}
@@ -62,7 +62,7 @@ export const getLocations = () =>{
 			})
 			.then(res =>{
 				if(res.status===200){
-					dispatch({type:'FETCH_LOCATION',location:res.data});
+					dispatch({type:'FETCH_LOCATION',locus:res.data});
 					
 					return res.data;
 				}
