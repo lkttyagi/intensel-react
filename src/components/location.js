@@ -236,10 +236,12 @@ class Location extends Component{
 
 
 	render(){
+		if(this.props.location.state)
+		{	
 		let transfer = this.props.location.state.assets.assets
-		var cards=[];
+		
 		var newcards=[];
-		const {value}=this.state;
+		
 
 		if(transfer.length>0){
 			
@@ -279,8 +281,10 @@ class Location extends Component{
 			
 			
 		}
+	}
 		
-		
+		const {value}=this.state;
+		var cards=[];
 		if(mapcards.length>0){
 		
 			console.log("mapcardsssssssss",this.state.locations);
@@ -447,7 +451,7 @@ class Location extends Component{
 
 				{cards}
 			</Grid.Row>
-			{(transfer.length>0)?<div><Header as="h2" textAlign="left">My Assets</Header><Grid.Row>
+			{(this.props.location.state)?<div><Header as="h2" textAlign="left">My Assets</Header><Grid.Row>
 			{newcards}</Grid.Row></div>:null}
 			<Grid.Row>
 				<Grid.Column width="4"></Grid.Column>
