@@ -1,22 +1,28 @@
 import React,{Component} from 'react';
-import SideNavbar from './sidebar';
-import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup} from 'semantic-ui-react';
+import SideNavbar from './oldsidebar';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Dropdown} from 'semantic-ui-react';
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
 import logo from '../assets/logo.png';
 import home from '../assets/home.png';
 import add from '../assets/images/add.png';
+import sample from '../assets/image.png';
 import search from '../assets/search.png';
 import {connect} from 'react-redux';	
-import {locus} from '../actions';
+import {locus,auth} from '../actions';
 
+import companyList from '../data.json';
 import {company} from '../actions';
 import 	Suggestion from './suggestion';
 
 
 const buttonRef = React.createRef();
 let mapcards=[];
+let selectList='';
+let optionList=[];
+
+
 class Location extends Component{
 	constructor(props){
 		super(props);
@@ -28,28 +34,25 @@ class Location extends Component{
 		file:false,
 		locations:[],
 		query:'',
+		option:'',
 		company:[],
+		portfolio:'',
+		selectedOption:null,
+		newlocations:[],
+
 		
 	};
-	handleInputChange=(e)=>{
 	
-		 this.setState({
-      query:e.target.value
-    }, () => {
-      if (this.state.query && this.state.query.length > 1) {
-        if (this.state.query.length % 2 === 0) {
-          this.getData();
-        }
-      } else if (!this.state.query) {
-      }
-    })
-	}
+	handleChange = (e,{value}) =>{
+		this.setState({selectedOption:value},()=>console.log("selectedoption",this.state.selectedOption))
 
+	}
 	onSubmit = (e) =>{
 		e.preventDefault();
 		let formdata = new FormData();
 		
 		formdata.append("value",JSON.stringify(this.state.locations))
+		formdata.append("portfolio_name",this.state.portfolio)
 		console.log("final data",formdata.get("location"))
 		this.props.addLocations(formdata)
 
@@ -113,7 +116,7 @@ class Location extends Component{
         			
         		 var address=response.address;
         		 mapcards.push([address,event.mapPoint.latitude,event.mapPoint.longitude])
-        		 console.log("mapcard",mapcards)
+        		 console.log("mapcard",mapcards)	
         		 that.setState({locations:mapcards},()=>console.log("locations",that.state.locations))
 
 	
@@ -150,7 +153,8 @@ class Location extends Component{
         }
          });
     
-    	
+    
+
     	
 		
 	}
@@ -167,11 +171,6 @@ class Location extends Component{
 		}
 	}
 
-	async getData(){
-		const res = await fetch('data.json');
-        const data = await res.json();
-        return this.setState({company:data});
-	}
 	
 	
 	handleRemoveFile = (e) => {
@@ -189,16 +188,102 @@ class Location extends Component{
   			mapcards.splice(index,1);
   		}
   }
+  handleSearch =(e,{value})=>{
+
+  	this.setState({company:value},()=>console.log(this.state.company));
+  	
+  	for(let i=0;i<this.state.company.length;i++){
+  		let LocationList = companyList.filter(company=>company.NAME===this.state.company[i])
+  		  	
+  		  	console.log("Location company",LocationList);
+  		  	for(let j=0;j<LocationList[i].loc.length;j++){
+  		  		console.log("chal raha hai ")
+  		  		let a = LocationList[i].loc
+  		  		console.log("ye a hai",a)
+  		  		let b = a.replace(/'/g,'"');
+  		  		console.log("ye b hai ",b);
+  		  		console.log("b",JSON.parse(b)[0]);	
+  		  	}
+
+		}
+  	
+  }
+  handleOptions =(e)=>{
+  	
+  	if(e.target.value.length>1){
+  		this.selectList=companyList.filter(company=>company.NAME.slice(0,2)==e.target.value.slice(0,2))
+  		
+  		let searchList = this.selectList.map(({NAME}) =>{
+	return{
+		key:NAME,
+		value:NAME,
+		text:NAME
+	}
+})      
+  		
+  		this.setState({option:searchList},()=>console.log("option",this.state.option));
+  		
+  	}
+  	
+  	  		this.setState({query:e.target.value},()=>console.log(this.state.query))
+
+  }
+  handleLogout =()=>{
+  	this.props.logout()
+  }
 
 
 
 
 	render(){
-		console.log("company",this.state.company);
+		let transfer = this.props.location.state.assets.assets
 		var cards=[];
+		var newcards=[];
+		const {value}=this.state;
+
+		if(transfer.length>0){
+			
+			for(let i =0;i<transfer.length;i++){
+				this.state.newlocations.push([transfer[i].name,transfer[i].latitude,transfer[i].longitude])
+
+			}
+			console.log("this.s",this.state.newlocations)
+			for(let i=0;i<this.state.newlocations.length;i++){
+				newcards.push(
+					<Grid.Column width="2" className="cont">
+					
+					<Label className="card">
+					<div className="front">
+						<div className="img-cont">
+
+							<Image src={home} alt="" style={{float:'center'}} verticalAlign="middle"/>
+						</div>
+						<div className="content-cont">
+							<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}>{this.state.newlocations[i][0]}</p>
+
+						</div>
+
+					</div>
+					<div className="back">
+						<button style={{float:'right',backgroundColor:'white',border:'0px',fontSize:'10px',color:'grey',marginLeft:'55%'}} onClick={()=>this.handleRemoveLocation(i)}><Image src={search} style={{float:'right',padding:'8px',opacity:'0.5'}}color='grey' size='mini'/></button>
+
+						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/>Lat {this.state.newlocations[i][1]}<br/>Long {this.state.newlocations[i][2]}</p>
+
+					</div>
+
+				</Label>
+
+				</Grid.Column>)	
+			}
+
+			
+			
+		}
+		
 		
 		if(mapcards.length>0){
-			console.log("mapcardsssssssss",mapcards);
+		
+			console.log("mapcardsssssssss",this.state.locations);
 		for(let i=0;i<this.state.locations.length;i++){
 				cards.push(
 					<Grid.Column width="2" className="cont">
@@ -241,6 +326,7 @@ class Location extends Component{
 				<Menu.Item
 				 name="logout"
 				 position="right"
+				 onClick={this.handleLogout}
 				 />
 			</Menu>
 
@@ -266,7 +352,7 @@ class Location extends Component{
 			
 			<br/>
 			
-			<p>Upload CSV File<Popup content="Upload location in csv file with column names in order name;latitude;longitude" trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/> </p>
+			<p>Upload CSV File<Popup content="Upload location in csv file with column names in order , name;latitude;longitude" trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/> </p>
 			 <CSVReader
         ref={buttonRef}
         onFileLoad={this.handleFileLoad}
@@ -331,14 +417,17 @@ class Location extends Component{
 
 				<p>Search for Company</p>
 				
-				<Form.Field
-					control={Input}
-					placeholder="Search for ...."
-					value={this.state.query}
-					onChange={this.handleInputChange}	
-					style={{width:'100%',fontSize:'1.3em'}}
+				<Dropdown 
+					placeholder="company"
+					fluid
+					multiple
+					search
+					selection 
+					value={value}
+					onChange={this.handleSearch}
+					options={this.state.option}
+					onKeyUp={this.handleOptions}
 					/>
-				<Suggestion company={this.state.company}/>
 			</Grid.Column>
 			</Grid.Row>
 			<Grid.Row>
@@ -357,7 +446,24 @@ class Location extends Component{
 			<Grid.Row>
 
 				{cards}
-			</Grid.Row>	
+			</Grid.Row>
+			{(transfer.length>0)?<div><Header as="h2" textAlign="left">My Assets</Header><Grid.Row>
+			{newcards}</Grid.Row></div>:null}
+			<Grid.Row>
+				<Grid.Column width="4"></Grid.Column>
+				<Grid.Column width="12">
+					<Form.Field
+						className="portfolio"
+						control={Input}
+						style={{width:"100%"}}
+						placeholder="Portfolio Name"
+						label='Portfolio Name'
+						value={this.state.portfolio}
+						onChange={e=>this.setState({portfolio:e.target.value})}
+						/>
+				</Grid.Column>
+			</Grid.Row>
+
 			<Button primary onClick={this.onSubmit}style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 
 			</Grid.Column>
@@ -387,6 +493,9 @@ const mapDispatchToPros = dispatch =>{
 		},
 		getCompany:()=>{
 			dispatch(company.getCompanies());
+		},
+		logout:()=>{
+			dispatch(auth.logout());
 		}
 	}
 }

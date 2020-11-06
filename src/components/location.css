@@ -132,7 +132,9 @@ h2{
 .ui.menu .item:before{
 	width:0px!important;
 }
-
+.portfolio{
+	width:190%;
+}
 
 
 

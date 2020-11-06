@@ -113,3 +113,41 @@ export const register = (first_name,last_name,username,email, password ,confirm_
 export const isUserAuthenticated =() =>{
   return localStorage.getItem('token')!==null
 }
+
+export const logout =()=>{
+  return(dispatch,getState)=>{
+    let headers={};
+    let id = localStorage.getItem('user_id');
+
+    return fetch("https://intensel.pythonanywhere.com/api/user/logout/"+id,{headers,method:'GET'})
+      .then(res =>{
+        if(res.status<500){
+          return res.json().then(data =>{
+            return {status:res.status,data};
+          })
+        }
+          else{
+            console.log("Server Error!");
+            throw res;
+          }
+        
+      })
+      .then(res =>{
+        if(res.status === 200 || res.status ===201){
+          dispatch({type:'LOGOUT_SUCCESSFUL',data:res.data});
+          
+          history.push('/login');
+          return res.data;
+        }
+        else if(res.status === 403 || res.status === 401){
+          dispatch({type:'AUTHENTICATION_ERROR',data:res.data});
+          throw res.data;
+        }
+        else{
+          dispatch({type:'LOGOUT_FAILED',data:res.data});
+          throw res.data;
+        }
+      })
+
+  }
+}

@@ -1,0 +1,79 @@
+[
+ {
+   "FIELD1": 0,
+   "NAME": "Adobe",
+   "ADDRESS": "['345 Park Ave', '3900 Northwoods Dr 3rd floor', 'One Broadway, 1 Broadway', '420 N Wabash Ave #700', '7878 Diamondback Dr', '707 17th St']",
+   "loc": "['San Jose, US (HQ)', 'Arden Hills, US', 'Cambridge, US', 'Chicago, US', 'College Park, US', 'Denver, US']",
+   "coord": "[(40.51995000000005, -111.93631999999997), (38.70580000000007, -90.28043999999994), (-33.884179689168896, 151.2001078583078), (39.11475561849458, -86.98854893741866), (31.557090033325558, -97.12771005164734), (51.574376915383375, 12.27056067077)]"
+ },
+ {
+   "FIELD1": 1,
+   "NAME": "MACCAM , Inc.",
+   "ADDRESS": "['7011 Hayvenhurst Ave B, Van Nuys']",
+   "loc": "['Los Angeles, US (HQ)']",
+   "coord": "[(34.197704998868375, -118.4924374606893)]"
+ },
+ {
+   "FIELD1": 2,
+   "NAME": "AxtonGroup Inc",
+   "ADDRESS": "['Edison, NJ 08837, USA']",
+   "loc": "['Edison, US (HQ)']",
+   "coord": "[(40.535578600000065, -74.32798309999998)]"
+ },
+ {
+   "FIELD1": 3,
+   "NAME": "AmigoCloud Inc.",
+   "ADDRESS": "['116 New Montgomery St #812, San Francisco', '4730 University Way #104']",
+   "loc": "['San Francisco, US (HQ)', 'Seattle, US (HQ)']",
+   "coord": "[(37.78722808593285, -122.4002737563105), (35.79101327878639, -78.63824740129495)]"
+ },
+ {
+   "FIELD1": 4,
+   "NAME": "Easydom Inc.",
+   "ADDRESS": "['Via del Caravaggio n.3']",
+   "loc": "['Milano, IT (HQ)']",
+   "coord": "[(45.49545000000006, 9.646130000000028)]"
+ },
+ {
+   "FIELD1": 5,
+   "NAME": "Ketchum Inc",
+   "ADDRESS": "['New York, NY 10019, USA']",
+   "loc": "['New York, US (HQ)']",
+   "coord": "[(40.766755000000046, -73.98891499999996)]"
+ },
+ {
+   "FIELD1": 6,
+   "NAME": "One Inc",
+   "ADDRESS": "['620 Coolidge Dr']",
+   "loc": "['Folsom, US (HQ)']",
+   "coord": "[(32.97763000000003, -111.51629999999994)]"
+ },
+ {
+   "FIELD1": 7,
+   "NAME": "Maple Inc",
+   "ADDRESS": "['214, Pankaj Plaza, Plot No-10, Central Market, Sector-06', 'F-2 Pratap Marg Sanganer, Prithviraj Nagar, Pratap Nagar', 'vashi plaza, A-294, 1st Floor, Vashi Plaza, -17, Navimumbai, Liberty Housing Society, Sector 17, Vashi', '535 Thurlow St #501', '2 Lansdowne Rd']",
+   "loc": "['New Delhi, IN (HQ)', 'Jaipur, IN', 'Mumbai, IN', 'Vancouver, CA', 'Croydon, GB']",
+   "coord": "[(30.894040000000075, 75.85871000000003), (26.438510000000065, 74.65037000000007), (19.06898093366486, 72.99753886321446), (50.449640000000045, -125.36962999999997), (40.76059001110853, -73.9947900732874)]"
+ },
+ {
+   "FIELD1": 8,
+   "NAME": "OnApproval, Inc.",
+   "ADDRESS": "['525 W 28th St']",
+   "loc": "['New York, US (HQ)']",
+   "coord": "[(44.95190000000008, -93.27414999999996)]"
+ },
+ {
+   "FIELD1": 9,
+   "NAME": "Co.Fund Inc.",
+   "ADDRESS": "['1460 Broadway']",
+   "loc": "['New York, US (HQ)']",
+   "coord": "[(52.040400000000034, -1.85576999999995)]"
+ },
+ {
+   "FIELD1": 10,
+   "NAME": "Kuber Inc.",
+   "ADDRESS": "['400 Spectrum Center Dr']",
+   "loc": "['Irvine, US (HQ)']",
+   "coord": "[(33.65423400590859, -117.74562598101124)]"
+ }
+]

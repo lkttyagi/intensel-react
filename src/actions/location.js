@@ -25,9 +25,9 @@ export const addLocations = (formdata) =>{
 				}
 			})
 			.then(res =>{
-				if(res.status===200){
+				if(res.status===201){
 					dispatch({type:'ADD_LOCATION',locus:res.data});
-					history.push('/myassets');
+					history.push('/project');
 					return res.data;
 				}
 				else if (res.status ===401 || res.status===403){
@@ -47,7 +47,7 @@ export const getLocations = () =>{
 		let headers={}
 		
 		
-		fetch('https://intensel.pythonanywhere.com/api/asset/',{headers,})
+		fetch('https://intensel.pythonanywhere.com/api/portfolio/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

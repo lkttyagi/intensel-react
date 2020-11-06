@@ -3,7 +3,7 @@ import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Sele
 import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
-import {locus} from '../actions';
+import {locus,auth} from '../actions';
 import SideNavbar from './sidebar';
 
 
@@ -28,20 +28,24 @@ class Project extends Component{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
 	}
+	handleLogout=()=>{
+		this.props.logout()
+	}
 
 	render(){
 		const {value} =this.state;
 		let user_id = localStorage.getItem('user_id')
-		const assets = this.props.location.filter(location=>location.users_id==user_id)
+		const assets = this.props.locus.filter(location=>location.users_id==user_id)
 		
 
 		let options=[];
 		for(let i=0;i<assets.length;i++){
 			options.push({
-				key:assets[i].name+','+assets[i].latitude+','+assets[i].longitude,
-				value:assets[i].name+','+assets[i].latitude+','+assets[i].longitude,
-				text:assets[i].name+','+assets[i].latitude+','+assets[i].longitude
+				key:assets[i].name,
+				value:assets[i].name,
+				text:assets[i].name
 			})
+		
 	}
 		
 		return(	
@@ -53,6 +57,7 @@ class Project extends Component{
 				<Menu.Item
 				 name="logout"
 				 position="right"
+				 onClick={this.handleLogout}
 				 />
 			</Menu>
 			<SideNavbar/>
@@ -128,6 +133,9 @@ const mapDispatchToProps = dispatch =>{
 	return{
 		getLocations:()=>{
 			dispatch(locus.getLocations());
+		},
+		logout:()=>{
+			dispatch(auth.logout())
 		}
 	}
 }
