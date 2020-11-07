@@ -84,7 +84,9 @@ onLoadRecaptcha(){
 	}
 	
 	render(){
-			
+			if(auth.isUserAuthenticated()){
+					return <Redirect to="/location"/>
+				}
 		return(
 		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
 		<Grid.Row>	

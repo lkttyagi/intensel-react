@@ -15,6 +15,9 @@ import shape3 from '../assets/images/services-shape-3.svg';
 
 class Home extends Component{
 	render(){
+        if(auth.isUserAuthenticated()){
+                    return <Redirect to="/location"/>
+                }
        
 		return(
 			<div>

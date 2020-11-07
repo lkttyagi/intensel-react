@@ -30,10 +30,10 @@ class RootContainerComponent extends Component{
           
             <Route  path="/login" component={Login}/>
             <Route  path="/register" component={Register}/>
-            <Route path="/location" component={Location}/>
-            <Route  path="/project" component={Project}/>
+            <PrivateRoute path="/location" component={Location}/>
+            <PrivateRoute  path="/project" component={Project}/>
             <PrivateRoute  path="/dashboard" component={Dashboard}/>
-            <PrivateRoute  path="/myassets" component={Asset}/>
+            
             
         </Switch>
       </Router>

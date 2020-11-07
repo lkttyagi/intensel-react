@@ -342,7 +342,7 @@ class Location extends Component{
 			<Grid.Column width="4"></Grid.Column>
 			<Grid.Column width="11" className="map">
 			<br/>
-			<Header as="h2" style={{color:'#6a6952'}}><Image src={add} size="medium" style={{marginTop:'-0.5rem'}}/> Add Assets<Popup content="Use the marker to select location on map ans see the assets added below." trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/></Header>
+			<Header className="asset" as="h2" style={{color:'#6a6952'}}><Image src={add} size="medium" style={{marginTop:'-0.5rem'}}/> Add Assets<Popup content="Use the marker to select location on map ans see the assets added below." trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/></Header>
 			<p>Select on Map using Marker</p>
 				<div id="viewDiv"></div>
 			

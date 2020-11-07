@@ -45,7 +45,10 @@ onLoadRecaptcha(){
 	}	
 	
 	render(){
-		
+		console.log(auth.isUserAuthenticated());
+				if(auth.isUserAuthenticated()){
+					return <Redirect to="/location"/>
+				}
 		console.log(this.props.errors)
 		return(
 		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
