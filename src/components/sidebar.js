@@ -39,9 +39,11 @@ class SideNavbar extends Component{
 	render(){
 			
 
-		
+		let assets='';
 		let user_id = localStorage.getItem('user_id')
-		const assets = this.props.locus.filter(location=>location.users_id==user_id)
+		if(this.props.locus.length>0){
+		assets = this.props.locus.filter(location=>location.users_id==user_id)
+	}
 		console.log("assets",assets.length);
 		let Level1AContent =[];
 		let level1Panels=[];
@@ -106,6 +108,7 @@ const rootPanels = [
   { key: 'panel-1', title: {children:(<a><Icon name="folder"></Icon>My Assets</a>)}, content: { content: Level1Content } }
   
 ]
+
 
 		
 		return(

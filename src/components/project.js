@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {locus,auth} from '../actions';
 import SideNavbar from './sidebar';
 
-
+let options=[];
 const StatusOptions=[
 	{key:'active',value:'active',text:'Active'},
 	{key:'finished',value:'finished',text:'Finished'}
@@ -19,11 +19,15 @@ class Project extends Component{
 		name:'',
 		description:'',
 		status:'',
-		assets:[]
+		assets:[],
+		
+		
 	}
-	componentDidMount(){
+	componentWillMount(){
 		this.props.getLocations();
+		
 	}
+
 	handleAssets=(e,{value})=>{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
@@ -34,11 +38,16 @@ class Project extends Component{
 
 	render(){
 		const {value} =this.state;
-		let user_id = localStorage.getItem('user_id')
+		let user_id = localStorage.getItem('user_id');
+		
+
+	
+		if(this.props.locus.length>0){
+		
 		const assets = this.props.locus.filter(location=>location.users_id==user_id)
 		
 
-		let options=[];
+		
 		for(let i=0;i<assets.length;i++){
 			options.push({
 				key:assets[i].name,
@@ -47,6 +56,9 @@ class Project extends Component{
 			})
 		
 	}
+}
+
+
 		
 		return(	
 			<div>
