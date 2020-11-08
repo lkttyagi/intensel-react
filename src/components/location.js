@@ -108,7 +108,8 @@ class Location extends Component{
         if(search.activeSource){
         	var geocoder = search.activeSource.locator;
         	var params = {
-        		location:event.mapPoint
+        		location:event.mapPoint,
+        		
         	};
 
         	geocoder.locationToAddress(params)
