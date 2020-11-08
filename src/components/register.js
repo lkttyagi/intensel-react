@@ -98,6 +98,9 @@ onLoadRecaptcha(){
 		 	<Image src={logo} size='medium' centered/>
 		 	<Header as='h2' textAlign='center'>Welcome to Intensel</Header>
 		 	<h5>Please fill in details to create an account</h5>
+		 	{ (this.props.errors.length>0) ?  <div className="row" style={{textAlign:"center"}}>
+                  <span style={{color:'red'}}>{this.props.errors[0].message}</span>
+                </div> : null}
 		 	<br/>
 			<Form>
 				<Form.Group widths='equal'>
