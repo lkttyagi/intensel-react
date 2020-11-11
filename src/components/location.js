@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import SideNavbar from './oldsidebar';
-import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Dropdown,Accordion} from 'semantic-ui-react';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Dropdown,Accordion,Checkbox} from 'semantic-ui-react';
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
@@ -36,10 +36,12 @@ class Location extends Component{
 		locations:[],
 		query:'',
 		option:'',
+		overwrite:'false',
 		company:[],
 		portfolio:'',
 		selectedOption:null,
 		newlocations:[],
+		modalOpen:false,
 
 		
 	};
@@ -79,6 +81,9 @@ class Location extends Component{
 	handelOnError =(err,file,inputElem,reason) =>{
 		console.log(err);
 	}
+
+	handleOpen =() => this.setState({modalOpen:true})
+	handleClose =() => this.setState({modalOpen:false})
 
 	
 	handleFile =() =>this.setState({upload:'csv'});
@@ -208,14 +213,15 @@ class Location extends Component{
   		let LocationList = companyList.filter(company=>company.NAME===this.state.company[i])
   		  	
   		  	console.log("Location company",LocationList);
-  		  	for(let j=0;j<LocationList[i].loc.length;j++){
+  		  	
   		  		console.log("chal raha hai ")
   		  		let a = LocationList[i].loc
-  		  		console.log("ye a hai",a)
+  		  		console.log("ye a hai",a.length)
   		  		let b = a.replace(/'/g,'"');
-  		  		console.log("ye b hai ",b);
-  		  		console.log("b",JSON.parse(b)[0]);	
-  		  	}
+  		  		console.log("ye b hai ",b.length);
+  		  		let c=JSON.parse(b)
+  		  		console.log(c[i]);
+  		  	
 
 		}
   	
@@ -491,13 +497,46 @@ class Location extends Component{
 			<br/>
 			
 
-			<Button primary onClick={this.onSubmit}style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
+			<Button primary onClick={this.handleOpen}style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 
 			</Grid.Column>
 
 			</Grid.Row>
 			</Grid>
+			<Modal
+            open={this.state.modalOpen}
+            onClose={this.handleClose}
+            closeIcon
+          >
+            <Modal.Header>Create Portfolio</Modal.Header>
+            <Modal.Content scrolling>
+              	<Form>
+				{(this.props.location.state)?
+					<div>
+						<p style={{marginLeft:'35%'}}>New Portfolio <Checkbox label="OverWrite Existing" value={this.state.overwrite} onChange={e=>this.setState({overwrite:!this.state.overwrite},()=>console.log("ovewrite",this.state.overwrite))} toggle/></p>
+						{(this.state.overwrite)?<Form.Field control={Input} label='Portfolio Name' value={this.state.portfolio_name} onChange={e=>this.setState({portfolio_name:e.target.value})}/>:<Form.Field control={Input} label='Portfolio' defaultValue={this.props.location.state.assets.name} disabled/>}
+					</div>:
+				<Form.Field 
+					 id="form-input-control-name"
+					 control={Input}
+					 label='Portfolio Name'
+					 value={this.state.portfolio_name}
+					 onChange={e=>this.setState({portfolio_name:e.target.value})}
+					 
+					 
+					 />}
+				
+				
+				
+				
+				
+			    <br/>
+			    <br/>
 
+				<Button style={{backgroundColor:'#015edc', marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>
+			</Form>
+            </Modal.Content>
+          </Modal>
 			</div>
 
 			)
