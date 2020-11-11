@@ -15,9 +15,6 @@ class SideNavbar extends Component{
 				vertical
 				visible
 				width='wide'>
-				<Menu.Item>
-				
-				</Menu.Item>
 				<br/><br/><br/><br/><br/><br/>
 				<Menu.Item>
 					<a href="/location"><Icon name="folder" size="large"/>My assets</a>

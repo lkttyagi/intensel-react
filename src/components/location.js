@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import SideNavbar from './oldsidebar';
-import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Dropdown} from 'semantic-ui-react';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Dropdown,Accordion} from 'semantic-ui-react';
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
 import { CSVReader } from 	'react-papaparse';
@@ -21,6 +21,7 @@ const buttonRef = React.createRef();
 let mapcards=[];
 let selectList='';
 let optionList=[];
+let newmapcards=[];
 
 
 class Location extends Component{
@@ -42,6 +43,12 @@ class Location extends Component{
 
 		
 	};
+	handleClick = (e,titleProps)=>{
+		const {index} = titleProps
+		const {activeIndex} = this.state
+		const newIndex = activeIndex  === index ?-1:index
+		this.setState({activeIndex:newIndex})
+	}
 	
 	handleChange = (e,{value}) =>{
 		this.setState({selectedOption:value},()=>console.log("selectedoption",this.state.selectedOption))
@@ -78,8 +85,8 @@ class Location extends Component{
 	handleMap =() =>this.setState({upload:'map'});
 
 	componentDidMount(){
-		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search'], { css: true })
-    .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search]) => {
+		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search','esri/tasks/Locator'], { css: true })
+    .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search,Locator]) => {
     let that =this;
     
       const map = new ArcGISMap({
@@ -107,12 +114,13 @@ class Location extends Component{
         
         if(search.activeSource){
         	var geocoder = search.activeSource.locator;
+        	var locator = new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&langCode=EN");
         	var params = {
         		location:event.mapPoint,
         		
         	};
 
-        	geocoder.locationToAddress(params)
+        	locator.locationToAddress(params)
         		.then(function(response){
         			
         		 var address=response.address;
@@ -120,7 +128,8 @@ class Location extends Component{
         		 console.log("mapcard",mapcards)	
         		 that.setState({locations:mapcards},()=>console.log("locations",that.state.locations))
 
-	
+
+				
         				
         		},function(err){
         			console.log("errror",err);
@@ -159,13 +168,7 @@ class Location extends Component{
     	
 		
 	}
-	componentDidUpdate(prevProps,prevState){
-		
-		if(prevProps.company !== this.props.company){
-			this.setState({company:this.props.company})
-		}
-
-	}
+	
 	componentWillUnmount(){
 		if(this.view){
 			this.view.destroy();
@@ -188,6 +191,14 @@ class Location extends Component{
   			this.setState({locations:array});
   			mapcards.splice(index,1);
   		}
+  }
+  handleRemoveNewLocation = (index) =>{
+  	var array =[...this.state.newlocations];
+  	if(index!==-1){
+  		array.splice(index,1);
+  		this.setState({newlocations:array});
+  		newmapcards.splice(index,1);
+  	}
   }
   handleSearch =(e,{value})=>{
 
@@ -237,19 +248,22 @@ class Location extends Component{
 
 
 	render(){
+		const {activeIndex} = this.state
+
 		if(this.props.location.state)
 		{	
-		let transfer = this.props.location.state.assets.assets
+		let newmapcards = this.props.location.state.assets.assets
 		
 		var newcards=[];
 		
 
-		if(transfer.length>0){
+		if(newmapcards.length>0){
 			
-			for(let i =0;i<transfer.length;i++){
-				this.state.newlocations.push([transfer[i].name,transfer[i].latitude,transfer[i].longitude])
+			
+			console.log("newcards",newmapcards);
 
-			}
+			this.state.newlocations=newmapcards;
+
 			console.log("this.s",this.state.newlocations)
 			for(let i=0;i<this.state.newlocations.length;i++){
 				newcards.push(
@@ -262,15 +276,15 @@ class Location extends Component{
 							<Image src={home} alt="" style={{float:'center'}} verticalAlign="middle"/>
 						</div>
 						<div className="content-cont">
-							<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}>{this.state.newlocations[i][0]}</p>
+							<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}>{this.state.newlocations[i].name}</p>
 
 						</div>
 
 					</div>
 					<div className="back">
-						<button style={{float:'right',backgroundColor:'white',border:'0px',fontSize:'10px',color:'grey',marginLeft:'55%'}} onClick={()=>this.handleRemoveLocation(i)}><Image src={search} style={{float:'right',padding:'8px',opacity:'0.5'}}color='grey' size='mini'/></button>
+						<button style={{float:'right',backgroundColor:'white',border:'0px',fontSize:'10px',color:'grey',marginLeft:'55%'}} onClick={()=>this.handleRemoveNewLocation(i)}><Image src={search} style={{float:'right',padding:'8px',opacity:'0.5'}}color='grey' size='mini'/></button>
 
-						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/>Lat {this.state.newlocations[i][1]}<br/>Long {this.state.newlocations[i][2]}</p>
+						<p style={{textAlign:'center',color:'#015edc',fontSize:'12px'}}><Icon name="map marker alternate" style={{color:'#015edc'}} size="large"/><br/>Lat {this.state.newlocations[i].latitude}<br/>Long {this.state.newlocations[i].longitude}</p>
 
 					</div>
 
@@ -324,27 +338,31 @@ class Location extends Component{
 		
 		return(
 			<div>
-			<Menu style={{minHeight:'4.35em',margin:'0rem 0'}}>
+			<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
+			    
 				<Menu.Item>
-			    <Image src={logo} size='small' style={{marginLeft:'30%'}}/>		
+			    <Image src={logo} size='small' style={{marginLeft:'5%'}}/>		
 			    </Menu.Item>
+			    <Menu.Item style={{marginLeft:'40%'}}><p style={{fontSize:'18px'}}>Add Assets</p></Menu.Item>
 				<Menu.Item
-				 name="logout"
+				 
 				 position="right"
-				 onClick={this.handleLogout}
-				 />
+				 
+				 >
+				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power"/></Button>
+
+				 </Menu.Item>
 			</Menu>
 
 			<SideNavbar/>
-			
+		<br/><br/><br/><br/><br/>
 		<Grid  padded>
 			<Grid.Row className="mapRow" style={{height:'650px'}}>
 			
 			<Grid.Column width="4"></Grid.Column>
 			<Grid.Column width="11" className="map">
 			<br/>
-			<Header className="asset" as="h2" style={{color:'#6a6952'}}><Image src={add} size="medium" style={{marginTop:'-0.5rem'}}/> Add Assets<Popup content="Use the marker to select location on map ans see the assets added below." trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/></Header>
-			<p>Select on Map using Marker</p>
+			<Header className="asset" as="h5" style={{color:'#6a6952'}}>Select on Map using Marker <Icon style={{float:'right'}}name="caret down" size="mini"/></Header>
 				<div id="viewDiv"></div>
 			
 			</Grid.Column>
@@ -353,11 +371,20 @@ class Location extends Component{
 				
 			<Grid.Row>
 			<Grid.Column width="4"></Grid.Column>
-			<Grid.Column width="6">
+			<Grid.Column width="11">
 			
 			<br/>
-			
-			<p>Upload CSV File<Popup content="Upload location in csv file with column names in order , name;latitude;longitude" trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/> </p>
+			<Accordion>
+			<Accordion.Title
+			active={activeIndex===0}
+			index={0}
+			onClick={this.handleClick}>
+						<Header className="asset" as="h5" style={{color:'#6a6952'}}>Upload using CSV File
+<Popup content="Upload location in csv file with column names in order , name;latitude;longitude" trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/><Icon style={{float:'right'}}name="caret down" size="mini"/> </Header>
+			</Accordion.Title>
+			<br/>
+			<br/>
+			<Accordion.Content active={activeIndex ===0}>
 			 <CSVReader
         ref={buttonRef}
         onFileLoad={this.handleFileLoad}
@@ -415,13 +442,17 @@ class Location extends Component{
           </aside>
         )}
       </CSVReader>
+		</Accordion.Content>	
+		
 			
-			</Grid.Column>
-			<Grid.Column width="5">
-			<br/>
-
-				<p>Search for Company</p>
-				
+				<Accordion.Title
+				active={activeIndex===1}
+				index={1}
+				onClick={this.handleClick}
+				>
+				<Header className="asset" as="h5" style={{color:'#6a6952'}}>Search For Company
+<Popup content="Upload location in csv file with column names in order , name;latitude;longitude" trigger={<Button style={{padding:'0.3rem 0.3rem',fontSize:'0.5rem',margin:'0.5rem',borderRadius:'50%',backgroundColor:'white',border:'0.5px solid grey'}}icon='info' size="mini"/>}/><Icon style={{float:'right'}}name="caret down" size="mini"/> </Header></Accordion.Title>
+				<Accordion.Content active={activeIndex===1}>
 				<Dropdown 
 					placeholder="company"
 					fluid
@@ -433,6 +464,8 @@ class Location extends Component{
 					options={this.state.option}
 					onKeyUp={this.handleOptions}
 					/>
+				</Accordion.Content>
+			</Accordion>
 			</Grid.Column>
 			</Grid.Row>
 			<Grid.Row>
@@ -452,22 +485,11 @@ class Location extends Component{
 
 				{cards}
 			</Grid.Row>
+			<br/>
 			{(this.props.location.state)?<div><Header as="h2" textAlign="left">My Assets</Header><Grid.Row>
 			{newcards}</Grid.Row></div>:null}
-			<Grid.Row>
-				<Grid.Column width="4"></Grid.Column>
-				<Grid.Column width="12">
-					<Form.Field
-						className="portfolio"
-						control={Input}
-						style={{width:"100%"}}
-						placeholder="Portfolio Name"
-						label='Portfolio Name'
-						value={this.state.portfolio}
-						onChange={e=>this.setState({portfolio:e.target.value})}
-						/>
-				</Grid.Column>
-			</Grid.Row>
+			<br/>
+			
 
 			<Button primary onClick={this.onSubmit}style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 

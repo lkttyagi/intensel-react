@@ -1,8 +1,8 @@
-.ui.menu .item,.accordion .title{
+.ui.menu .item,{
 	padding:1.2rem 1.4rem !important;
 	border:0px;
-	font-size:17px;
-	font-family:Roboto;
+	font-size:15px;
+	letter-spacing: 0.5px;
 	text-align:justify-all;
 	float:center;
 	transition: none
@@ -16,8 +16,8 @@
 	color:rgba(0,0,0,0.7);
 	padding-left:10px;
 	width:150px;
-	font-family:'Roboto';
-	font-weight:600;
+	font-family:'Montserrat';
+	font-weight:400;
 
 }
 
@@ -42,5 +42,7 @@
 
 }
 .ui.wide.left.sidebar{
-	width:20%!important;
+	width:15%!important;
+	border-right:1px solid rgba(34,36,38,0.15) ;
+	background-color:#f7f6f6;
 }
