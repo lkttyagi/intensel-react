@@ -1,6 +1,6 @@
 import React ,{Component} from 'react';
 import SideNavbar from './sidebar';
-import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Segment} from 'semantic-ui-react';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox} from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import home from '../assets/home.png';
 import add from '../assets/images/add.png';
@@ -200,7 +200,7 @@ class Dashboard extends Component{
 				 position="right"
 				 
 				 >
-				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power"/></Button>
+				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power" size="big"/></Button>
 
 				 </Menu.Item>
 			</Menu>
@@ -210,11 +210,15 @@ class Dashboard extends Component{
 			<Grid.Row>
 			
 			<Grid.Column width="4"></Grid.Column>
-			<Grid.Column width="11">
+			<Grid.Column width="11" textAlign="center">
 			<br/>
 			
-			
-		 
+			<p style={{float:'right'}}>Local<Checkbox toggle/>Global</p>
+			<div style={{float:'center'}} centered>
+			<Button primary style={{float:'center'}}>OverAll Analysis</Button>
+			<Button primary style={{float:'center'}}>Detailed Analysis</Button>
+			</div>
+		 	
 			
 			</Grid.Column>
 
@@ -222,53 +226,62 @@ class Dashboard extends Component{
 				
 			<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
-			<Grid.Column width="2" style={{marginTop:'10%',boxShadow:'0 1px 2px 0 rgba(34,36,38,0.5)',zIndex:'100'}}>
-				<p>Map Visualizations</p>
-				<Icon name="calendar"/>Year of Flood<br/><br/>
+			<Grid.Column width="2" style={{position:'fixed',marginLeft:'2%',marginTop:'22%',boxShadow:'0 1px 2px 0 rgba(34,36,38,0.5)',zIndex:'3000',backgroundColor:'#f7f6f6'}}>
+				<br/>
+				<Icon name="calendar"/>Project<br/>
 				<Form.Field
-					id="form-input-control-status"
+					id="form-input-control-project"
 					control={Select}
 					
 					
 					value="2030"
-					placeholder='Select year'
-					onChange={e=>this.setState({status:e.target.value})}
-
-				/>
-				<Icon name="calendar"/>Scenario<br/><br/>
-				<Form.Field
-					id="form-input-control-status"
-					control={Select}
-					
-					
-					value="2030"
-					placeholder='Select year'
+					placeholder='Project'
 					onChange={e=>this.setState({status:e.target.value})}
 
 				/>
 				<br/>
-				<Icon name="calendar"/>Hazards<br/><br/>
-				 <Form.Radio
-					id="form-input-control-status"
-					label="Tropical Cyclone storm surge"
-					/>
-					<Form.Radio
-					id="form-input-control-status"
-					label="Non Tropical Storng surge"
-					/>
-					<Form.Radio
-					id="form-input-control-status"
-					label="Flood"
-					/>
-					<Form.Radio
-					id="form-input-control-status"
-					label="Flood"
-					/>
+				<br/>
+				<Form.Field
+					id="form-input-control-climate"
+					control={Select}
+					
+					
+					value="2030"
+					placeholder='Climate Variable'
+					onChange={e=>this.setState({status:e.target.value})}
+
+				/>
+				
+			<br/>
+					
+				<Form.Field
+					id="form-input-control-climate"
+					control={Select}
+					
+					
+					value="2030"
+					placeholder='RCP'
+					onChange={e=>this.setState({status:e.target.value})}
+
+				/>
+				<br/>
+				<Form.Field
+					id="form-input-control-rcp"
+					control={Select}
+					
+					
+					value="2030"
+					placeholder='Year'
+					onChange={e=>this.setState({status:e.target.value})}
+
+				/>
+				
+				
 			</Grid.Column>	
-			<Grid.Column width="3">
+			<Grid.Column width="5">
 			<p style={{color:"#015edc"}}>Climate Risk Index</p>
 				   <ComposedChart
-        width={400}
+        width={500}
         height={400}
         data={data}
         margin={{
@@ -287,18 +300,90 @@ class Dashboard extends Component{
 			</Grid.Column>
 			
 			<Grid.Column width="8">
-			  <div id="viewDiv" style={{height:'500px'}}></div>
+						<p style={{color:"#015edc"}}>Asset Level Risk Map</p>
+
+			  <div id="viewDiv" style={{height:'400px'}}></div>
 			
 			</Grid.Column>
 
 			</Grid.Row>
 			<Grid.Row>
+				
 				<Grid.Column width="3"></Grid.Column>
-				<Grid.Column width="2"></Grid.Column>
-				<Grid.Column width="3">
-					
+				<Grid.Column width="4" style={{boxShadow:'0 1px 2px 0 rgba(34,36,38,0.5)'}}>
+				<br/>
+				<p style={{color:"#015edc"}}>Risks</p>
+
+					<div>
+						<Label>Overall</Label>
+						<Progress percent={32} color='red'/>
+					    <Label>Rain</Label>
+						<Progress percent={32} color='green'/>
+						<Label>Rain</Label>
+						<Progress percent={32} color='yellow'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/>
+						{/*				<p style={{color:"#015edc"}}>Portfolio Losses</p>
+						<Label>Overall</Label>
+						<Progress percent={32} color='red'/>
+					    <Label>Rain</Label>
+						<Progress percent={32} color='blue'/>
+						<Label>Rain</Label>
+						<Progress percent={32} color='black'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/>*/}
+
+
+					</div>
 				</Grid.Column>
-				<Grid.Column width="8"></Grid.Column>
+				<Grid.Column width="9">
+						<Table columns={5}>
+    <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell>Name</Table.HeaderCell>
+        <Table.HeaderCell>Type</Table.HeaderCell>
+        <Table.HeaderCell>Climate Score</Table.HeaderCell>
+        <Table.HeaderCell>Overalll Loss(mil $)</Table.HeaderCell>
+        <Table.HeaderCell>Value</Table.HeaderCell>
+        <Table.HeaderCell>Analyse</Table.HeaderCell>
+        <Table.HeaderCell>Modify</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+
+    <Table.Body>
+      <Table.Row>
+        <Table.Cell>John</Table.Cell>
+        <Table.Cell>Approved</Table.Cell>
+        <Table.Cell>22</Table.Cell>
+        <Table.Cell>Male</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Jamie</Table.Cell>
+        <Table.Cell>Approved</Table.Cell>
+        <Table.Cell>32</Table.Cell>
+        <Table.Cell>Male</Table.Cell>
+        <Table.Cell>Requires call</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+      </Table.Row>
+      <Table.Row>
+        <Table.Cell>Jill</Table.Cell>
+        <Table.Cell>Denied</Table.Cell>
+        <Table.Cell>22</Table.Cell>
+        <Table.Cell>Other</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+      </Table.Row>
+    </Table.Body>
+
+    <Table.Footer>
+         </Table.Footer>
+  </Table>
+				</Grid.Column>
 			</Grid.Row>
 			</Grid>
 

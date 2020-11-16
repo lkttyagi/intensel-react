@@ -50,6 +50,10 @@ class SideNavbar extends Component{
 		
 		console.log("assetslengngrg",assets.length)
 		let x=0;
+		if(assets.length>5){
+			console.log("klegmmd",assets.slice(0,5))
+			assets.length=5;
+		}
 		for(let i=0;i<assets.length;i++){
 
 
@@ -77,6 +81,7 @@ class SideNavbar extends Component{
 			Level1AContent=[];
 		
 		}
+		
 	
 	
 			

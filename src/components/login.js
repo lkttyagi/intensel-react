@@ -45,7 +45,7 @@ onLoadRecaptcha(){
 	}	
 	
 	render(){
-		console.log(auth.isUserAuthenticated());
+		
 				if(auth.isUserAuthenticated()){
 					return <Redirect to="/location"/>
 				}
@@ -104,7 +104,7 @@ onLoadRecaptcha(){
             onloadCallback={this.onLoadRecaptcha}
             
         />		
-        		{(this.state.loading && this.props.errors.length<1)?<Button style={{backgroundColor:'#015edc'}}><Spinner/></Button>:
+        		{(this.state.loading && this.props.errors.length==0)?<Button style={{backgroundColor:'#015edc'}}><Spinner/></Button>:
 				<Button style={{backgroundColor:'#015edc'}} onClick={this.onSubmit} primary>Login</Button>}
 			</Form>
 			<br/>

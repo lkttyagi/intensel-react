@@ -12,10 +12,10 @@ import search from '../assets/search.png';
 import {connect} from 'react-redux';	
 import {locus,auth} from '../actions';
 
-import companyList from '../data.json';
+import companyList from '../newdata.json';
 import {company} from '../actions';
 import 	Suggestion from './suggestion';
-
+import Spinner from './loader';
 
 const buttonRef = React.createRef();
 let mapcards=[];
@@ -42,6 +42,7 @@ class Location extends Component{
 		selectedOption:null,
 		newlocations:[],
 		modalOpen:false,
+		loading:false
 
 		
 	};
@@ -63,7 +64,7 @@ class Location extends Component{
 		formdata.append("value",JSON.stringify(this.state.locations))
 		formdata.append("portfolio_name",this.state.portfolio)
 		console.log("final data",formdata.get("location"))
-		this.props.addLocations(formdata)
+		this.setState({loading:true},()=>{this.props.addLocations(formdata)});
 
 	}
 
@@ -73,6 +74,7 @@ class Location extends Component{
 		}
 	}
 	handleFileLoad = data =>{
+	mapcards=[];	
 	for(let i=1;i<data.length-1;i++){	
 		mapcards.push(data[i].data);
 	}
@@ -110,7 +112,7 @@ class Location extends Component{
     view: view
     });
     view.ui.add(search, "top-right");
-       
+       mapcards=[];
        view.on("click", function(event){
        	
        	console.log(event.mapPoint.latitude,event.mapPoint.longitude);
@@ -207,24 +209,35 @@ class Location extends Component{
   }
   handleSearch =(e,{value})=>{
 
-  	this.setState({company:value},()=>console.log(this.state.company));
+  	this.setState({company:value},this.handleAsync);
   	
-  	for(let i=0;i<this.state.company.length;i++){
+  
+  	
+  }
+  handleAsync=()=>{
+  		console.log("ye his",this.state.company);
+  		mapcards=[];
+  		for(let i=0;i<this.state.company.length;i++){
   		let LocationList = companyList.filter(company=>company.NAME===this.state.company[i])
   		  	
   		  	console.log("Location company",LocationList);
   		  	
-  		  		console.log("chal raha hai ")
-  		  		let a = LocationList[i].loc
-  		  		console.log("ye a hai",a.length)
-  		  		let b = a.replace(/'/g,'"');
-  		  		console.log("ye b hai ",b.length);
-  		  		let c=JSON.parse(b)
-  		  		console.log(c[i]);
+  		  		console.log("chal raha hai ",i)
+  		  		let a = JSON.parse(LocationList[0].ADDRESS.replace(/'/g,'"'));
+  		  		console.log("working",a);
+  		  		let b = JSON.parse(LocationList[0].coord.replace(/'/g,'"'));
+  		  		console.log("working",b[0].split(',')[1].replace(/[()]/g,''));
+  		  		
+  		  		for(let j=0;j<b.length;j++){
+  		  			mapcards.push([a[j],b[j].split(',')[0].replace(/[()]/g,''),b[j].split(',')[1].replace(/[()]/g,'')])
+  		  		}
+  		  		this.setState({locations:mapcards},()=>console.log("comapnay",mapcards))
+  		  		
+
   		  	
 
 		}
-  	
+
   }
   handleOptions =(e)=>{
   	
@@ -254,6 +267,7 @@ class Location extends Component{
 
 
 	render(){
+		console.log("state clear",this.state.locations,mapcards)
 		const {activeIndex} = this.state
 
 		if(this.props.location.state)
@@ -355,7 +369,7 @@ class Location extends Component{
 				 position="right"
 				 
 				 >
-				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power"/></Button>
+				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power" size="big"/></Button>
 
 				 </Menu.Item>
 			</Menu>
@@ -514,14 +528,14 @@ class Location extends Component{
 				{(this.props.location.state)?
 					<div>
 						<p style={{marginLeft:'35%'}}>New Portfolio <Checkbox label="OverWrite Existing" value={this.state.overwrite} onChange={e=>this.setState({overwrite:!this.state.overwrite},()=>console.log("ovewrite",this.state.overwrite))} toggle/></p>
-						{(this.state.overwrite)?<Form.Field control={Input} label='Portfolio Name' value={this.state.portfolio_name} onChange={e=>this.setState({portfolio_name:e.target.value})}/>:<Form.Field control={Input} label='Portfolio' defaultValue={this.props.location.state.assets.name} disabled/>}
+						{(this.state.overwrite)?<Form.Field control={Input} label='Portfolio Name' value={this.state.portfolio} onChange={e=>this.setState({portfolio:e.target.value})}/>:<Form.Field control={Input} label='Portfolio' defaultValue={this.props.location.state.assets.name} disabled/>}
 					</div>:
 				<Form.Field 
 					 id="form-input-control-name"
 					 control={Input}
 					 label='Portfolio Name'
-					 value={this.state.portfolio_name}
-					 onChange={e=>this.setState({portfolio_name:e.target.value})}
+					 value={this.state.portfolio}
+					 onChange={e=>this.setState({portfolio:e.target.value})}
 					 
 					 
 					 />}

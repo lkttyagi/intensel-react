@@ -23,10 +23,17 @@ class Project extends Component{
 		
 		
 	}
-	componentWillMount(){
-		this.props.getLocations();
-		
+
+	onSubmit=(e)=>{
+		e.preventDefault();
+		let formdata = new FormData();
+		formdata.append("name",this.state.name)
+		formdata.append("status",this.state.status)
+		formdata.append("description",this.state.description)
+		formdata.append("portfolio",this.state.assets)
+
 	}
+	
 
 	handleAssets=(e,{value})=>{
 		this.setState({assets:value},()=>console.log(this.state.assets))
@@ -123,8 +130,8 @@ class Project extends Component{
 					onChange={e=>this.setState({status:e.target.value})}
 
 				/>
-				<label>Assets</label>
-				<Dropdown  placeholder="Assets" fluid  multiple selection options={options} value={value} onChange={this.handleAssets}/>	
+				<label>Portfolio</label>
+				<Dropdown  placeholder="Assets" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
 				
 			    <br/>
 			    <br/>

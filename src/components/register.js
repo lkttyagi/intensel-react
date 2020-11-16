@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {auth} from '../actions';
 import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
+import Spinner from './loader';
 
 
 
@@ -50,7 +51,8 @@ onLoadRecaptcha(){
 		company_code:'',
 		passwordConfirmValid:false,
 		formValid:false,
-		errorMsg:{}
+		errorMsg:{},
+		loading:false
 	};
 
 	validateForm=()=>{
@@ -80,13 +82,15 @@ onLoadRecaptcha(){
   }
 	onSubmit = e =>{
 		e.preventDefault();
-		this.props.register(this.state.first_name,this.state.last_name,this.state.username,this.state.email,this.state.password,this.state.confirm_password,this.state.company_code)
+		this.setState({loading:true},()=>{
+		this.props.register(this.state.first_name,this.state.last_name,this.state.username,this.state.email,this.state.password,this.state.confirm_password,this.state.company_code)});
 	}
 	
 	render(){
 			if(auth.isUserAuthenticated()){
 					return <Redirect to="/location"/>
 				}
+			console.log(this.props.errors)	
 		return(
 		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
 		<Grid.Row>	
@@ -179,8 +183,9 @@ onLoadRecaptcha(){
             onloadCallback={this.onLoadRecaptcha}
             
         />
-
+        	{(this.state.loading && this.props.errors.length==0)?<Button style={{backgroundColor:'#015edc'}}><Spinner/></Button>:
 				<Button style={{backgroundColor:'#015edc'}} disabled={!this.state.formValid} onClick={this.onSubmit} primary>Register</Button>
+        	}
 			</Form>
 
 			<br/>

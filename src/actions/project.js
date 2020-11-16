@@ -1,11 +1,18 @@
-export const getLocations = () =>{
+import { history } from '../_helpers/history';  
+
+
+
+export const addProject = (formdata) =>{
 	return(dispatch,getState) =>{
-		let headers={}
-		let token = localStorage.getItem('token')
+		let headers={};
+		let token = localStorage.getItem('token');
+		let id = localStorage.getItem('user_id');
 		if(token){
-			headers['Authorization']=`Token ${token}`;	
+			headers['Authorization']=`Token ${token}`;
 		}
-		fetch('https://intensel.pythonanywhere.com/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
+		
+
+		fetch('https://intensel.pythonanywhere.com/api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
@@ -13,15 +20,15 @@ export const getLocations = () =>{
 					})
 				}
 				else{
-					dispatch({type:'LOCATION_FAIL',data:res.data});
+					dispatch({type:'PROJECT_FAIL',data:res.data});
 					console.log("Server Error");
 					throw res.data;
 				}
 			})
 			.then(res =>{
 				if(res.status===201){
-					dispatch({type:'ADD_LOCATION',location:res.data});
-					
+					dispatch({type:'ADD_PROJECT',locus:res.data});
+					history.push('/dashboard');
 					return res.data;
 				}
 				else if (res.status ===401 || res.status===403){
@@ -29,10 +36,10 @@ export const getLocations = () =>{
 					throw res.data;
 				}
 				else {
-					dispatch({type:'LOCATION_FAIL',data:res.data});
+					dispatch({type:'PROJECT_FAIL',data:res.data});
 					throw res.data;
 				}
 			})
+			
 	}
-
 }
