@@ -1,18 +1,20 @@
 import React ,{Component} from 'react';
 import SideNavbar from './sidebar';
-import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox} from 'semantic-ui-react';
+import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import home from '../assets/home.png';
 import add from '../assets/images/add.png';
 import search from '../assets/search.png';
 import 	{ loadModules } from 'esri-loader';
 import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
 import {
   ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend,
 } from 'recharts';
+import {project,auth,dashboard} from '../actions';
 
-
+let options=[];
 const data = [
   {
     name: 'Page A', uv: 590, pv: 800, amt: 1400,
@@ -33,10 +35,37 @@ const data = [
     name: 'Page F', uv: 1400, pv: 680, amt: 1700,
   },
 ];
+const RcpOptions=[
+	{key:2.6,value:2.6,text:2.6},
+	{key:4.5,value:4.5,text:4.5},
+	{key:8.5,value:8.5,text:8.5}
+]
+const VariableOptions=[
+	{key:'Flood',value:'Flood',text:'Flood'},
+	{key:'Rain',value:'Rain',text:'Rain'},
+	{key:'Storm',value:'Storm',text:'Storm'},
+	{key:'LandSlide',value:'LandSlide',text:'LandSlide'}
+]
+const YearOptions=[
+	{key:2020,value:2020,text:2020},
+	{key:2030,value:2030,text:2030},
+	{key:2050,value:2050,text:2050}
+]
+
 
 
 
 class Dashboard extends Component{
+	constructor(props){
+		super(props);
+	}
+	state={
+		project:'demo',
+		variable:'Flood',
+		rcp:2.6,
+		year:2030,
+		analysis:'local'
+	}
 
 
 	componentDidMount(){
@@ -182,11 +211,57 @@ class Dashboard extends Component{
         }
          });
     
-    	
-   	
+   
+   	this.props.getProjects();
+   		let formdata = new FormData();
+   		formdata.append('project',this.state.project)
+   		formdata.append('rcp',this.state.rcp)
+   		formdata.append('variable',this.state.variable)
+   		formdata.append('year',this.state.year)
+   		formdata.append('analysis',this.state.analysis)
+   		this.props.addDashboard(formdata);
 		
 	}
+	componentDidUpdate(prevProps,prevState){
+		if(prevProps.project!==this.props.project){
+			this.setState({project:this.props.project[0].name})
+		}
+	}
+	handleProject=(e,{value})=>{
+		this.setState({project:value},()=>console.log(this.state.project))
+	}
+	handleRCP=(e,{value})=>{
+		this.setState({rcp:value},()=>console.log(this.state.rcp))
+	}
+	handleVariable=(e,{value})=>{
+		this.setState({variable:value},()=>console.log(this.state.variable))
+	}
+	handleYear=(e,{value})=>{
+		this.setState({year:value},()=>console.log(this.state.year))
+	}
+	handleLogout=()=>{
+		this.props.logout()
+	}
+
  render(){
+ 	const {value}=this.state
+ 	let user_id = localStorage.getItem('user_id');
+ 	
+ 	if(this.props.project.length>0)
+ 	{
+ 		const projects = this.props.project.filter(project=>project.user_id==user_id)
+ 		console.log("lengm",projects.length)
+ 		for(let i=0;i<projects.length;i++){
+ 			options.push({
+ 				key:projects[i].name,
+ 				value:projects[i].name,
+ 				text:projects[i].name
+
+ 			})
+ 		}
+ 		console.log("option",options)
+
+ 	}
  	return(
  		<div>
 			<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
@@ -215,8 +290,8 @@ class Dashboard extends Component{
 			
 			<p style={{float:'right'}}>Local<Checkbox toggle/>Global</p>
 			<div style={{float:'center'}} centered>
-			<Button primary style={{float:'center'}}>OverAll Analysis</Button>
-			<Button primary style={{float:'center'}}>Detailed Analysis</Button>
+			<Button primary style={{float:'center',backgroundColor:'#015edc'}}>OverAll Analysis</Button>
+			<Button primary style={{float:'center',backgroundColor:'#015edc'}}>Detailed Analysis</Button>
 			</div>
 		 	
 			
@@ -232,23 +307,23 @@ class Dashboard extends Component{
 				<Form.Field
 					id="form-input-control-project"
 					control={Select}
+					options={options}
 					
-					
-					value="2030"
+					value={this.state.project}
 					placeholder='Project'
-					onChange={e=>this.setState({status:e.target.value})}
+					onChange={this.handleProject}
 
 				/>
-				<br/>
+				
 				<br/>
 				<Form.Field
 					id="form-input-control-climate"
 					control={Select}
+					options={VariableOptions}
 					
-					
-					value="2030"
+					value={this.state.variable}
 					placeholder='Climate Variable'
-					onChange={e=>this.setState({status:e.target.value})}
+					onChange={this.handleVariable}
 
 				/>
 				
@@ -257,22 +332,22 @@ class Dashboard extends Component{
 				<Form.Field
 					id="form-input-control-climate"
 					control={Select}
+					options={RcpOptions}
 					
-					
-					value="2030"
+					value={this.state.rcp}
 					placeholder='RCP'
-					onChange={e=>this.setState({status:e.target.value})}
+					onChange={this.handleRCP}
 
 				/>
 				<br/>
 				<Form.Field
 					id="form-input-control-rcp"
 					control={Select}
+					options={YearOptions}
 					
-					
-					value="2030"
+					value={this.state.year}
 					placeholder='Year'
-					onChange={e=>this.setState({status:e.target.value})}
+					onChange={this.handleYear}
 
 				/>
 				
@@ -293,9 +368,9 @@ class Dashboard extends Component{
         <YAxis label={{ value: 'Index', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
-        <Area type="monotone" dataKey="amt" fill="#8884d8" stroke="#8884d8" />
-        <Bar dataKey="pv" barSize={20} fill="#413ea0" />
-        <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+        <Area type="monotone" dataKey="amt" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="pv" barSize={20} fill="#015edc" />
+        <Line type="monotone" dataKey="uv" stroke="#000000" />
       </ComposedChart>
 			</Grid.Column>
 			
@@ -392,5 +467,24 @@ class Dashboard extends Component{
  		)
  }
 } 
+const mapStateToProps = state =>{
+	return{
+		errors:state.project.errors,
+		project:state.project.project
+	}
+}
+const mapDispatchToProps = dispatch =>{
+	return{
+		addDashboard:(formdata)=>{
+			dispatch(dashboard.postDashboard(formdata));
+		},
+		getProjects:()=>{
+			dispatch(project.getProjects());
+		},
+		logout:()=>{
+			dispatch(auth.logout())
+		}
+	}
+}
 
-export default withRouter(Dashboard);
+export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);

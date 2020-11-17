@@ -7,11 +7,11 @@ export const addLocations = (formdata) =>{
 		let token = localStorage.getItem('token');
 		let id = localStorage.getItem('user_id');
 		if(token){
-			headers['Authorization']=`Token ${token}`;
+			headers['Authorization2']=token;
 		}
 		
 
-		fetch('https://intensel.pythonanywhere.com/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('http://13.126.191.145/api/asset/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
@@ -47,7 +47,7 @@ export const getLocations = () =>{
 		let headers={}
 		
 		
-		fetch('https://intensel.pythonanywhere.com/api/portfolio/',{headers,})
+		fetch('http://13.126.191.145/api/portfolio/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

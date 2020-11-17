@@ -267,7 +267,7 @@ class Location extends Component{
 
 
 	render(){
-		console.log("state clear",this.state.locations,mapcards)
+		console.log("state clear",this.props.errors.error)
 		const {activeIndex} = this.state
 
 		if(this.props.location.state)
@@ -547,7 +547,8 @@ class Location extends Component{
 			    <br/>
 			    <br/>
 
-				<Button style={{backgroundColor:'#015edc', marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>
+				{(this.state.loading && this.props.errors.error==undefined)?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>}
 			</Form>
             </Modal.Content>
           </Modal>

@@ -5,12 +5,12 @@ const initialState ={
 
 export default function project(state=initialState,action){
 	switch(action.type){
-		case 'ADD_LOCATION':
+		case 'ADD_PROJECT':
 			return {...state,project:action.project};
-		case 'FETCH_LOCATION':
+		case 'FETCH_PROJECT':
 			return {...state,project:action.project};
 		case 'AUTHENTICATION_ERROR':
-		case 'LOCATION_FAIL':
+		case 'PROJECT_FAIL':
 			return {...state,errors:action.data,project:null};
 		default:
 			return state;

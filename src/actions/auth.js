@@ -43,7 +43,7 @@ export const login = (formdata) => {
     let headers = {};
     
 
-    return fetch("https://intensel.pythonanywhere.com/api/user/login/", {headers, body:formdata, method: "POST"})
+    return fetch("http://13.126.191.145/api/user/login/", {headers, body:formdata, method: "POST"})
       .then(res => {
         if (res.status < 500) {
           return res.json().then(data => {
@@ -83,7 +83,7 @@ export const register = (first_name,last_name,username,email, password ,confirm_
     let headers = {"Content-Type": "application/json"};
     let body = JSON.stringify({first_name,last_name,username,email, password, confirm_password ,company_code,});
 
-    return fetch("https://intensel.pythonanywhere.com/api/user/", {headers, body, method: "POST"})
+    return fetch("http://13.126.191.145/api/user/", {headers, body, method: "POST"})
       .then(res => {
         if (res.status < 500) {
           return res.json().then(data => {
@@ -119,7 +119,7 @@ export const logout =()=>{
     let headers={};
     let id = localStorage.getItem('user_id');
 
-    return fetch("https://intensel.pythonanywhere.com/api/user/logout/"+id,{headers,method:'GET'})
+    return fetch("https://13.126.191.145/api/user/logout/"+id,{headers,method:'GET'})
       .then(res =>{
         if(res.status<500){
           return res.json().then(data =>{

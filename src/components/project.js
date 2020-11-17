@@ -3,13 +3,13 @@ import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Sele
 import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
-import {locus,auth} from '../actions';
+import {locus,auth,project} from '../actions';
 import SideNavbar from './sidebar';
-
+import Spinner from './loader';
 let options=[];
 const StatusOptions=[
-	{key:'active',value:'active',text:'Active'},
-	{key:'finished',value:'finished',text:'Finished'}
+	{key:'active',value:'Active',text:'Active'},
+	{key:'finished',value:'Finished',text:'Finished'}
 ]
 
 
@@ -20,6 +20,7 @@ class Project extends Component{
 		description:'',
 		status:'',
 		assets:[],
+		loading:false
 		
 		
 	}
@@ -31,6 +32,7 @@ class Project extends Component{
 		formdata.append("status",this.state.status)
 		formdata.append("description",this.state.description)
 		formdata.append("portfolio",this.state.assets)
+		this.setState({loading:true},()=>{this.props.addProject(formdata)})
 
 	}
 	
@@ -38,6 +40,9 @@ class Project extends Component{
 	handleAssets=(e,{value})=>{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
+	}
+	handleStatus=(e,{value})=>{
+		this.setState({status:value},()=>console.log(this.state.status))
 	}
 	handleLogout=()=>{
 		this.props.logout()
@@ -127,16 +132,17 @@ class Project extends Component{
 					options={StatusOptions}
 					value={this.state.status}
 					placeholder='Select Project Status'
-					onChange={e=>this.setState({status:e.target.value})}
+					onChange={this.handleStatus}
 
-				/>
+				/>	
 				<label>Portfolio</label>
 				<Dropdown  placeholder="Assets" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
 				
 			    <br/>
 			    <br/>
 
-				<Button style={{backgroundColor:'#015edc', marginLeft:'35%'}} onClick={this.onSubmit} primary>Submit</Button>
+				{(this.state.loading && this.props.errors.error==undefined)?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>}
 			</Form>
 			
 		</Grid.Column>
@@ -150,7 +156,7 @@ class Project extends Component{
 
 const mapStateToProps = state =>{
 	return {
-		errors:state.locus.errors,
+		errors:state.project.errors,
 		locus:state.locus.locus
 	}
 }
@@ -161,6 +167,9 @@ const mapDispatchToProps = dispatch =>{
 		},
 		logout:()=>{
 			dispatch(auth.logout())
+		},
+		addProject:(formdata)=>{
+			dispatch(project.addProject(formdata))
 		}
 	}
 }
