@@ -6,7 +6,7 @@ export const addAssets = (formdata) =>{
 		let token = localStorage.getItem('token');
 		let id = localStorage.getItem('user_id');
 		if(token){
-			headers['Authorization']=`Token ${token}`;
+			headers['Authorization2']=`${token}`;
 		}
 		console.log('form',formdata);
 
@@ -47,7 +47,7 @@ export const getAssets = () =>{
 		let headers={}
 		
 		
-		fetch('https://intensel.pythonanywhere.com/api/portfolio/',{headers,})
+		fetch('https://www.api-intensel.live/api/portfolio/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

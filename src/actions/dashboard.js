@@ -8,7 +8,7 @@ export const postDashboard = (formdata) =>{
 		}
 		
 
-		fetch('http://13.126.191.145/api/dashboard/overall/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://www.api-intensel.live/api/dashboard/overall/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

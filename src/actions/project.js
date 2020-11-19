@@ -8,15 +8,13 @@ export const addProject = (formdata) =>{
 		let token = localStorage.getItem('token');
 		let id = localStorage.getItem('user_id');
 		if(token){
-			headers['Authorization2']=token;
-			headers['Access-Control-Allow-Origin']="*"
-			headers['Access-Control-Allow-Credentials']="true"
-			headers['Access-Control-Allow-Methods']="GET,HEAD,OPTIONS,POST,PUT"
-			headers['Access-Control-Allow-Headers']="Origin, X-Requested-With, Content-Type,Accept,Authorization"
+			
+			headers['Authorization2']=`${token}`
+			
 		}
 		
 
-		fetch('http://13.126.191.145/api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://www.api-intensel.live/api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{
@@ -52,7 +50,7 @@ export const getProjects = () =>{
 		let headers={}
 		
 		
-		fetch('http://13.126.191.145/api/project/',{headers,})
+		fetch('https://www.api-intensel.live/api/project/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

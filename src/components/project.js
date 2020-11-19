@@ -85,7 +85,7 @@ class Project extends Component{
 				 position="right"
 				 
 				 >
-				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power"/></Button>
+				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power" size="big"/></Button>
 
 				 </Menu.Item>
 			</Menu>

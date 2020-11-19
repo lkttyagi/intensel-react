@@ -17,22 +17,31 @@ import {project,auth,dashboard} from '../actions';
 let options=[];
 const data = [
   {
-    name: 'Page A', uv: 590, pv: 800, amt: 1400,
+    name: '2020', uv: 800, rcp1: 800, amt: 1400,
   },
   {
-    name: 'Page B', uv: 868, pv: 967, amt: 1506,
+    name: '2020', uv: 900, rcp2: 1100, amt: 1506,
   },
   {
-    name: 'Page C', uv: 1397, pv: 1098, amt: 989,
+    name: '2020', uv: 1200, rcp3: 1200, amt: 1506,
   },
   {
-    name: 'Page D', uv: 1480, pv: 1200, amt: 1228,
+    name: '2030-2050', uv: 1098, rcp1: 1098, amt: 1200,
   },
   {
-    name: 'Page E', uv: 1520, pv: 1108, amt: 1100,
+    name: '2030-2050', uv: 1500, rcp2: 1500, amt: 1200,
   },
   {
-    name: 'Page F', uv: 1400, pv: 680, amt: 1700,
+    name: '2030-2050', uv: 1500, rcp3: 1500, amt: 1500,
+  },
+  {
+    name: '2050-2070', uv: 1108, rcp1: 1108, amt: 1500,
+  },
+  {
+    name: '2050-2070', uv: 1200, rcp2: 1200, amt: 1700,
+  },
+  {
+    name: '2050-2070', uv: 1310, rcp3: 1310, amt: 1700,
   },
 ];
 const RcpOptions=[
@@ -364,12 +373,16 @@ class Dashboard extends Component{
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name" label={{ value: 'Pages', position: 'insideBottomRight', offset: 0 }} />
-        <YAxis label={{ value: 'Index', angle: -90, position: 'insideLeft' }} />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
         <Area type="monotone" dataKey="amt" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="pv" barSize={20} fill="#015edc" />
+        <Bar dataKey="rcp1" barSize={20} fill="#015edc" />
+        <Bar dataKey="rcp2" barSize={20} fill="black" />
+        <Bar dataKey="rcp3" barSize={20} fill="#00BFFF" />
+
+
         <Line type="monotone" dataKey="uv" stroke="#000000" />
       </ComposedChart>
 			</Grid.Column>
@@ -411,7 +424,8 @@ class Dashboard extends Component{
 
 					</div>
 				</Grid.Column>
-				<Grid.Column width="9">
+				<Grid.Column width="1"></Grid.Column>
+				<Grid.Column width="8">
 						<Table columns={5}>
     <Table.Header>
       <Table.Row>
@@ -427,32 +441,51 @@ class Dashboard extends Component{
 
     <Table.Body>
       <Table.Row>
-        <Table.Cell>John</Table.Cell>
-        <Table.Cell>Approved</Table.Cell>
-        <Table.Cell>22</Table.Cell>
-        <Table.Cell>Male</Table.Cell>
+        <Table.Cell>Asset1</Table.Cell>
+        <Table.Cell>Active</Table.Cell>
+        <Table.Cell>Commercial</Table.Cell>
+        <Table.Cell><Progress percent={32} color="red"/></Table.Cell>
+        <Table.Cell>4</Table.Cell>
         <Table.Cell>None</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jamie</Table.Cell>
-        <Table.Cell>Approved</Table.Cell>
-        <Table.Cell>32</Table.Cell>
-        <Table.Cell>Male</Table.Cell>
-        <Table.Cell>Requires call</Table.Cell>
+       <Table.Row>
+        <Table.Cell>Asset2</Table.Cell>
+        <Table.Cell>Active</Table.Cell>
+        <Table.Cell>Residential</Table.Cell>
+        <Table.Cell><Progress percent={52} color="green"/></Table.Cell>
+        <Table.Cell>3</Table.Cell>
         <Table.Cell>None</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jill</Table.Cell>
-        <Table.Cell>Denied</Table.Cell>
-        <Table.Cell>22</Table.Cell>
-        <Table.Cell>Other</Table.Cell>
+       <Table.Row>
+        <Table.Cell>Asset3</Table.Cell>
+        <Table.Cell>Finished</Table.Cell>
+        <Table.Cell>Commercial</Table.Cell>
+        <Table.Cell><Progress percent={62} color="yellow"/></Table.Cell>
+        <Table.Cell>2</Table.Cell>
         <Table.Cell>None</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
+       <Table.Row>
+        <Table.Cell>Asset4</Table.Cell>
+        <Table.Cell>Active</Table.Cell>
+        <Table.Cell>Commercial</Table.Cell>
+        <Table.Cell><Progress percent={62} color="red"/></Table.Cell>
+        <Table.Cell>1</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Icon name="edit"/></Table.Cell>
+      </Table.Row>
+       <Table.Row>
+        <Table.Cell>Asset5</Table.Cell>
+        <Table.Cell>Active</Table.Cell>
+        <Table.Cell>Commercial</Table.Cell>
+        <Table.Cell><Progress percent={62} color="yellow"/></Table.Cell>
+        <Table.Cell>1.5</Table.Cell>
+        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Icon name="edit"/></Table.Cell>
+      </Table.Row>
+      
     </Table.Body>
 
     <Table.Footer>
