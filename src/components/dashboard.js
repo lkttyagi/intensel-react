@@ -13,6 +13,8 @@ import {
   Legend,
 } from 'recharts';
 import {project,auth,dashboard} from '../actions';
+import Example from './example';
+import LineExample from './Line';
 
 let options=[];
 const data = [
@@ -69,11 +71,12 @@ class Dashboard extends Component{
 		super(props);
 	}
 	state={
-		project:'demo',
+		project:'company_demo',
 		variable:'Flood',
 		rcp:2.6,
 		year:2030,
-		analysis:'local'
+		analysis:'local',
+		modalOpen:false
 	}
 
 
@@ -233,7 +236,7 @@ class Dashboard extends Component{
 	}
 	componentDidUpdate(prevProps,prevState){
 		if(prevProps.project!==this.props.project){
-			this.setState({project:this.props.project[0].name})
+			this.setState({project:this.props.project})
 		}
 	}
 	handleProject=(e,{value})=>{
@@ -251,6 +254,8 @@ class Dashboard extends Component{
 	handleLogout=()=>{
 		this.props.logout()
 	}
+	handleOpen =() => this.setState({modalOpen:true})
+	handleClose =() => this.setState({modalOpen:false})
 
  render(){
  	const {value}=this.state
@@ -310,58 +315,7 @@ class Dashboard extends Component{
 				
 			<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
-			<Grid.Column width="2" style={{position:'fixed',marginLeft:'2%',marginTop:'22%',boxShadow:'0 1px 2px 0 rgba(34,36,38,0.5)',zIndex:'3000',backgroundColor:'#f7f6f6'}}>
-				<br/>
-				<Icon name="calendar"/>Project<br/>
-				<Form.Field
-					id="form-input-control-project"
-					control={Select}
-					options={options}
-					
-					value={this.state.project}
-					placeholder='Project'
-					onChange={this.handleProject}
-
-				/>
-				
-				<br/>
-				<Form.Field
-					id="form-input-control-climate"
-					control={Select}
-					options={VariableOptions}
-					
-					value={this.state.variable}
-					placeholder='Climate Variable'
-					onChange={this.handleVariable}
-
-				/>
-				
-			<br/>
-					
-				<Form.Field
-					id="form-input-control-climate"
-					control={Select}
-					options={RcpOptions}
-					
-					value={this.state.rcp}
-					placeholder='RCP'
-					onChange={this.handleRCP}
-
-				/>
-				<br/>
-				<Form.Field
-					id="form-input-control-rcp"
-					control={Select}
-					options={YearOptions}
-					
-					value={this.state.year}
-					placeholder='Year'
-					onChange={this.handleYear}
-
-				/>
-				
-				
-			</Grid.Column>	
+			
 			<Grid.Column width="5">
 			<p style={{color:"#015edc"}}>Climate Risk Index</p>
 				   <ComposedChart
@@ -446,7 +400,7 @@ class Dashboard extends Component{
         <Table.Cell>Commercial</Table.Cell>
         <Table.Cell><Progress percent={32} color="red"/></Table.Cell>
         <Table.Cell>4</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Button onClick={this.handleOpen}><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
        <Table.Row>
@@ -455,7 +409,7 @@ class Dashboard extends Component{
         <Table.Cell>Residential</Table.Cell>
         <Table.Cell><Progress percent={52} color="green"/></Table.Cell>
         <Table.Cell>3</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
        <Table.Row>
@@ -464,7 +418,7 @@ class Dashboard extends Component{
         <Table.Cell>Commercial</Table.Cell>
         <Table.Cell><Progress percent={62} color="yellow"/></Table.Cell>
         <Table.Cell>2</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
        <Table.Row>
@@ -473,7 +427,7 @@ class Dashboard extends Component{
         <Table.Cell>Commercial</Table.Cell>
         <Table.Cell><Progress percent={62} color="red"/></Table.Cell>
         <Table.Cell>1</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
        <Table.Row>
@@ -482,7 +436,7 @@ class Dashboard extends Component{
         <Table.Cell>Commercial</Table.Cell>
         <Table.Cell><Progress percent={62} color="yellow"/></Table.Cell>
         <Table.Cell>1.5</Table.Cell>
-        <Table.Cell>None</Table.Cell>
+        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
       
@@ -494,7 +448,104 @@ class Dashboard extends Component{
 				</Grid.Column>
 			</Grid.Row>
 			</Grid>
+				<Modal
+            open={this.state.modalOpen}
+            onClose={this.handleClose}
+            closeIcon
+            size="fullscreen"
+          >
+            <Modal.Header>Create Group</Modal.Header>
+            <Modal.Content scrolling>
+              	<Grid>
+              		<Grid.Row>
+              			<Grid.Column width="5">
+              					<p style={{color:"#015edc"}}>Climate Risk Index</p>
+				   <ComposedChart
+        width={500}
+        height={400}
+        data={data}
+        margin={{
+          top: 20, right: 80, bottom: 20, left: 20,
+        }}
+      >
+        <CartesianGrid stroke="#f5f5f5" />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <Tooltip />
+        <Legend />
+        <Area type="monotone" dataKey="amt" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="rcp1" barSize={20} fill="#015edc" />
+        <Bar dataKey="rcp2" barSize={20} fill="black" />
+        <Bar dataKey="rcp3" barSize={20} fill="#00BFFF" />
 
+
+        <Line type="monotone" dataKey="uv" stroke="#000000" />
+      </ComposedChart>
+              			</Grid.Column>
+              			<Grid.Column width="5">
+              					<p style={{color:"#015edc"}}>Risks</p>
+
+					<div>
+						<Label>Overall</Label>
+						<Progress percent={32} color='red'/>
+					    <Label>Rain</Label>
+						<Progress percent={32} color='green'/>
+						<Label>Rain</Label>
+						<Progress percent={32} color='yellow'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/>
+						
+
+
+					</div>
+              			</Grid.Column>
+              			<Grid.Column width="5">
+              							<p style={{color:"#015edc"}}>Portfolio Losses</p>
+						<Label>Overall</Label>
+						<Progress percent={32} color='red'/>
+					    <Label>Rain</Label>
+						<Progress percent={32} color='blue'/>
+						<Label>Rain</Label>
+						<Progress percent={32} color='black'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/><Label>Rain</Label>
+						<Progress percent={32} color='red'/></Grid.Column>
+
+
+              		</Grid.Row>
+              		<Grid.Row>
+              			<Grid.Column width="5">
+              			              					<p style={{color:"#015edc"}}>RCP 2.6 vs RCP 4.5 vs RCP 8.5</p>
+
+              				<Example/>
+              			</Grid.Column>
+              			<Grid.Column width="5">
+              			              					<p style={{color:"#015edc"}}>Year 2030 vs Year 2050</p>
+
+              				<Example/>
+              			</Grid.Column>
+              			<Grid.Column width="5">
+              			              					<p style={{color:"#015edc"}}>Return Period</p>
+
+              				<Example/>
+              			</Grid.Column>
+
+
+              		</Grid.Row>
+              		<Grid.Row>
+              			<Grid.Column width="8">
+              			              					<p style={{color:"#015edc"}}>Analysis of Flood Damage</p>
+
+              				<LineExample/>
+              			</Grid.Column>
+              			<Grid.Column width="8">
+              			              					<p style={{color:"#015edc"}}>Analysis of Storm Surge</p>
+
+              				<LineExample/>
+              			</Grid.Column>
+              		</Grid.Row>
+              	</Grid>
+            </Modal.Content>
+          </Modal>
 			</div>
 
  		)

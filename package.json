@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.3",
+    "d3-scale-chromatic": "^2.0.0",
     "esri-loader": "^2.16.0",
     "history": "^4.10.1",
     "mapbox-gl": "^1.12.0",
@@ -37,7 +38,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy":"https://www.api-intensel.live",
+  "proxy": "https://www.api-intensel.live",
   "eslintConfig": {
     "extends": "react-app"
   },

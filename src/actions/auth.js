@@ -83,7 +83,7 @@ export const register = (first_name,last_name,username,email, password ,confirm_
     let headers = {"Content-Type": "application/json"};
     let body = JSON.stringify({first_name,last_name,username,email, password, confirm_password ,company_code,});
 
-    return fetch("http://www.api-intensel.live/api/user/", {headers, body, method: "POST"})
+    return fetch("https://www.api-intensel.live/api/user/", {headers, body, method: "POST"})
       .then(res => {
         if (res.status < 500) {
           return res.json().then(data => {

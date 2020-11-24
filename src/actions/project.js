@@ -5,22 +5,19 @@ import { history } from '../_helpers/history';
 export const addProject = (formdata) =>{
 	return(dispatch,getState) =>{
 		let headers={
-			'Access-Control-Allow-Origin':'*',
-			'Access-Control-Allow-Methods':'GET,POST,PUT,DELETE,PATCH,OPTIONS',
-
-			'Access-Control-Allow-Headers':'Acces-Control-Allow-Origin,Access-Control-Allow-Methods,x-api-key,Content-Type',
+			
 
 		};
 		let token = localStorage.getItem('token');
 		let id = localStorage.getItem('user_id');
 		if(token){
 			
-			headers['x-api-key']=token
+			headers['Authorization']=token
 			
 		}
 		
 
-		fetch('https://www.api-intensel.live/api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://www.api-intensel.live//api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					

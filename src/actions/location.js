@@ -7,7 +7,7 @@ export const addLocations = (formdata) =>{
 		let token = localStorage.getItem('token');
 		let id = localStorage.getItem('user_id');
 		if(token){
-			headers['Authorization2']=`${token}`;
+			headers['Authorization']=`${token}`;
 		}
 		
 
