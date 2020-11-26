@@ -22,8 +22,9 @@ export const postDashboard = (formdata) =>{
 				}
 			})
 			.then(res =>{
-				if(res.status===201){
-					dispatch({type:'ADD_DASHBOARD',locus:res.data});
+				if(res.status===200){
+					console.log("respskso",res.data)
+					dispatch({type:'ADD_DASHBOARD',feedback:res.data});
 					
 					return res.data;
 				}

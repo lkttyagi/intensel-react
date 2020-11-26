@@ -4,10 +4,10 @@ import auth from '../reducers/auth';
 import locus from '../reducers/location';
 import company from '../reducers/company';
 import project from '../reducers/project';
-import dashboard from '../reducers/dashboard';
+import feedback from '../reducers/dashboard';
 
 let reducers =  combineReducers({
-	auth,locus,company,project,dashboard
+	auth,locus,company,project,feedback
 });
 
 const store = createStore(

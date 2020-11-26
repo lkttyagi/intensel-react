@@ -17,35 +17,7 @@ import Example from './example';
 import LineExample from './Line';
 
 let options=[];
-const data = [
-  {
-    name: '2020', uv: 800, rcp1: 800, amt: 1400,
-  },
-  {
-    name: '2020', uv: 900, rcp2: 1100, amt: 1506,
-  },
-  {
-    name: '2020', uv: 1200, rcp3: 1200, amt: 1506,
-  },
-  {
-    name: '2030-2050', uv: 1098, rcp1: 1098, amt: 1200,
-  },
-  {
-    name: '2030-2050', uv: 1500, rcp2: 1500, amt: 1200,
-  },
-  {
-    name: '2030-2050', uv: 1500, rcp3: 1500, amt: 1500,
-  },
-  {
-    name: '2050-2070', uv: 1108, rcp1: 1108, amt: 1500,
-  },
-  {
-    name: '2050-2070', uv: 1200, rcp2: 1200, amt: 1700,
-  },
-  {
-    name: '2050-2070', uv: 1310, rcp3: 1310, amt: 1700,
-  },
-];
+
 const RcpOptions=[
 	{key:2.6,value:2.6,text:2.6},
 	{key:4.5,value:4.5,text:4.5},
@@ -71,12 +43,17 @@ class Dashboard extends Component{
 		super(props);
 	}
 	state={
-		project:'company_demo',
+		project:'Project 1',
 		variable:'Flood',
 		rcp:2.6,
 		year:2030,
 		analysis:'local',
-		modalOpen:false
+		modalOpen:false,
+		feedback:'',
+		asset_table:'',
+		risk:'',
+		single_asset:'',
+		activeItemName:'',
 	}
 
 
@@ -235,9 +212,14 @@ class Dashboard extends Component{
 		
 	}
 	componentDidUpdate(prevProps,prevState){
-		if(prevProps.project!==this.props.project){
-			this.setState({project:this.props.project})
+		if(prevProps.feedback!==this.props.feedback){
+			this.setState({feedback:this.props.feedback.overall.overall_bar_chart,
+				asset_table:this.props.feedback.overall.asset_table,
+				risk:this.props.feedback.overall.progress_bars,
+				single_asset:this.props.feedback.single_asset
+			})
 		}
+
 	}
 	handleProject=(e,{value})=>{
 		this.setState({project:value},()=>console.log(this.state.project))
@@ -254,12 +236,28 @@ class Dashboard extends Component{
 	handleLogout=()=>{
 		this.props.logout()
 	}
-	handleOpen =() => this.setState({modalOpen:true})
+	handleOpen =(asset) => this.setState({modalOpen:true,
+		activeItemName:asset.name})
 	handleClose =() => this.setState({modalOpen:false})
 
  render(){
- 	const {value}=this.state
+ 	console.log("dashbaord dta",this.state.single_asset)
+ 	
  	let user_id = localStorage.getItem('user_id');
+ 	const data = [
+  {
+    name: '2020', rcp2:0, rcp4:0, rcp8:this.state.feedback['2020'],
+  },
+  
+  {
+    name: '2030-2050', rcp2:this.state.feedback['2030_26'], rcp4:this.state.feedback['2030_45'], rcp8:this.state.feedback['2030_85'],
+  },
+  
+
+  {
+    name: '2050-2070', rcp2:this.state.feedback['2050_26'], rcp4:this.state.feedback['2050_45'], rcp8:this.state.feedback['2050_85'],
+  }
+];
  	
  	if(this.props.project.length>0)
  	{
@@ -326,15 +324,30 @@ class Dashboard extends Component{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
       >
+      <defs>
+      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#176bad	" stopOpacity={1}/>
+            <stop offset="95%" stopColor="#142459" stopOpacity={0.5}/>
+        </linearGradient>
+        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#1ac9e6" stopOpacity={1}/>
+            <stop offset="95%" stopColor="#1de4bd" stopOpacity={0.5}/>
+        </linearGradient>
+        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#1de4bd" stopOpacity={1}/>
+            <stop offset="95%" stopColor="#6df002" stopOpacity={0.5}/>
+        </linearGradient>
+      </defs>
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
         <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
-        <Area type="monotone" dataKey="amt" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp1" barSize={20} fill="#015edc" />
-        <Bar dataKey="rcp2" barSize={20} fill="black" />
-        <Bar dataKey="rcp3" barSize={20} fill="#00BFFF" />
+
+        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="rcp2" barSize={20} fill="url(#colorUv)"/>
+        <Bar dataKey="rcp4" barSize={20} fill="url(#colorVv)" />
+        <Bar dataKey="rcp8" barSize={20} fill="url(#colorWv)" />
 
 
         <Line type="monotone" dataKey="uv" stroke="#000000" />
@@ -358,13 +371,17 @@ class Dashboard extends Component{
 
 					<div>
 						<Label>Overall</Label>
-						<Progress percent={32} color='red'/>
-					    <Label>Rain</Label>
-						<Progress percent={32} color='green'/>
-						<Label>Rain</Label>
-						<Progress percent={32} color='yellow'/><Label>Rain</Label>
-						<Progress percent={32} color='red'/><Label>Rain</Label>
-						<Progress percent={32} color='red'/>
+						<Progress percent={this.state.risk.OVERALL} color='red'/>
+					    <Label>Flood</Label>
+						<Progress percent={this.state.risk.Flood} color='green'/>
+						<Label>Rainfall</Label>
+						<Progress percent={this.state.risk.Rainfall} color='yellow'/><Label>Storm Surge</Label>
+						<Progress percent={this.state.risk['Storm Surge']} color='red'/><Label>Drought</Label>
+						<Progress percent={this.state.risk.Drought} color='red'/><Label>Extreme Heat</Label>
+												<Progress percent={this.state.risk['Extreme Heat']} color='red'/><Label>LandSlide</Label>
+						<Progress percent={this.state.risk['LandSlide']} color='red'/>
+
+						
 						{/*				<p style={{color:"#015edc"}}>Portfolio Losses</p>
 						<Label>Overall</Label>
 						<Progress percent={32} color='red'/>
@@ -394,51 +411,21 @@ class Dashboard extends Component{
     </Table.Header>
 
     <Table.Body>
-      <Table.Row>
-        <Table.Cell>Asset1</Table.Cell>
-        <Table.Cell>Active</Table.Cell>
-        <Table.Cell>Commercial</Table.Cell>
-        <Table.Cell><Progress percent={32} color="red"/></Table.Cell>
-        <Table.Cell>4</Table.Cell>
-        <Table.Cell><Button onClick={this.handleOpen}><Icon name="chart line"/></Button></Table.Cell>
+    {this.state.asset_table.length>0?this.state.asset_table.map((asset,index)=>(
+      <Table.Row key={index}>
+
+        <Table.Cell>{asset.name}</Table.Cell>
+       
+        <Table.Cell>{asset.type}</Table.Cell>
+        <Table.Cell><Progress percent={(asset.climatic_score)} color="red"/></Table.Cell>
+        <Table.Cell>{asset.overall_loss}</Table.Cell>
+        <Table.Cell>{asset.value}</Table.Cell>
+        <Table.Cell><Button onClick={()=>this.handleOpen(asset)}><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
-       <Table.Row>
-        <Table.Cell>Asset2</Table.Cell>
-        <Table.Cell>Active</Table.Cell>
-        <Table.Cell>Residential</Table.Cell>
-        <Table.Cell><Progress percent={52} color="green"/></Table.Cell>
-        <Table.Cell>3</Table.Cell>
-        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
-        <Table.Cell><Icon name="edit"/></Table.Cell>
-      </Table.Row>
-       <Table.Row>
-        <Table.Cell>Asset3</Table.Cell>
-        <Table.Cell>Finished</Table.Cell>
-        <Table.Cell>Commercial</Table.Cell>
-        <Table.Cell><Progress percent={62} color="yellow"/></Table.Cell>
-        <Table.Cell>2</Table.Cell>
-        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
-        <Table.Cell><Icon name="edit"/></Table.Cell>
-      </Table.Row>
-       <Table.Row>
-        <Table.Cell>Asset4</Table.Cell>
-        <Table.Cell>Active</Table.Cell>
-        <Table.Cell>Commercial</Table.Cell>
-        <Table.Cell><Progress percent={62} color="red"/></Table.Cell>
-        <Table.Cell>1</Table.Cell>
-        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
-        <Table.Cell><Icon name="edit"/></Table.Cell>
-      </Table.Row>
-       <Table.Row>
-        <Table.Cell>Asset5</Table.Cell>
-        <Table.Cell>Active</Table.Cell>
-        <Table.Cell>Commercial</Table.Cell>
-        <Table.Cell><Progress percent={62} color="yellow"/></Table.Cell>
-        <Table.Cell>1.5</Table.Cell>
-        <Table.Cell><Button><Icon name="chart line"/></Button></Table.Cell>
-        <Table.Cell><Icon name="edit"/></Table.Cell>
-      </Table.Row>
+      )):
+<Table.Row></Table.Row>}
+      
       
     </Table.Body>
 
@@ -452,9 +439,10 @@ class Dashboard extends Component{
             open={this.state.modalOpen}
             onClose={this.handleClose}
             closeIcon
+            itemName={this.state.activeItemName}
             size="fullscreen"
           >
-            <Modal.Header>Create Group</Modal.Header>
+            <Modal.Header>Asset Analysis</Modal.Header>
             <Modal.Content scrolling>
               	<Grid>
               		<Grid.Row>
@@ -475,7 +463,7 @@ class Dashboard extends Component{
         <Legend />
         <Area type="monotone" dataKey="amt" fill="#ffffff" stroke="#ffffff" />
         <Bar dataKey="rcp1" barSize={20} fill="#015edc" />
-        <Bar dataKey="rcp2" barSize={20} fill="black" />
+        <Bar dataKey="rcp2" barSize={20} fill="#380036" />
         <Bar dataKey="rcp3" barSize={20} fill="#00BFFF" />
 
 
@@ -554,7 +542,8 @@ class Dashboard extends Component{
 const mapStateToProps = state =>{
 	return{
 		errors:state.project.errors,
-		project:state.project.project
+		project:state.project.project,
+		feedback:state.feedback.feedback
 	}
 }
 const mapDispatchToProps = dispatch =>{
