@@ -6,29 +6,36 @@ import {
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 
-const colors = scaleOrdinal(schemeCategory10).range();
+
+
+export default class Example extends PureComponent {
+  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/rnywhbu8/';
+    
+  render() {
+    console.log("data coming from parent",this.props.data)
+    const colors = scaleOrdinal(schemeCategory10).range();
 
 const data = [
   {
-    name: 'Page A', uv: 4000, female: 2400, male: 2400,
+    name: 'Overall', uv: 40, female:this.props.data, male: 40,
   },
   {
-    name: 'Page B', uv: 3000, female: 1398, male: 2210,
+    name: 'Flood', uv: 35, female: 13, male: 22,
   },
   {
-    name: 'Page C', uv: 2000, female: 9800, male: 2290,
+    name: 'Rainfall', uv: 20, female: 98, male: 22,
   },
   {
-    name: 'Page D', uv: 2780, female: 3908, male: 2000,
+    name: 'ExtremeHeat', uv: 27, female: 39, male: 20,
   },
   {
-    name: 'Page E', uv: 1890, female: 4800, male: 2181,
+    name: 'Drought', uv: 18, female: 48, male: 21,
   },
   {
-    name: 'Page F', uv: 2390, female: 3800, male: 2500,
+    name: 'StormSurge', uv: 23, female: 38, male: 25,
   },
   {
-    name: 'Page G', uv: 3490, female: 4300, male: 2100,
+    name: 'LandSlide', uv: 34, female: 43, male: 21,
   },
 ];
 
@@ -52,11 +59,6 @@ TriangleBar.propTypes = {
   width: PropTypes.number,
   height: PropTypes.number,
 };
-
-export default class Example extends PureComponent {
-  static jsfiddleUrl = 'https://jsfiddle.net/alidingling/rnywhbu8/';
-
-  render() {
     return (
       <BarChart
         width={500}

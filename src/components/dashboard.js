@@ -15,8 +15,11 @@ import {
 import {project,auth,dashboard} from '../actions';
 import Example from './example';
 import LineExample from './Line';
+import './dashboard.css';
 
 let options=[];
+let Item=[];
+
 
 const RcpOptions=[
 	{key:2.6,value:2.6,text:2.6},
@@ -43,7 +46,7 @@ class Dashboard extends Component{
 		super(props);
 	}
 	state={
-		project:'Project 1',
+		project:'demo',
 		variable:'Flood',
 		rcp:2.6,
 		year:2030,
@@ -54,6 +57,11 @@ class Dashboard extends Component{
 		risk:'',
 		single_asset:'',
 		activeItemName:'',
+		single_asset_overall:'',
+		singel_asset_chart:'',
+		single_asset_loss:'',
+		single_asset_progress:'',
+		single_asset_cone_chart:''
 	}
 
 
@@ -237,8 +245,42 @@ class Dashboard extends Component{
 		this.props.logout()
 	}
 	handleOpen =(asset) => this.setState({modalOpen:true,
-		activeItemName:asset.name})
+		activeItemName:asset.name},this.handleSingleAsset)
 	handleClose =() => this.setState({modalOpen:false})
+
+	handleSingleAsset=()=>{
+		if(this.state.single_asset.length>0){
+			console.log("itemksfk",this.state.activeItemName,this.state.single_asset)
+			Item=this.state.single_asset.filter(asset=>asset.asset_name==this.state.activeItemName)
+			this.setState({single_asset_overall:Item},this.handleSingleChart)
+
+
+
+		}
+	}
+	handleSingleChart=()=>{
+		console.log("fndfdgdgdsgdijgdos",this.state.single_asset_overall)
+	let singledata =[
+ {
+    name: '2020', rcp2:0, rcp4:0, rcp8:this.state.single_asset_overall[0].overall_bar_chart['2020'],
+  },
+  
+  {
+    name: '2030-2050', rcp2:this.state.single_asset_overall[0].overall_bar_chart['2030_26'], rcp4:this.state.single_asset_overall[0].overall_bar_chart['2030_45'], rcp8:this.state.single_asset_overall[0].overall_bar_chart['2030_85'],
+  },
+  
+
+  {
+    name: '2050-2070', rcp2:this.state.single_asset_overall[0].overall_bar_chart['2050_26'], rcp4:this.state.single_asset_overall[0].overall_bar_chart['2050_45'], rcp8:this.state.single_asset_overall[0].overall_bar_chart
+    ['2050_85'],
+  }
+
+]
+this.setState({singel_asset_chart:singledata,
+	single_asset_loss:this.state.single_asset_overall[0].loss_bars,
+	single_asset_progress:this.state.single_asset_overall[0].progress_bars,
+	single_asset_cone_chart:this.state.single_asset_overall[0].cone_chart},()=>console.log("loss",this.state.single_asset_loss['Total Loss'][0]))
+	}
 
  render(){
  	console.log("dashbaord dta",this.state.single_asset)
@@ -258,11 +300,11 @@ class Dashboard extends Component{
     name: '2050-2070', rcp2:this.state.feedback['2050_26'], rcp4:this.state.feedback['2050_45'], rcp8:this.state.feedback['2050_85'],
   }
 ];
+
  	
  	if(this.props.project.length>0)
  	{
  		const projects = this.props.project.filter(project=>project.user_id==user_id)
- 		console.log("lengm",projects.length)
  		for(let i=0;i<projects.length;i++){
  			options.push({
  				key:projects[i].name,
@@ -274,6 +316,11 @@ class Dashboard extends Component{
  		console.log("option",options)
 
  	}
+ 	 		
+
+ 	
+
+
  	return(
  		<div>
 			<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
@@ -302,8 +349,7 @@ class Dashboard extends Component{
 			
 			<p style={{float:'right'}}>Local<Checkbox toggle/>Global</p>
 			<div style={{float:'center'}} centered>
-			<Button primary style={{float:'center',backgroundColor:'#015edc'}}>OverAll Analysis</Button>
-			<Button primary style={{float:'center',backgroundColor:'#015edc'}}>Detailed Analysis</Button>
+			<p style={{float:'center'}}>OverAll Analysis<Checkbox toggle/>Detailed Analysis</p>
 			</div>
 		 	
 			
@@ -314,47 +360,49 @@ class Dashboard extends Component{
 			<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
 			
-			<Grid.Column width="5">
+			<Grid.Column width="4"  style={{boxShadow:'0 1px 2px 0 rgba(34,36,38,0.5)'}}>
 			<p style={{color:"#015edc"}}>Climate Risk Index</p>
 				   <ComposedChart
-        width={500}
+        width={445}
         height={400}
         data={data}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
+        padding={5}
+       
       >
       <defs>
       	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#176bad	" stopOpacity={1}/>
-            <stop offset="95%" stopColor="#142459" stopOpacity={0.5}/>
+            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
         </linearGradient>
         <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#1ac9e6" stopOpacity={1}/>
-            <stop offset="95%" stopColor="#1de4bd" stopOpacity={0.5}/>
+            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
         </linearGradient>
         <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#1de4bd" stopOpacity={1}/>
-            <stop offset="95%" stopColor="#6df002" stopOpacity={0.5}/>
+            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
         </linearGradient>
       </defs>
-        <CartesianGrid stroke="#f5f5f5" />
+        <CartesianGrid stroke="#e5e5e5" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
         <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
 
         <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2" barSize={20} fill="url(#colorUv)"/>
-        <Bar dataKey="rcp4" barSize={20} fill="url(#colorVv)" />
-        <Bar dataKey="rcp8" barSize={20} fill="url(#colorWv)" />
+        <Bar dataKey="rcp2" barSize={20} fill="url(#colorUv)" stroke="#1cb5e0"/>
+        <Bar dataKey="rcp4" barSize={20} fill="url(#colorVv)" stroke="#2f80ed"/>
+        <Bar dataKey="rcp8" barSize={20} fill="url(#colorWv)" stroke="#0052d4"/>
 
 
         <Line type="monotone" dataKey="uv" stroke="#000000" />
       </ComposedChart>
 			</Grid.Column>
-			
-			<Grid.Column width="8">
+			<Grid.Column width="1"></Grid.Column>
+			<Grid.Column width="8" style={{boxShadow:'0 1px 2px 0 rgba(34,36,38,0.5)'}}>
 						<p style={{color:"#015edc"}}>Asset Level Risk Map</p>
 
 			  <div id="viewDiv" style={{height:'400px'}}></div>
@@ -370,15 +418,25 @@ class Dashboard extends Component{
 				<p style={{color:"#015edc"}}>Risks</p>
 
 					<div>
-						<Label>Overall</Label>
-						<Progress percent={this.state.risk.OVERALL} color='red'/>
-					    <Label>Flood</Label>
+						<p style={{fontSize:'12px'}}>OverAll  <i style={{float:'right'}}>{this.state.risk.OVERALL}%</i></p>
+						<Progress percent={this.state.risk.OVERALL}/>
+					    <p style={{fontSize:'12px'}}>Flood  <i style={{float:'right'}}>{this.state.risk.Flood}%</i></p>
+
 						<Progress percent={this.state.risk.Flood} color='green'/>
-						<Label>Rainfall</Label>
-						<Progress percent={this.state.risk.Rainfall} color='yellow'/><Label>Storm Surge</Label>
-						<Progress percent={this.state.risk['Storm Surge']} color='red'/><Label>Drought</Label>
-						<Progress percent={this.state.risk.Drought} color='red'/><Label>Extreme Heat</Label>
-												<Progress percent={this.state.risk['Extreme Heat']} color='red'/><Label>LandSlide</Label>
+						<p style={{fontSize:'12px'}}>Rainfall  <i style={{float:'right'}}>{this.state.risk.Rainfall}%</i></p>
+
+						<Progress percent={this.state.risk.Rainfall} color='yellow'/>
+						<p style={{fontSize:'12px'}}>Storm Surge  <i style={{float:'right'}}>{this.state.risk['Storm Surge']}%</i></p>
+
+						<Progress percent={this.state.risk['Storm Surge']} color='red'/>
+						<p style={{fontSize:'12px'}}>Drought  <i style={{float:'right'}}>{this.state.risk.Drought}%</i></p>
+
+						<Progress percent={this.state.risk.Drought} color='red'/>
+						<p style={{fontSize:'12px'}}>Extreme Heat  <i style={{float:'right'}}>{this.state.risk['Extreme Heat']}%</i></p>
+
+						<Progress percent={this.state.risk['Extreme Heat']} color='red'/>
+					    <p style={{fontSize:'12px'}}>LandSlide  <i style={{float:'right'}}>{this.state.risk.Landslide}%</i></p>
+
 						<Progress percent={this.state.risk['LandSlide']} color='red'/>
 
 						
@@ -404,7 +462,7 @@ class Dashboard extends Component{
         <Table.HeaderCell>Type</Table.HeaderCell>
         <Table.HeaderCell>Climate Score</Table.HeaderCell>
         <Table.HeaderCell>Overalll Loss(mil $)</Table.HeaderCell>
-        <Table.HeaderCell>Value</Table.HeaderCell>
+        
         <Table.HeaderCell>Analyse</Table.HeaderCell>
         <Table.HeaderCell>Modify</Table.HeaderCell>
       </Table.Row>
@@ -416,10 +474,10 @@ class Dashboard extends Component{
 
         <Table.Cell>{asset.name}</Table.Cell>
        
-        <Table.Cell>{asset.type}</Table.Cell>
+        <Table.Cell style={{textTransform:'capitalize'}}>{asset.type}</Table.Cell>
         <Table.Cell><Progress percent={(asset.climatic_score)} color="red"/></Table.Cell>
         <Table.Cell>{asset.overall_loss}</Table.Cell>
-        <Table.Cell>{asset.value}</Table.Cell>
+        
         <Table.Cell><Button onClick={()=>this.handleOpen(asset)}><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
       </Table.Row>
@@ -442,29 +500,47 @@ class Dashboard extends Component{
             itemName={this.state.activeItemName}
             size="fullscreen"
           >
+
             <Modal.Header>Asset Analysis</Modal.Header>
             <Modal.Content scrolling>
               	<Grid>
               		<Grid.Row>
               			<Grid.Column width="5">
               					<p style={{color:"#015edc"}}>Climate Risk Index</p>
-				   <ComposedChart
-        width={500}
+			   <ComposedChart
+        width={445}
         height={400}
         data={data}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
+        padding={5}
+       
       >
-        <CartesianGrid stroke="#f5f5f5" />
+      <defs>
+      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
+        </linearGradient>
+      </defs>
+        <CartesianGrid stroke="#e5e5e5" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
         <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
-        <Area type="monotone" dataKey="amt" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp1" barSize={20} fill="#015edc" />
-        <Bar dataKey="rcp2" barSize={20} fill="#380036" />
-        <Bar dataKey="rcp3" barSize={20} fill="#00BFFF" />
+
+        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="rcp2" barSize={20} fill="url(#colorUv)" stroke="#1cb5e0"/>
+        <Bar dataKey="rcp4" barSize={20} fill="url(#colorVv)" stroke="#2f80ed"/>
+        <Bar dataKey="rcp8" barSize={20} fill="url(#colorWv)" stroke="#0052d4"/>
 
 
         <Line type="monotone" dataKey="uv" stroke="#000000" />
@@ -474,14 +550,26 @@ class Dashboard extends Component{
               					<p style={{color:"#015edc"}}>Risks</p>
 
 					<div>
-						<Label>Overall</Label>
-						<Progress percent={32} color='red'/>
-					    <Label>Rain</Label>
-						<Progress percent={32} color='green'/>
-						<Label>Rain</Label>
-						<Progress percent={32} color='yellow'/><Label>Rain</Label>
-						<Progress percent={32} color='red'/><Label>Rain</Label>
-						<Progress percent={32} color='red'/>
+							<p style={{fontSize:'12px'}}>OverAll  <i style={{float:'right'}}>{this.state.single_asset_progress.OVERALL}%</i></p>
+						<Progress percent={this.state.single_asset_progress.OVERALL}/>
+					    <p style={{fontSize:'12px'}}>Flood  <i style={{float:'right'}}>{this.state.single_asset_progress.Flood}%</i></p>
+
+						<Progress percent={this.state.single_asset_progress.Flood} color='green'/>
+						<p style={{fontSize:'12px'}}>Rainfall  <i style={{float:'right'}}>{this.state.single_asset_progress.Rainfall}%</i></p>
+
+						<Progress percent={this.state.single_asset_progress.Rainfall} color='yellow'/>
+						<p style={{fontSize:'12px'}}>Storm Surge  <i style={{float:'right'}}>{this.state.single_asset_progress['Storm Surge']}%</i></p>
+
+						<Progress percent={this.state.single_asset_progress['Storm Surge']} color='red'/>
+						<p style={{fontSize:'12px'}}>Drought  <i style={{float:'right'}}>{this.state.single_asset_progress.Drought}%</i></p>
+
+						<Progress percent={this.state.single_asset_progress.Drought} color='red'/>
+						<p style={{fontSize:'12px'}}>Extreme Heat  <i style={{float:'right'}}>{this.state.single_asset_progress['Extreme Heat']}%</i></p>
+
+						<Progress percent={this.state.single_asset_progress['Extreme Heat']} color='red'/>
+					    <p style={{fontSize:'12px'}}>LandSlide  <i style={{float:'right'}}>{this.state.single_asset_progress.Landslide}%</i></p>
+
+						<Progress percent={this.state.single_asset_progress['LandSlide']} color='red'/>
 						
 
 
@@ -489,30 +577,57 @@ class Dashboard extends Component{
               			</Grid.Column>
               			<Grid.Column width="5">
               							<p style={{color:"#015edc"}}>Portfolio Losses</p>
-						<Label>Overall</Label>
-						<Progress percent={32} color='red'/>
-					    <Label>Rain</Label>
-						<Progress percent={32} color='blue'/>
-						<Label>Rain</Label>
-						<Progress percent={32} color='black'/><Label>Rain</Label>
-						<Progress percent={32} color='red'/><Label>Rain</Label>
-						<Progress percent={32} color='red'/></Grid.Column>
+							<p style={{fontSize:'12px'}}>Total Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Total Loss']}</i></p>
+						<Progress percent={this.state.single_asset_loss['Total Loss']}/>
+					    <p style={{fontSize:'12px'}}>Asset Flood Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset Flood Damage']}</i></p>
+
+						<Progress percent={this.state.single_asset_loss['Asset Flood Damage']} color='green'/>
+						<p style={{fontSize:'12px'}}>Asset Storm Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset storm Damage']}</i></p>
+
+						<Progress percent={this.state.single_asset_loss['Asset Storm Damage']} color='yellow'/>
+						<p style={{fontSize:'12px'}}>Operational Flood Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Operational Flood Loss']}</i></p>
+
+						<Progress percent={this.state.single_asset_loss['Operational Flood Loss']} color='red'/>
+						<p style={{fontSize:'12px'}}> Operational Storm Surge Loss <i style={{float:'right'}}>{this.state.single_asset_loss['Operational Storm Surge Loss']}</i></p>
+
+						<Progress percent={this.state.single_asset_loss['Operational Storm Surge Loss']} color='red'/>
+						
+						</Grid.Column>
 
 
               		</Grid.Row>
               		<Grid.Row>
               			<Grid.Column width="5">
-              			              					<p style={{color:"#015edc"}}>RCP 2.6 vs RCP 4.5 vs RCP 8.5</p>
+              			              					<p style={{color:"#015edc"}}>RCP 2.6</p>
+
+              				<Example data={this.state.single_asset_cone_chart.cone1_26}/>
+              			</Grid.Column>
+              			<Grid.Column width="5">
+              			              					<p style={{color:"#015edc"}}>RCP 4.5</p>
 
               				<Example/>
               			</Grid.Column>
               			<Grid.Column width="5">
-              			              					<p style={{color:"#015edc"}}>Year 2030 vs Year 2050</p>
+              			              					<p style={{color:"#015edc"}}>RCP 8.5</p>
+
+              				<Example/>
+              			</Grid.Column>
+
+
+              		</Grid.Row>
+              		<Grid.Row>
+              			<Grid.Column width="5">
+              			              					<p style={{color:"#015edc"}}>Year 2020</p>
 
               				<Example/>
               			</Grid.Column>
               			<Grid.Column width="5">
-              			              					<p style={{color:"#015edc"}}>Return Period</p>
+              			              					<p style={{color:"#015edc"}}>Year 2030 </p>
+
+              				<Example/>
+              			</Grid.Column>
+              			<Grid.Column width="5">
+              			              					<p style={{color:"#015edc"}}>Year 2050</p>
 
               				<Example/>
               			</Grid.Column>

@@ -1,0 +1,10 @@
+.progress1{
+	font-size:8px!important;
+
+}
+td{
+	font-size:12px;
+}
+.ui.progress .bar{
+	background:linear-gradient(#56ccf2,#2f80ed)!important;
+}

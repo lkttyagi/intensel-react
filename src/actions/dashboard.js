@@ -29,11 +29,11 @@ export const postDashboard = (formdata) =>{
 					return res.data;
 				}
 				else if (res.status ===401 || res.status===403){
-					dispatch({type:'AUTHENTICATION_ERROR',data:res.data});
+					dispatch({type:'AUTHENTICATION_ERROR',feedback:res.data});
 					throw res.data;
 				}
 				else {
-					dispatch({type:'DASHBOARD_FAIL',data:res.data});
+					dispatch({type:'DASHBOARD_FAIL',feedback:res.data});
 					throw res.data;
 				}
 			})

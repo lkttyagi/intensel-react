@@ -1,17 +1,41 @@
 import React,{Component} from 'react';
-import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Select,Dropdown,Icon} from 'semantic-ui-react';
+import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Select,Dropdown,Icon,Table,Modal} from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
 import {locus,auth,project} from '../actions';
 import SideNavbar from './sidebar';
 import Spinner from './loader';
+import CsvDownload from 'react-json-to-csv';
+
 let options=[];
 const StatusOptions=[
 	{key:'active',value:'Active',text:'Active'},
 	{key:'finished',value:'Finished',text:'Finished'}
 ]
-
+const csv=[];
+const othersOptions=[
+	
+	{key:'type',value:'type',text:'type'},
+	{key:'Area',value:'Area',text:'Area'},
+	{key:'Building_H',value:'Building_H',text:'Building_H'}
+]
+const variableOptions=[
+	{key:'Storm Surge',value:'Storm Surge',text:'Storm Surge'},
+	{key:'Flood',value:'Flood',text:'Flood'},
+	{key:'Landslide',value:'Landslide',text:'Landslide'},
+	{key:'Extreme heat',value:'Extreme heat',text:'Extreme heat'}
+]
+const rcpOptions=[
+	{key:'2.6',value:'2.6',text:'2.6'},
+	{key:'4.5',value:'4.5',text:'4.5'},
+	{key:'8.5',value:'8.5',text:'8.5'}
+]
+const yearOptions=[
+	{key:'2020',value:'2020',text:'2020'},
+	{key:'2030',value:'2030',text:'2030'},
+	{key:'2050',value:'2050',text:'2050'}
+]
 
 
 class Project extends Component{
@@ -20,8 +44,13 @@ class Project extends Component{
 		description:'',
 		status:'',
 		assets:[],
-		loading:false
-		
+		loading:false,
+		activeItemName:'',
+		modalOpen:false,
+		variables:[],
+		others:'',
+		year:'',
+		rcp:''
 		
 	}
 
@@ -35,7 +64,19 @@ class Project extends Component{
 		this.setState({loading:true},()=>{this.props.addProject(formdata)})
 
 	}
-	
+	handleChange=(value,key)=>{
+		this.setState({[key]:value},()=>console.log("othres",this.state.others,this.state.variables));
+	}
+	handleSubmit=(e)=>{
+		e.preventDefault();
+		let formdata=new FormData();
+		formdata.append('portfolio',this.state.activeItemName)
+		formdata.append('variables',JSON.stringify(this.state.variables))
+		formdata.append('others',JSON.stringify(this.state.others))
+		formdata.append('year',JSON.stringify(this.state.year))
+		formdata.append('rcp',JSON.stringify(this.state.rcp))
+		this.setState({loading:true},()=>{this.props.getCSV(formdata)})
+	}
 
 	handleAssets=(e,{value})=>{
 		this.setState({assets:value},()=>console.log(this.state.assets))
@@ -47,18 +88,21 @@ class Project extends Component{
 	handleLogout=()=>{
 		this.props.logout()
 	}
+	handleOpen =(portfolio) => this.setState({modalOpen:true,
+		activeItemName:portfolio},()=>console.log(this.state.activeItemName))
+	handleClose =() => this.setState({modalOpen:false})
 
 	render(){
-		const {value} =this.state;
+		const {value,others,variables,rcp,year} =this.state;
 		let user_id = localStorage.getItem('user_id');
 		
 
-	
+		
 		if(this.props.locus.length>0){
 		
 		const assets = this.props.locus.filter(location=>location.users_id==user_id)
 		
-
+		console.log("locations",assets[0].assets)
 		
 		for(let i=0;i<assets.length;i++){
 			options.push({
@@ -68,6 +112,11 @@ class Project extends Component{
 			})
 		
 	}
+	if(this.props.csv.length===undefined){
+		csv.push(this.props.csv.success)
+	}
+
+		
 }
 
 
@@ -149,15 +198,95 @@ class Project extends Component{
 				<Grid.Column width="6"></Grid.Column>	
 
 		</Grid.Row>
+		<Grid.Row>
+			<Grid.Column width="4"></Grid.Column>
+			<Grid.Column width="6">
+				<Table>
+					<Table.Header>
+						<Table.Row>
+							<Table.HeaderCell>Portfolio</Table.HeaderCell>
+							<Table.HeaderCell>Download</Table.HeaderCell>
+
+						</Table.Row>
+					</Table.Header>
+					<Table.Body>
+
+					{this.props.locus.length>0?this.props.locus.map((portfolio,index)=>(
+      <Table.Row key={index}>
+
+        <Table.Cell><p>{portfolio.name}</p></Table.Cell>
+       
+        
+        
+        <Table.Cell><Button onClick={()=>this.handleOpen(portfolio.name)} style={{backgroundColor:'#015edc'}} primary>Download CSV</Button></Table.Cell>
+        
+      </Table.Row>
+      )):
+<Table.Row></Table.Row>}
+					
+					</Table.Body>
+
+				</Table>
+			</Grid.Column>
+			<Grid.Column width="4"></Grid.Column>
+		</Grid.Row>
 		</Grid>
+		<Modal
+		open={this.state.modalOpen}
+		onClose={this.handleClose}
+		closeIcon
+		itemName={this.state.activeItemName}
+		>
+		<Modal.Header>
+			Download CSV 
+		</Modal.Header>
+		<Modal.Content scrolling>
+		<div style={{marginLeft:'20%',marginRight:'20%'}}>
+		
+		<p>Select Data You want to Download</p>
+		<Grid.Row>
+				<Dropdown  placeholder="Others" fluid multiple  selection options={othersOptions} value={others} onChange={(e,{value})=>this.handleChange(value,'others')}/>	
+
+		</Grid.Row>
+		<p>Select Climate Variable</p>
+		<Grid.Row>
+
+		<Dropdown  placeholder="Climate variables" fluid multiple  selection options={variableOptions} value={variables} onChange={(e,{value})=>this.handleChange(value,'variables')}/>	
+
+		</Grid.Row>
+		<p>Select RCP</p>
+		<Grid.Row>
+				<Dropdown  placeholder="RCP" fluid multiple  selection options={rcpOptions} value={rcp} onChange={(e,{value})=>this.handleChange(value,'rcp')}/>	
+
+		</Grid.Row>
+		<p>Select Year</p>
+		<Grid.Row>
+				<Dropdown  placeholder="Year" fluid multiple  selection options={yearOptions} value={year} onChange={(e,{value})=>this.handleChange(value,'year')}/>	
+
+		</Grid.Row>
+		<br/>
+
+		{(this.state.loading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleSubmit} primary>Submit</Button>}
+		
+		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
+		
+		</div>
+		</Modal.Content>
+		</Modal>
 			</div>)
+		
+		
+		
 	}
 }
 
 const mapStateToProps = state =>{
 	return {
 		errors:state.project.errors,
-		locus:state.locus.locus
+		locus:state.locus.locus,
+		csv:state.project.csv
+
 	}
 }
 const mapDispatchToProps = dispatch =>{
@@ -170,6 +299,9 @@ const mapDispatchToProps = dispatch =>{
 		},
 		addProject:(formdata)=>{
 			dispatch(project.addProject(formdata))
+		},
+		getCSV:(formdata)=>{
+			dispatch(project.getCSV(formdata))
 		}
 	}
 }

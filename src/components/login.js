@@ -51,13 +51,13 @@ onLoadRecaptcha(){
 				}
 		console.log(this.props.errors)
 		return(
-		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
+		<Grid style={{ height:'100vh',padding:'50px' }} verticalAlign='middle' padded>	
 		<Grid.Row>	
-		
-		<Grid.Column width={8}>
+		<Grid.Column width={2}></Grid.Column>
+		<Grid.Column width={6}>
 			<Image src={login}/>
 		</Grid.Column> 	
-		 <Grid.Column width={8}>
+		 <Grid.Column width={6}>
 		 	<Image src={logo} size='medium' centered/>
 		 	<Header as='h2' textAlign='center'>Welcome to Intensel</Header>
 		 	<h5>Please fill in details to Login</h5>
