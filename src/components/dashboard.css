@@ -8,3 +8,18 @@ td{
 .ui.progress .bar{
 	background:linear-gradient(#56ccf2,#2f80ed)!important;
 }
+.card{
+	background-color:#ffffff;
+	box-shadow:0 1px 15px rgba(0,0,0,.04)
+				0 1px 6px rgba(0,0,0,.04);
+	border-radius:0.75em;
+	padding:15px;
+}
+.card p{
+	font-size:1.2rem;
+	color:#3a3a3a;
+	font-weight: 600;
+}
+line{
+	stroke:white;
+}

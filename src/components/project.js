@@ -82,8 +82,8 @@ class Project extends Component{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
 	}
-	handleStatus=(e,{value})=>{
-		this.setState({status:value},()=>console.log(this.state.status))
+	handleStatus=(e,{status})=>{
+		this.setState({status:status},()=>console.log(this.state.status))
 	}
 	handleLogout=()=>{
 		this.props.logout()
@@ -93,13 +93,13 @@ class Project extends Component{
 	handleClose =() => this.setState({modalOpen:false})
 
 	render(){
-		const {value,others,variables,rcp,year} =this.state;
+		const {value,others,variables,rcp,year,status} =this.state;
 		let user_id = localStorage.getItem('user_id');
 		
 
 		
 		if(this.props.locus.length>0){
-		
+		options=[];
 		const assets = this.props.locus.filter(location=>location.users_id==user_id)
 		
 		console.log("locations",assets[0].assets)
@@ -110,8 +110,10 @@ class Project extends Component{
 				value:assets[i].name,
 				text:assets[i].name
 			})
+
 		
 	}
+	console.log("options",options)
 	if(this.props.csv.length===undefined){
 		csv.push(this.props.csv.success)
 	}
@@ -174,18 +176,11 @@ class Project extends Component{
 					 />
 				
 				</Form.Group>
-				<Form.Field
-					id="form-input-control-status"
-					control={Select}
-					label="Status"
-					options={StatusOptions}
-					value={this.state.status}
-					placeholder='Select Project Status'
-					onChange={this.handleStatus}
+				<label>Status</label>
+				<Dropdown  placeholder="Status" fluid   selection options={StatusOptions} value={status} onChange={this.handleAssets}/>	
 
-				/>	
 				<label>Portfolio</label>
-				<Dropdown  placeholder="Assets" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
+				<Dropdown  placeholder="Portfolio" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
 				
 			    <br/>
 			    <br/>
