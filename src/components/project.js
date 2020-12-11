@@ -18,13 +18,18 @@ const othersOptions=[
 	
 	{key:'type',value:'type',text:'type'},
 	{key:'Area',value:'Area',text:'Area'},
-	{key:'Building_H',value:'Building_H',text:'Building_H'}
+	{key:'Building_H',value:'Building_H',text:'Building_H'},
+	{key:'SSL',value:'SSL',text:'SSL'},
+	{key:'FLL',value:'FLL',text:'FLL'}
 ]
 const variableOptions=[
 	{key:'Storm Surge',value:'Storm Surge',text:'Storm Surge'},
 	{key:'Flood',value:'Flood',text:'Flood'},
 	{key:'Landslide',value:'Landslide',text:'Landslide'},
-	{key:'Extreme heat',value:'Extreme heat',text:'Extreme heat'}
+	{key:'Extreme heat',value:'Extreme heat',text:'Extreme heat'},
+	{key:'Drought Index',value:'Drought Index',text:'Drought Index'},
+	{key:'Drought Rainfall',value:'Drought Rainfall',text:'Drought Rainfall'},
+	
 ]
 const rcpOptions=[
 	{key:'2.6',value:'2.6',text:'2.6'},
@@ -32,7 +37,7 @@ const rcpOptions=[
 	{key:'8.5',value:'8.5',text:'8.5'}
 ]
 const yearOptions=[
-	{key:'2020',value:'2020',text:'2020'},
+	
 	{key:'2030',value:'2030',text:'2030'},
 	{key:'2050',value:'2050',text:'2050'}
 ]
@@ -50,7 +55,9 @@ class Project extends Component{
 		variables:[],
 		others:'',
 		year:'',
-		rcp:''
+		rcp:'',
+		modalloading:false,
+		lossmodalOpen:false
 		
 	}
 
@@ -71,11 +78,21 @@ class Project extends Component{
 		e.preventDefault();
 		let formdata=new FormData();
 		formdata.append('portfolio',this.state.activeItemName)
-		formdata.append('variables',JSON.stringify(this.state.variables))
+		formdata.append('variable',JSON.stringify(this.state.variables))
 		formdata.append('others',JSON.stringify(this.state.others))
 		formdata.append('year',JSON.stringify(this.state.year))
 		formdata.append('rcp',JSON.stringify(this.state.rcp))
-		this.setState({loading:true},()=>{this.props.getCSV(formdata)})
+		
+		
+		
+		this.setState({modalloading:true},()=>{this.props.getCSV(formdata)})
+	}
+	handleLossSubmit=(e)=>{
+		e.preventDefault();
+		let formdata= new FormData();
+		formdata.append('portfolio',this.state.activeItemName)
+		formdata.append('year',this.state.year)
+		this.setState({modalloading:true},()=>{this.props.getLoss(formdata)})
 	}
 
 	handleAssets=(e,{value})=>{
@@ -91,6 +108,13 @@ class Project extends Component{
 	handleOpen =(portfolio) => this.setState({modalOpen:true,
 		activeItemName:portfolio},()=>console.log(this.state.activeItemName))
 	handleClose =() => this.setState({modalOpen:false})
+
+	handleLossModalOpen =(portfolio) => this.setState({lossmodalOpen:true,
+		activeItemName:portfolio},()=>console.log(this.state.activeItemName))
+
+	handleLossModalClose =()=>{
+		this.setState({lossmodalOpen:false})
+	}
 
 	render(){
 		const {value,others,variables,rcp,year,status} =this.state;
@@ -116,6 +140,7 @@ class Project extends Component{
 	console.log("options",options)
 	if(this.props.csv.length===undefined){
 		csv.push(this.props.csv.success)
+		console.log("csv data",this.props.csv.success)
 	}
 
 		
@@ -195,12 +220,12 @@ class Project extends Component{
 		</Grid.Row>
 		<Grid.Row>
 			<Grid.Column width="4"></Grid.Column>
-			<Grid.Column width="6">
+			<Grid.Column width="8">
 				<Table>
 					<Table.Header>
 						<Table.Row>
-							<Table.HeaderCell>Portfolio</Table.HeaderCell>
-							<Table.HeaderCell>Download</Table.HeaderCell>
+							<Table.HeaderCell textAlign="center">Portfolio</Table.HeaderCell>
+							<Table.HeaderCell textAlign="center">Download</Table.HeaderCell>
 
 						</Table.Row>
 					</Table.Header>
@@ -209,12 +234,13 @@ class Project extends Component{
 					{this.props.locus.length>0?this.props.locus.map((portfolio,index)=>(
       <Table.Row key={index}>
 
-        <Table.Cell><p>{portfolio.name}</p></Table.Cell>
+        <Table.Cell width="4" textAlign="center"><p>{portfolio.name}</p></Table.Cell>
        
         
         
-        <Table.Cell><Button onClick={()=>this.handleOpen(portfolio.name)} style={{backgroundColor:'#015edc'}} primary>Download CSV</Button></Table.Cell>
-        
+        <Table.Cell><Button className="csv" onClick={()=>this.handleOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black'}} primary>Download CSV</Button></Table.Cell>
+        <Table.Cell><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black'}} primary>Download Loss</Button></Table.Cell>
+        <Table.Cell><Button className="csv"  style={{backgroundColor:'white',border:'1px solid black',color:'black'}} primary>Download Summary</Button></Table.Cell>
       </Table.Row>
       )):
 <Table.Row></Table.Row>}
@@ -261,8 +287,38 @@ class Project extends Component{
 		</Grid.Row>
 		<br/>
 
-		{(this.state.loading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
 				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleSubmit} primary>Submit</Button>}
+		
+		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
+		
+		</div>
+		</Modal.Content>
+		</Modal>
+
+
+		<Modal
+		open={this.state.lossmodalOpen}
+		onClose={this.handleLossModalClose}
+		closeIcon
+		itemName={this.state.activeItemName}
+		>
+		<Modal.Header>
+			Download CSV 
+		</Modal.Header>
+		<Modal.Content scrolling>
+		<div style={{marginLeft:'20%',marginRight:'20%'}}>
+		
+		
+		<p>Select Year</p>
+		<Grid.Row>
+				<Dropdown  placeholder="Year" fluid   selection options={yearOptions} value={year} onChange={(e,{value})=>this.handleChange(value,'year')}/>	
+
+		</Grid.Row>	
+		<br/>
+
+		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleLossSubmit} primary>Submit</Button>}
 		
 		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
 		
@@ -297,6 +353,12 @@ const mapDispatchToProps = dispatch =>{
 		},
 		getCSV:(formdata)=>{
 			dispatch(project.getCSV(formdata))
+		},
+		getLoss:(formdata)=>{
+			dispatch(project.getLoss(formdata))
+		},
+		getSummary:(formdata)=>{
+			dispatch(project.getSummary(formdata))
 		}
 	}
 }

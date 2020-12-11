@@ -74,7 +74,7 @@ class Location extends Component{
 		}
 	}
 	handleFileLoad = data =>{
-	mapcards=[];	
+		
 	for(let i=1;i<data.length-1;i++){	
 		mapcards.push(data[i].data);
 	}
@@ -112,7 +112,7 @@ class Location extends Component{
     view: view
     });
     view.ui.add(search, "top-right");
-       mapcards=[];
+       
        view.on("click", function(event){
        	
        	console.log(event.mapPoint.latitude,event.mapPoint.longitude);
@@ -180,6 +180,7 @@ class Location extends Component{
 		if(this.view){
 			this.view.destroy();
 		}
+		mapcards=[];
 	}
 
 	
@@ -216,7 +217,7 @@ class Location extends Component{
   }
   handleAsync=()=>{
   		console.log("ye his",this.state.company);
-  		mapcards=[];
+  		
   		for(let i=0;i<this.state.company.length;i++){
   		let LocationList = companyList.filter(company=>company.NAME===this.state.company[i])
   		  	

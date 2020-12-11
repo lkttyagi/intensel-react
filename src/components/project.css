@@ -28,3 +28,21 @@ label{
 	width:25%;
 	padding:5px;
 }
+.csv:hover{
+	background-color:#015edc!important;
+	color:white!important;
+	border:1px solid white!important;
+}
+.ui.modal>.close{
+	margin-right:35px;
+	margin-top:35px;
+	color:black!important;
+}
+.ui.fullscreen.modal>.close{
+margin-right:35px;
+	margin-top:35px;
+	color:black!important;	
+}
+.ui.fullscreen.modal{
+	left:10!important;
+}

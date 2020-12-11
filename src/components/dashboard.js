@@ -10,16 +10,21 @@ import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {
   ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  Legend,
+  Legend,ScatterChart,Scatter
 } from 'recharts';
 import {project,auth,dashboard} from '../actions';
-import Example from './example';
+import Building from './building';
 import LineExample from './Line';
 import './dashboard.css';
 
+import {Tabs,Tab,Row,Col} from 'react-bootstrap';
+import Detail from './detail';
+
+
 let options=[];
 let Item=[];
-
+let singledata=[];
+let data01=[];
 
 const RcpOptions=[
 	{key:2.6,value:2.6,text:2.6},
@@ -37,6 +42,34 @@ const YearOptions=[
 	{key:2030,value:2030,text:2030},
 	{key:2050,value:2050,text:2050}
 ]
+const basementOptions=[
+	{key:'yes',value:'yes',text:'yes'},
+	{key:'no',value:'no',text:'no'},
+	{key:'unknown',value:'unknown',text:'unknown'},
+
+]
+const constructionOptions=[
+	{key:'wood',value:'wood',text:'wood'},
+	{key:'concrete',value:'concrete',text:'concrete'},
+	{key:'masonry',value:'masonry',text:'masonry'},
+	{key:'mobile home',value:'mobile home',text:'mobile home'},
+	{key:'light metal',value:'light metal',text:'light metal'},
+	{key:'steel',value:'steel',text:'steel'},
+	{key:'unknown',value:'unknown',text:'unknown'}
+
+]
+const storiesOptions=[
+	{key:1,value:1,text:1},
+	{key:2,value:2,text:2},
+	{key:'3 or More',value:'3 or More',text:'3 or More'},
+	{key:'unknown',valeu:'unknown',text:'unknown'}
+]
+const occupancyOptions=[
+	{key:'res',value:'res',text:'res'},
+	{key:'com',value:'com',text:'com'},
+	{key:'ind',value:'ind',text:'ind'},
+	{key:'unknown',value:'unknown',text:'unknown'}
+]
 
 
 
@@ -46,7 +79,7 @@ class Dashboard extends Component{
 		super(props);
 	}
 	state={
-		project:'demo',
+		project:'123',
 		variable:'Flood',
 		rcp:2.6,
 		year:2030,
@@ -61,7 +94,17 @@ class Dashboard extends Component{
 		singel_asset_chart:'',
 		single_asset_loss:'',
 		single_asset_progress:'',
-		single_asset_cone_chart:''
+		single_asset_cone_chart:'',
+		RcpData:'',
+		YearData:'',
+		basement:'yes',
+		construction:'wood',
+		stories:'1',
+		occupancy:'res',
+		per_sq_m_value:40000,
+		scatter:'',
+		yearDetail:'',
+		detailed:'false'
 	}
 
 
@@ -217,6 +260,10 @@ class Dashboard extends Component{
    		formdata.append('year',this.state.year)
    		formdata.append('analysis',this.state.analysis)
    		this.props.addDashboard(formdata);
+
+   	let formdata1=new FormData();
+   	formdata1.append('portfolio','salsa')
+   	this.props.getDetailByYear(formdata1);
 		
 	}
 	componentDidUpdate(prevProps,prevState){
@@ -226,9 +273,13 @@ class Dashboard extends Component{
 				risk:this.props.feedback.overall.progress_bars,
 				single_asset:this.props.feedback.single_asset
 			})
+
 		}
 
+
+
 	}
+
 	handleProject=(e,{value})=>{
 		this.setState({project:value},()=>console.log(this.state.project))
 	}
@@ -260,7 +311,7 @@ class Dashboard extends Component{
 	}
 	handleSingleChart=()=>{
 		console.log("fndfdgdgdsgdijgdos",this.state.single_asset_overall)
-	let singledata =[
+	 singledata =[
  {
     name: '2020', rcp2:0, rcp4:0, rcp8:this.state.single_asset_overall[0].overall_bar_chart['2020'],
   },
@@ -275,29 +326,111 @@ class Dashboard extends Component{
     ['2050_85'],
   }
 
+
 ]
+console.log("singledata",singledata);
 this.setState({singel_asset_chart:singledata,
 	single_asset_loss:this.state.single_asset_overall[0].loss_bars,
 	single_asset_progress:this.state.single_asset_overall[0].progress_bars,
-	single_asset_cone_chart:this.state.single_asset_overall[0].cone_chart},()=>console.log("loss",this.state.single_asset_loss['Total Loss'][0]))
+	single_asset_cone_chart:this.state.single_asset_overall[0].cone_chart},this.handleComparison)
+
+
+}
+
+
+handleComparison=()=>{
+	
+	 let RcpData=[
+			 {
+    name: 'OverAll', 'rcp2.6':this.state.single_asset_cone_chart.cone1_26['OVERALL'], 'rcp4.5':this.state.single_asset_cone_chart.cone1_45['OVERALL'], 'rcp8.5':this.state.single_asset_cone_chart.cone1_85['OVERALL'],
+  },
+  
+  {
+    name: 'Flood', 'rcp2.6':this.state.single_asset_cone_chart.cone1_26['Flood'], 'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Flood'], 'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Flood'],
+  },
+  
+
+  {
+    name: 'Storm Surge', 'rcp2.6':this.state.single_asset_cone_chart.cone1_26['Storm Surge'], 'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Storm Surge'], 'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Storm Surge'],
+  },
+  {
+  	name:'LandSlide','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Landslide'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Landslide'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Landslide']
+  },
+  {
+  	name:'Rainfall','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Rainfall'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Rainfall'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Rainfall']
+  },
+  {
+  	name:'Drought','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Drought'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Drought'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Drought']
+  },
+  {
+  	name:'Extreme Heat','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Extreme Heat'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Extreme Heat'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Extreme Heat']
+  }
+]
+
+
+		let yearData =[
+		{
+ 	    name: 'OverAll', 2020:this.state.single_asset_cone_chart.cone3_20['OVERALL'], 2030:this.state.single_asset_cone_chart.cone3_30['OVERALL'], 2050:this.state.single_asset_cone_chart.cone3_50['OVERALL'],
+  },
+  
+  {
+    name: 'Flood', 2020:this.state.single_asset_cone_chart.cone3_20['Flood'], 2030:this.state.single_asset_cone_chart.cone3_30['Flood'], 2050:this.state.single_asset_cone_chart.cone3_50['Flood'],
+  },
+  
+
+  {
+    name: 'Storm Surge', 2020:this.state.single_asset_cone_chart.cone3_20['Storm Surge'], 2030:this.state.single_asset_cone_chart.cone3_30['Storm Surge'], 2050:this.state.single_asset_cone_chart.cone3_50['Storm Surge'],
+  },
+  {
+  	name:'LandSlide',2020:this.state.single_asset_cone_chart.cone3_20['Landslide'],2030:this.state.single_asset_cone_chart.cone3_30['Landslide'],2050:this.state.single_asset_cone_chart.cone3_50['Landslide']
+  },
+  {
+  	name:'Rainfall',2020:this.state.single_asset_cone_chart.cone3_20['Rainfall'],2030:this.state.single_asset_cone_chart.cone3_30['Rainfall'],2050:this.state.single_asset_cone_chart.cone3_50['Rainfall']
+  },
+  {
+  	name:'Drought',2020:this.state.single_asset_cone_chart.cone3_20['Drought'],2030:this.state.single_asset_cone_chart.cone3_30['Drought'],2050:this.state.single_asset_cone_chart.cone3_50['Drought']
+  },
+  {
+  	name:'Extreme Heat',2020:this.state.single_asset_cone_chart.cone3_20['Extreme Heat'],2030:this.state.single_asset_cone_chart.cone3_30['Extreme Heat'],2050:this.state.single_asset_cone_chart.cone3_50['Extreme Heat']
+  }
+
+		]
+	this.setState({RcpData:RcpData,
+		YearData:yearData},()=>console.log("yeardata",this.state.YearData))
+	}
+	handleChange=(value,key)=>{
+		this.setState({[key]:value})
 	}
 
+	handleSubmit=(e)=>{
+		e.preventDefault();
+		let formdata= new FormData();
+		formdata.append('building',this.state.activeItemName)
+		formdata.append('basement',this.state.basement)
+		formdata.append('construction',this.state.construction)
+		formdata.append('stories',this.state.stories)
+		formdata.append('occupancy',this.state.occupancy)
+		formdata.append('per_sq_m_value',this.state.per_sq_m_value)
+		this.props.getBuilding(formdata)
+	}
+
+
  render(){
- 	console.log("dashbaord dta",this.state.single_asset)
- 	
+ 	console.log("dashbaord dta",this.state.feedback['2050_85'])
+ 	const {value,basement,construction,stories,occupancy}=this.state;
  	let user_id = localStorage.getItem('user_id');
  	const data = [
   {
-    name: '2020', rcp2:0, rcp4:0, rcp8:this.state.feedback['2020'],
+    name: '2020', 'RCP2.6':0, 'RCP4.5':0, 'RCP8.5':this.state.feedback['2020'],
   },
   
   {
-    name: '2030-2050', rcp2:this.state.feedback['2030_26'], rcp4:this.state.feedback['2030_45'], rcp8:this.state.feedback['2030_85'],
+    name: '2030-2050', 'RCP2.6':this.state.feedback['2030_26'], 'RCP4.5':this.state.feedback['2030_45'], 'RCP8.5':this.state.feedback['2030_85'],
   },
   
 
   {
-    name: '2050-2070', rcp2:this.state.feedback['2050_26'], rcp4:this.state.feedback['2050_45'], rcp8:this.state.feedback['2050_85'],
+    name: '2050-2070', 'RCP2.6':this.state.feedback['2050_26'], 'RCP4.5':this.state.feedback['2050_45'], 'RCP 8.5':this.state.feedback['2050_85'],
   }
 ];
 
@@ -316,9 +449,12 @@ this.setState({singel_asset_chart:singledata,
  		console.log("option",options)
 
  	}
+ 	if(this.props.detailyear.success&&this.props.detailyear.success.length>0){
+ 		console.log("detailyear",this.props.detailyear.success)
+ 		this.state.yearDetail=this.props.detailyear.success
+ 	}
  	 		
-
- 	
+ 
 
 
  	return(
@@ -349,21 +485,23 @@ this.setState({singel_asset_chart:singledata,
 			
 			<p style={{float:'right'}}>Local<Checkbox toggle/>Global</p>
 			<div style={{float:'center'}} centered>
-			<p style={{float:'center'}}>OverAll Analysis<Checkbox toggle/>Detailed Analysis</p>
+			<p style={{float:'center'}}>OverAll Analysis<Checkbox  value={this.state.detailed} onChange={e=>this.setState({detailed:!this.state.detailed},()=>console.log("detailed",this.state.detailed))}toggle/>Detailed Analysis</p>
 			</div>
 		 	
 			
 			</Grid.Column>
 
 			</Grid.Row>
-				
-			<Grid.Row>
+			</Grid>
+			{this.state.detailed?
+				<Grid>
+				<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
 			
 			<Grid.Column width="4" className="card">
 			<p>Climate Risk Index</p>
 				   <ComposedChart
-        width={445}
+        width={460}
         height={400}
         data={data}
         margin={{
@@ -393,12 +531,12 @@ this.setState({singel_asset_chart:singledata,
         <Legend />
 
         <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4" barSize={20} fill="#60b1cc" />
-        <Bar dataKey="rcp8" barSize={20} fill="#bac3d2" />
+        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc" />
+        <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2" />
 
 
-        <Line type="monotone" dataKey="uv" stroke="#000000" />
+        
       </ComposedChart>
 			</Grid.Column>
 			<Grid.Column width="1"></Grid.Column>
@@ -492,7 +630,138 @@ this.setState({singel_asset_chart:singledata,
   </Table>
 				</Grid.Column>
 			</Grid.Row>
-			</Grid>
+			<Grid.Row>
+				<Grid.Column width="3"></Grid.Column>
+				<Grid.Column width="13" className="card">
+				<Table>
+					<Table.Header><p style={{padding:'5px'}}>Asset Loss Analysis (in million $) for year 2020</p></Table.Header>
+					<Table.Header>
+						<Table.HeaderCell>Name</Table.HeaderCell>
+						<Table.HeaderCell>Prop Value</Table.HeaderCell>
+						<Table.HeaderCell>Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell>Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell>Total Loss</Table.HeaderCell>
+
+					</Table.Header>
+					<Table.Body>
+						{this.state.yearDetail.length>0?this.state.yearDetail.map((asset,index)=>(
+      <Table.Row key={index}>
+
+        <Table.Cell>{asset.name}</Table.Cell>
+       
+        <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['20']['Flood Dollar Percentage Loss RCP 0.0'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['20']['Storm Surge Dollar Percentage Loss RCP 0.0'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['20']['Total Loss RCP 0.0'].toFixed(2)}</Table.Cell>
+        
+      </Table.Row>
+      )):
+<Table.Row></Table.Row>}
+					</Table.Body>
+				</Table>
+				</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+				<Grid.Column width="3"></Grid.Column>
+				<Grid.Column width="13" className="card">
+				<Table>
+					<Table.Header><p style={{padding:'5px'}}>Asset Loss Analysis (in million $) for year 2030</p></Table.Header>
+					<Table.Header>
+						<Table.HeaderCell>Name</Table.HeaderCell>
+						<Table.HeaderCell>Prop Value</Table.HeaderCell>
+						<Table.HeaderCell> RCP 2.6 Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 2.6 Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 2.6 Total Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 4.5 Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 4.5 Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 4.5 Total Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 8.5 Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 8.5 Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 8.5 Total Loss</Table.HeaderCell>
+
+					</Table.Header>
+					<Table.Body>
+						{this.state.yearDetail.length>0?this.state.yearDetail.map((asset,index)=>(
+      <Table.Row key={index}>
+
+        <Table.Cell>{asset.name}</Table.Cell>
+       
+        <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Flood Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Storm Surge Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['50']['Total Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Flood Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Storm Surge Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['50']['Total Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Flood Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Storm Surge Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['50']['Total Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        
+      </Table.Row>
+      )):
+<Table.Row></Table.Row>}
+					</Table.Body>
+				</Table>
+				</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+				<Grid.Column width="3"></Grid.Column>
+				<Grid.Column width="13" className="card">
+
+				<Table>
+					<Table.Header><p style={{padding:'5px'}}>Asset Loss Analysis (in million $) for year 2050</p></Table.Header>
+					<Table.Header>
+						<Table.HeaderCell>Name</Table.HeaderCell>
+						<Table.HeaderCell>Prop Value</Table.HeaderCell>
+						<Table.HeaderCell> RCP 2.6 Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 2.6 Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 2.6 Total Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 4.5 Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 4.5 Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 4.5 Total Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 8.5 Flood Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 8.5 Storm Damage Loss</Table.HeaderCell>
+						<Table.HeaderCell> RCP 8.5 Total Loss</Table.HeaderCell>
+
+					</Table.Header>
+					<Table.Body>
+						{this.state.yearDetail.length>0?this.state.yearDetail.map((asset,index)=>(
+      <Table.Row key={index}>
+
+        <Table.Cell>{asset.name}</Table.Cell>
+       
+        <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Flood Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Storm Surge Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['70']['Total Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Flood Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Storm Surge Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['70']['Total Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Flood Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Storm Surge Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        
+        <Table.Cell>{asset['70']['Total Loss RCP 8.5']}</Table.Cell>
+        
+      </Table.Row>
+      )):
+<Table.Row></Table.Row>}
+					</Table.Body>
+				</Table>
+
+				</Grid.Column>
+			</Grid.Row>
+			</Grid>:
+			<Grid.Row>
+			<Grid.Column width="3"></Grid.Column>
+			<Grid.Column width="13"><Detail/></Grid.Column>
+			</Grid.Row>}
+			
 				<Modal
             open={this.state.modalOpen}
             onClose={this.handleClose}
@@ -503,34 +772,20 @@ this.setState({singel_asset_chart:singledata,
 
             <Modal.Header>Asset Analysis</Modal.Header>
             <Modal.Content scrolling>
-           <div class="ui grid page">
-<div class="column">
-  <div class="ui segment">
-    <div class="ui menu top">
-      <a class="active item" data-tab="edit"><i class="icon edit sign"></i>Risk</a>
-      <a class="item" data-tab="summary">Comparison</a>
-      <a class="item" data-tab="buiding">Building Losses</a>
-    </div>
-    
-    <div class="ui tab" data-tab="edit">
-     not conods
-    </div>
-    <div class="ui tab" data-tab="summary">
-      Other content
-    </div>
-
-  </div>
-</div>
-</div>
-              	<Grid>
-              		<Grid.Row>
+            	<Row>
+            		<Col>
+            			<Tabs defaultActiveKey="Risk">
+            				<Tab eventKey="Risk" title="Risk">
+            				<br/>
+            				<Grid>
+            					          		<Grid.Row>
               			<Grid.Column width="1"></Grid.Column>
               			<Grid.Column width="4" className="card">
               					<p>Climate Risk Index</p>
 			   <ComposedChart
         width={450}
         height={400}
-        data={data}
+        data={singledata}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
@@ -618,15 +873,20 @@ this.setState({singel_asset_chart:singledata,
 
 
               		</Grid.Row>
-              		<Grid.Row>
+              		</Grid>
+            				</Tab>
+            				<Tab eventKey="Comparison" title="Comparison">
+            				<br/>
+            				<Grid>
+            					       		<Grid.Row>
               			<Grid.Column width="1"></Grid.Column>
-              			<Grid.Column width="6" className="card">
+              			<Grid.Column width="7" className="card">
               			              					<p>RCP 2.6 vs RCP 4.5 vs RCP 8.5</p>
 
-              						   <ComposedChart
-        width={450}
+            <ComposedChart
+        width={750}
         height={400}
-        data={data}
+        data={this.state.RcpData}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
@@ -654,22 +914,22 @@ this.setState({singel_asset_chart:singledata,
         <Legend />
 
         <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4" barSize={20} fill="#60b1cc"/>
-        <Bar dataKey="rcp8" barSize={20} fill="#bac3d2"/>
+        <Bar dataKey="rcp2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="rcp4.5" barSize={20} fill="#60b1cc"/>
+        <Bar dataKey="rcp8.5" barSize={20} fill="#bac3d2"/>
 
 
         <Line type="monotone" dataKey="uv" stroke="#000000" />
       </ComposedChart>
               			</Grid.Column>
-              			<Grid.Column width="2"></Grid.Column>
-              			<Grid.Column width="6" className="card">
+              			<Grid.Column width="1"></Grid.Column>
+              			<Grid.Column width="7" className="card">
               			              					<p>Year 2020 vs Year 2030 vs Year 2050</p>
 
               						   <ComposedChart
-        width={450}
+        width={750}
         height={400}
-        data={data}
+        data={this.state.YearData}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
@@ -696,10 +956,10 @@ this.setState({singel_asset_chart:singledata,
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4" barSize={20} fill="#60b1cc"/>
-        <Bar dataKey="rcp8" barSize={20} fill="#bac3d2"/>
+        <Area type="monotone" dataKey="Year" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="2020" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="2030" barSize={20} fill="#60b1cc"/>
+        <Bar dataKey="2050" barSize={20} fill="#bac3d2"/>
 
 
         <Line type="monotone" dataKey="uv" stroke="#000000" />
@@ -709,20 +969,17 @@ this.setState({singel_asset_chart:singledata,
 
 
               		</Grid.Row>
-              		
-              		<Grid.Row>
-              			<Grid.Column width="8">
-              			              					<p style={{color:"#015edc"}}>Analysis of Flood Damage</p>
+              		</Grid>
+            				</Tab>
+            				<Tab eventKey="Building" title="Building">
 
-              				<LineExample/>
-              			</Grid.Column>
-              			<Grid.Column width="8">
-              			              					<p style={{color:"#015edc"}}>Analysis of Storm Surge</p>
-
-              				<LineExample/>
-              			</Grid.Column>
-              		</Grid.Row>
-              	</Grid>
+            				<br/>
+            				<Building name={this.state.activeItemName}/>
+            				</Tab>
+            			</Tabs>
+            		</Col>
+            	</Row>
+              
             </Modal.Content>
           </Modal>
 			</div>
@@ -734,7 +991,9 @@ const mapStateToProps = state =>{
 	return{
 		errors:state.project.errors,
 		project:state.project.project,
-		feedback:state.feedback.feedback
+		feedback:state.feedback.feedback,
+		building:state.feedback.building,
+		detailyear:state.feedback.detailyear
 	}
 }
 const mapDispatchToProps = dispatch =>{
@@ -747,6 +1006,12 @@ const mapDispatchToProps = dispatch =>{
 		},
 		logout:()=>{
 			dispatch(auth.logout())
+		},
+		getBuilding:(formdata)=>{
+			dispatch(dashboard.getBuilding(formdata))
+		},
+		getDetailByYear:(formdata)=>{
+			dispatch(dashboard.getDetailByYear(formdata))
 		}
 	}
 }
