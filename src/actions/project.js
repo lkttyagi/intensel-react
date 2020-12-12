@@ -17,7 +17,7 @@ export const addProject = (formdata) =>{
 		}
 		
 
-		fetch('https://www.api-intensel.live//api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
+		fetch('https://www.api-intensel.live/api/project/add/'+id+'/',{headers,method:'POST',body:formdata})
 			.then(res=>{
 				if(res.status < 500){
 					
