@@ -100,11 +100,11 @@ class Building extends Component {
       exportEnabled: true,
       theme: "light2", // "light1", "dark1", "dark2"
       title:{
-        text: "Loss in Million $"
+        text: "Flood Loss"
       },
       axisY: {
         title: "Loss in Million $",
-        suffix: "%"
+        suffix: ""
       },
       axisX: {
         title: "Depth",
@@ -122,11 +122,11 @@ class Building extends Component {
       exportEnabled: true,
       theme: "light2", // "light1", "dark1", "dark2"
       title:{
-        text: "Loss in Million $"
+        text: "Storm Surge Loss"
       },
       axisY: {
         title: "Loss in Million $",
-        suffix: "%"
+        suffix: ""
       },
       axisX: {
         title: "Depth",
@@ -191,7 +191,7 @@ class Building extends Component {
                     <Grid.Column width="7" className="card">
                                         
                                             <p>Analysis of Flood Damage</p>
-                                            <CanvasJSChart options = {options}
+                                            <CanvasJSChart id="chartContainer"options = {options} style={{padding:'5px'}}
     
       />
                        
@@ -199,7 +199,7 @@ class Building extends Component {
                     <Grid.Column width="1"></Grid.Column>
                     <Grid.Column width="7" className="card">
                                             <p>Analysis of Storm Surge</p>
-        <CanvasJSChart id="cjhart" options = {options1}
+        <CanvasJSChart id="chartContainer1" options = {options}
     
       />
                       

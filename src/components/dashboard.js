@@ -255,7 +255,7 @@ class Dashboard extends Component{
    	this.props.getProjects();
 
    	if(this.props.project){
-   		console.log("kffdsjsdojosj",this.props.location.state.project)
+   		console.log("kffdsjsdojosj",this.props.location.state.project_name.project)
    		let formdata = new FormData();
    		formdata.append('project',this.state.project)
    		formdata.append('rcp',this.state.rcp)
@@ -268,7 +268,7 @@ class Dashboard extends Component{
 
 
    	let formdata1=new FormData();
-   	formdata1.append('project',this.props.location.state.project)
+   	formdata1.append('project',this.props.location.state.project_name.project)
    	this.props.getDetailByYear(formdata1);
 		
 	}
@@ -706,8 +706,8 @@ handleComparison=()=>{
         <Table.Cell>{asset.name}</Table.Cell>
        
         <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['20']['Flood Dollar Percentage Loss RCP 0.0'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['20']['Storm Surge Dollar Percentage Loss RCP 0.0'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['20']['Asset Flood Damage RCP 0.0'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['20']['Asset Storm Damage RCP 0.0'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['20']['Total Loss RCP 0.0'].toFixed(2)}</Table.Cell>
         
@@ -744,16 +744,16 @@ handleComparison=()=>{
         <Table.Cell>{asset.name}</Table.Cell>
        
         <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Flood Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Storm Surge Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Asset Flood Damage RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Asset Storm Damage RCP 2.6'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['50']['Total Loss RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Flood Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Storm Surge Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Asset Flood Damage RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Asset Storm Damage RCP 4.5'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['50']['Total Loss RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Flood Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Storm Surge Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Asset Flood Damage RCP 8.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['50']['Asset Storm Damage RCP 8.5'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['50']['Total Loss RCP 8.5'].toFixed(2)}</Table.Cell>
         
@@ -791,16 +791,16 @@ handleComparison=()=>{
         <Table.Cell>{asset.name}</Table.Cell>
        
         <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Flood Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Storm Surge Dollar Percentage Loss RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Asset Flood Damage RCP 2.6'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Asset Storm Damage RCP 2.6'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['70']['Total Loss RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Flood Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Storm Surge Dollar Percentage Loss RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Asset Flood Damage RCP 4.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Asset Storm Damage RCP 4.5'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['70']['Total Loss RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Flood Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Storm Surge Dollar Percentage Loss RCP 8.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Asset Flood Damage RCP 8.5'].toFixed(2)}</Table.Cell>
+        <Table.Cell>{asset['70']['Asset Storm Damage RCP 8.5'].toFixed(2)}</Table.Cell>
         
         <Table.Cell>{asset['70']['Total Loss RCP 8.5']}</Table.Cell>
         
