@@ -7,7 +7,7 @@ import {
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import {project,auth,dashboard} from '../actions';
 import {connect} from 'react-redux';
-
+import  {CanvasJSChart } from  'canvasjs-react-charts';
 
 
 let data01=[];
@@ -55,6 +55,7 @@ class Building extends Component {
   }
 
   componentDidMount(){
+    console.log("fndfffdsfdljfjfo")
     let formdata= new FormData();
     formdata.append('building',this.props.name)
     formdata.append('basement',this.state.basement)
@@ -94,6 +95,52 @@ class Building extends Component {
   this.state.scatter=data01
 
  }
+ const options = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2", // "light1", "dark1", "dark2"
+      title:{
+        text: "Loss in Million $"
+      },
+      axisY: {
+        title: "Loss in Million $",
+        suffix: "%"
+      },
+      axisX: {
+        title: "Depth",
+        prefix: "W",
+        interval: 2
+      },
+      data: [{
+        type: "line",
+        toolTipContent: "{x}: {y}",
+        dataPoints:this.state.scatter
+      }]
+    }
+   const options1 = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2", // "light1", "dark1", "dark2"
+      title:{
+        text: "Loss in Million $"
+      },
+      axisY: {
+        title: "Loss in Million $",
+        suffix: "%"
+      },
+      axisX: {
+        title: "Depth",
+        prefix: "W",
+        interval: 2
+      },
+      data: [{
+        type: "line",
+        toolTipContent: "{x}: {y}",
+        dataPoints:this.state.scatter
+      }]
+    }
+
+
 
     return(
       <Grid>
@@ -142,51 +189,24 @@ class Building extends Component {
                       <Grid.Row>
                       <Grid.Column width="1"></Grid.Column>
                     <Grid.Column width="7" className="card">
+                                        
                                             <p>Analysis of Flood Damage</p>
-
-                       <LineChart
-        width={500}
-        height={400}
-        margin={{
-          top: 20, right: 20, bottom: 20, left: 20,
-        }}
-        data={this.state.scatter}
-      >
-        <CartesianGrid />
-        <XAxis type="number" dataKey="x" name="x" />
-        <YAxis type="number" dataKey="y" name="y"  />
-        
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Legend />
-        <Line  dataKey="x" stroke="#8884d8"/>
-         
-        
-      </LineChart>
+                                            <CanvasJSChart options = {options}
+    
+      />
+                       
                     </Grid.Column>
                     <Grid.Column width="1"></Grid.Column>
                     <Grid.Column width="7" className="card">
                                             <p>Analysis of Storm Surge</p>
-                                                             <LineChart
-        width={500}
-        height={400}
-        margin={{
-          top: 20, right: 20, bottom: 20, left: 20,
-        }}
-        data={this.state.scatter}
-      >
-        <CartesianGrid />
-        <XAxis type="number" dataKey="x" name="x" />
-        <YAxis type="number" dataKey="y" name="y"  />
-        
-        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Legend />
-        <Line  dataKey="x" stroke="#8884d8"/>
-        
-        
-      </LineChart>
+        <CanvasJSChart id="cjhart" options = {options1}
+    
+      />
                       
                     </Grid.Column>
                   </Grid.Row>
+
+      
                   </Grid>)
   }
   

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "animate.css": "^4.1.1",
     "bootstrap": "^4.5.3",
+    "canvasjs-react-charts": "^1.0.5",
     "d3-scale-chromatic": "^2.0.0",
     "esri-loader": "^2.16.0",
     "history": "^4.10.1",

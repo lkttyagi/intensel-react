@@ -34,7 +34,8 @@ export const addProject = (formdata) =>{
 			.then(res =>{
 				if(res.status===201){
 					dispatch({type:'ADD_PROJECT',project:res.data});
-					history.push('/dashboard');
+					console.log("project ke action mine",res.data)
+					history.push({pathname:'/dashboard',state:{project_name:res.data}});
 					return res.data;
 				}
 				else if (res.status ===401 || res.status===403){

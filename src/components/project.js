@@ -201,12 +201,13 @@ class Project extends Component{
 					 />
 				
 				</Form.Group>
-				<label>Status</label>
-				<Dropdown  placeholder="Status" fluid   selection options={StatusOptions} value={status} onChange={this.handleAssets}/>	
+				
 
 				<label>Portfolio</label>
 				<Dropdown  placeholder="Portfolio" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
 				
+				<label>Status</label>
+				<Dropdown  placeholder="Status" fluid   selection options={StatusOptions} value={status} onChange={this.handleStatus}/>	
 			    <br/>
 			    <br/>
 
@@ -231,7 +232,7 @@ class Project extends Component{
 					</Table.Header>
 					<Table.Body>
 
-					{this.props.locus.length>0?this.props.locus.map((portfolio,index)=>(
+					{this.props.locus.length>0?this.props.locus.reverse().map((portfolio,index)=>(
       <Table.Row key={index}>
 
         <Table.Cell width="4" textAlign="center"><p>{portfolio.name}</p></Table.Cell>

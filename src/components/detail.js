@@ -58,7 +58,7 @@ class Detail extends Component {
 
   componentDidMount(){
     let formdata=new FormData();
-    formdata.append("project",this.state.project)
+    formdata.append("project",this.props.project)
     this.props.getDetail(formdata)
     
 
@@ -74,9 +74,9 @@ class Detail extends Component {
               
               data.push({
                 name:i,
-                'rcp2.6':x[j][i]['rcp2.6'],
-                'rcp4.5':x[j][i]['rcp4.5'],
-                'rcp8.5':x[j][i]['rcp8.5'],
+                'RCP2.6':x[j][i]['rcp2.6'],
+                'RCP4.5':x[j][i]['rcp4.5'],
+                'RCP8.5':x[j][i]['rcp8.5'],
                 'loss_2020':x[j][i]['loss_2020']
               })
             }
@@ -88,9 +88,9 @@ class Detail extends Component {
 
             data1.push({
               name:i,
-                'rcp2.6':y[k][i]['rcp2.6'],
-                'rcp4.5':y[k][i]['rcp4.5'],
-                'rcp8.5':y[k][i]['rcp8.5'],
+                'RCP2.6':y[k][i]['rcp2.6'],
+                'RCP4.5':y[k][i]['rcp4.5'],
+                'RCP8.5':y[k][i]['rcp8.5'],
                 'loss_2020':y[k][i]['loss_2020']
             })
         }
@@ -148,16 +148,16 @@ class Detail extends Component {
         </linearGradient>
       </defs>
         <CartesianGrid stroke="#ffffff" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'10px'}}/>
-        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} stroke="#3a3a3a"  />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'12px'}}/>
+        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'12px'}}  />
         <Tooltip />
         <Legend />
 
         <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
         <Bar dataKey="loss_2020" barSize={20} fill="#bac3d2"/>
-        <Bar dataKey="rcp2.6" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4.5" barSize={20} fill="#60b1cc" />
-        <Bar dataKey="rcp8.5" barSize={20} fill="red" />
+        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc" />
+        <Bar dataKey="RCP8.5" barSize={20} fill="red" />
         
 
 
@@ -193,16 +193,16 @@ class Detail extends Component {
         </linearGradient>
       </defs>
         <CartesianGrid stroke="#ffffff" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'10px'}}/>
-        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} stroke="#3a3a3a"  />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'12px'}}/>
+        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'12px'}}  />
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2.6" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4.5" barSize={20} fill="#60b1cc" />
-        <Bar dataKey="rcp8.5" barSize={20} fill="#bac3d2" />
-        <Bar dataKey="loss_2020" barSize={20} fill="red"/>
+        <Bar dataKey="loss_2020" barSize={20} fill="#bac3d2"/>
+        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc" />
+        <Bar dataKey="RCP8.5" barSize={20} fill="red" />
+        
 
 
         
@@ -236,12 +236,12 @@ class Detail extends Component {
         </linearGradient>
       </defs>
         <CartesianGrid stroke="#ffffff" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'10px'}}/>
-        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} stroke="#3a3a3a"  />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'12px'}}/>
+        <YAxis label={{  value:'Value',angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'9px'}}  />
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="Year" fill="#ffffff" stroke="#ffffff" />
+        
         <Bar dataKey="2020" barSize={20} fill="#6c85bd" />
         <Bar dataKey="2030" barSize={20} fill="#60b1cc" />
         <Bar dataKey="2050" barSize={20} fill="#bac3d2" />

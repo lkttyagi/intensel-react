@@ -1,5 +1,5 @@
 import React ,{Component} from 'react';
-import SideNavbar from './sidebar';
+import SideNavbar from './oldsidebar';
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import home from '../assets/home.png';
@@ -38,7 +38,7 @@ const VariableOptions=[
 	{key:'LandSlide',value:'LandSlide',text:'LandSlide'}
 ]
 const YearOptions=[
-	{key:2020,value:2020,text:2020},
+	
 	{key:2030,value:2030,text:2030},
 	{key:2050,value:2050,text:2050}
 ]
@@ -253,6 +253,9 @@ class Dashboard extends Component{
     
    
    	this.props.getProjects();
+
+   	if(this.props.project){
+   		console.log("kffdsjsdojosj",this.props.location.state.project)
    		let formdata = new FormData();
    		formdata.append('project',this.state.project)
    		formdata.append('rcp',this.state.rcp)
@@ -260,9 +263,12 @@ class Dashboard extends Component{
    		formdata.append('year',this.state.year)
    		formdata.append('analysis',this.state.analysis)
    		this.props.addDashboard(formdata);
+   	}
+
+
 
    	let formdata1=new FormData();
-   	formdata1.append('portfolio','salsa')
+   	formdata1.append('project',this.props.location.state.project)
    	this.props.getDetailByYear(formdata1);
 		
 	}
@@ -401,6 +407,19 @@ handleComparison=()=>{
 	handleChange=(value,key)=>{
 		this.setState({[key]:value})
 	}
+	handleChangePro=(value,key)=>{
+		this.setState({[key]:value},this.handleSubmitPro)
+	}
+	handleSubmitPro=()=>{
+		
+		let formdata = new FormData();
+   		formdata.append('project',this.state.project)
+   		formdata.append('rcp',this.state.rcp)
+   		formdata.append('variable',this.state.variable)
+   		formdata.append('year',this.state.year)
+   		formdata.append('analysis',this.state.analysis)
+   		this.props.addDashboard(formdata);
+	}
 
 	handleSubmit=(e)=>{
 		e.preventDefault();
@@ -417,8 +436,8 @@ handleComparison=()=>{
 
  render(){
  	console.log("dashbaord dta",this.state.feedback['2050_85'])
- 	const {value,basement,construction,stories,occupancy}=this.state;
- 	let user_id = localStorage.getItem('user_id');
+ 	const {value,basement,construction,stories,occupancy,project,rcp,year}=this.state;
+ 	
  	const data = [
   {
     name: '2020', 'RCP2.6':0, 'RCP4.5':0, 'RCP8.5':this.state.feedback['2020'],
@@ -433,11 +452,14 @@ handleComparison=()=>{
     name: '2050-2070', 'RCP2.6':this.state.feedback['2050_26'], 'RCP4.5':this.state.feedback['2050_45'], 'RCP 8.5':this.state.feedback['2050_85'],
   }
 ];
+	  	if(this.props.project.length>0)
+ 	{	
 
- 	
- 	if(this.props.project.length>0)
- 	{
- 		const projects = this.props.project.filter(project=>project.user_id==user_id)
+ 		
+ 		let user_id = localStorage.getItem('user_id');
+ 		const projects = this.props.project.filter(project=>project.users_id==user_id)
+ 		console.log("projscddkfl",projects)
+ 		options=[];
  		for(let i=0;i<projects.length;i++){
  			options.push({
  				key:projects[i].name,
@@ -449,6 +471,9 @@ handleComparison=()=>{
  		console.log("option",options)
 
  	}
+
+ 	
+ 	
  	if(this.props.detailyear.success&&this.props.detailyear.success.length>0){
  		console.log("detailyear",this.props.detailyear.success)
  		this.state.yearDetail=this.props.detailyear.success
@@ -542,7 +567,38 @@ handleComparison=()=>{
 			<Grid.Column width="1"></Grid.Column>
 			<Grid.Column width="8" className="card">
 						<p>Asset Level Risk Map</p>
+						
+					<Grid.Row>
+				           
 
+						
+                          <Form.Select placeholder="Project"
+                          onChange={(e,{value})=>this.handleChangePro(value,'project')}
+                          value={project}
+                          options={options}
+                          style={{marginLeft:'25px'}}
+                           />
+                          
+                          
+                          <Form.Select placeholder="RCP"
+                          onChange={(e,{value})=>this.handleChangePro(value,'rcp')}
+                          value={rcp}
+                          options={RcpOptions}
+                          style={{marginLeft:'25px'}}
+                          />
+                          
+                          
+                          <Form.Select placeholder="Year"
+                          onChange={(e,{value})=>this.handleChangePro(value,'year')}
+                          value={year}
+                          options={YearOptions}
+                          style={{marginLeft:'25px'}}
+                          />
+                          
+                          
+                          
+                          
+					</Grid.Row>
 			  <div id="viewDiv" style={{height:'400px',padding:'10px'}}></div>
 			
 			</Grid.Column>
@@ -759,7 +815,7 @@ handleComparison=()=>{
 			</Grid>:
 			<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
-			<Grid.Column width="13"><Detail/></Grid.Column>
+			<Grid.Column width="13"><Detail project={this.state.project}/></Grid.Column>
 			</Grid.Row>}
 			
 				<Modal
@@ -1006,9 +1062,6 @@ const mapDispatchToProps = dispatch =>{
 		},
 		logout:()=>{
 			dispatch(auth.logout())
-		},
-		getBuilding:(formdata)=>{
-			dispatch(dashboard.getBuilding(formdata))
 		},
 		getDetailByYear:(formdata)=>{
 			dispatch(dashboard.getDetailByYear(formdata))

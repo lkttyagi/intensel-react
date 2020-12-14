@@ -12,7 +12,7 @@ import Dashboard from './components/dashboard';
 import Asset from './components/assets';
 import PrivateRoute from './private-route';
 import {history} from './_helpers/history';
-import Detail from './components/detail';
+import Building from './components/building';
 
 class RootContainerComponent extends Component{
 
@@ -34,7 +34,7 @@ class RootContainerComponent extends Component{
             <PrivateRoute path="/location" component={Location}/>
             <PrivateRoute  path="/project" component={Project}/>
             <PrivateRoute  path="/dashboard" component={Dashboard}/>
-            <Route path="/detail" component={Detail}/>
+            <Route path="/detail" component={Building}/>
             
             
         </Switch>
