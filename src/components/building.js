@@ -100,7 +100,7 @@ class Building extends Component {
       exportEnabled: true,
       theme: "light2", // "light1", "dark1", "dark2"
       title:{
-        text: "Flood Loss"
+        text: ""
       },
       axisY: {
         title: "Loss in Million $",
@@ -117,7 +117,7 @@ class Building extends Component {
         dataPoints:this.state.scatter
       }]
     }
-   const options1 = {
+const options1 = {
       animationEnabled: true,
       exportEnabled: true,
       theme: "light2", // "light1", "dark1", "dark2"
@@ -187,23 +187,17 @@ class Building extends Component {
                       
                     </Grid.Row>
                       <Grid.Row>
-                      <Grid.Column width="1"></Grid.Column>
-                    <Grid.Column width="7" className="card">
+                      <Grid.Column width="4"></Grid.Column>
+                    <Grid.Column width="8" className="card">
                                         
                                             <p>Analysis of Flood Damage</p>
-                                            <CanvasJSChart id="chartContainer"options = {options} style={{padding:'5px'}}
+                                            <CanvasJSChart id="chartContainer1" options = {options} style={{padding:'5px'}}
     
       />
                        
                     </Grid.Column>
                     <Grid.Column width="1"></Grid.Column>
-                    <Grid.Column width="7" className="card">
-                                            <p>Analysis of Storm Surge</p>
-        <CanvasJSChart id="chartContainer1" options = {options}
-    
-      />
-                      
-                    </Grid.Column>
+                    
                   </Grid.Row>
 
       

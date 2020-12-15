@@ -522,6 +522,7 @@ class Location extends Component{
             open={this.state.modalOpen}
             onClose={this.handleClose}
             closeIcon
+            style={{width:'30%'}}
           >
             <Modal.Header>Create Portfolio</Modal.Header>
             <Modal.Content scrolling>

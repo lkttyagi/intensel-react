@@ -78,7 +78,7 @@ class Project extends Component{
 		e.preventDefault();
 		let formdata=new FormData();
 		formdata.append('portfolio',this.state.activeItemName)
-		formdata.append('variable',JSON.stringify(this.state.variables))
+		formdata.append('variables',JSON.stringify(this.state.variables))
 		formdata.append('others',JSON.stringify(this.state.others))
 		formdata.append('year',JSON.stringify(this.state.year))
 		formdata.append('rcp',JSON.stringify(this.state.rcp))

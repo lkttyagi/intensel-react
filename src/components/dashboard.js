@@ -255,9 +255,9 @@ class Dashboard extends Component{
    	this.props.getProjects();
 
    	if(this.props.project){
-   		console.log("kffdsjsdojosj",this.props.location.state.project_name.project)
+   		
    		let formdata = new FormData();
-   		formdata.append('project',this.state.project)
+   		formdata.append('project',this.props.location.state.project_name.project)
    		formdata.append('rcp',this.state.rcp)
    		formdata.append('variable',this.state.variable)
    		formdata.append('year',this.state.year)
@@ -319,16 +319,16 @@ class Dashboard extends Component{
 		console.log("fndfdgdgdsgdijgdos",this.state.single_asset_overall)
 	 singledata =[
  {
-    name: '2020', rcp2:0, rcp4:0, rcp8:this.state.single_asset_overall[0].overall_bar_chart['2020'],
+    name: '2020', 'RCP2.6':0, 'RCP4.5':0, 'RCP8.5':this.state.single_asset_overall[0].overall_bar_chart['2020'],
   },
   
   {
-    name: '2030-2050', rcp2:this.state.single_asset_overall[0].overall_bar_chart['2030_26'], rcp4:this.state.single_asset_overall[0].overall_bar_chart['2030_45'], rcp8:this.state.single_asset_overall[0].overall_bar_chart['2030_85'],
+    name: '2030-2050', 'RCP2.6':this.state.single_asset_overall[0].overall_bar_chart['2030_26'], 'RCP4.5':this.state.single_asset_overall[0].overall_bar_chart['2030_45'], 'RCP8.5':this.state.single_asset_overall[0].overall_bar_chart['2030_85'],
   },
   
 
   {
-    name: '2050-2070', rcp2:this.state.single_asset_overall[0].overall_bar_chart['2050_26'], rcp4:this.state.single_asset_overall[0].overall_bar_chart['2050_45'], rcp8:this.state.single_asset_overall[0].overall_bar_chart
+    name: '2050-2070', 'RCP2.6':this.state.single_asset_overall[0].overall_bar_chart['2050_26'], 'RCP4.5':this.state.single_asset_overall[0].overall_bar_chart['2050_45'], 'RCP8.5':this.state.single_asset_overall[0].overall_bar_chart
     ['2050_85'],
   }
 
@@ -869,12 +869,12 @@ handleComparison=()=>{
         <Legend />
 
         <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4" barSize={20} fill="#60b1cc"/>
-        <Bar dataKey="rcp8" barSize={20} fill="#bac3d2"/>
+        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc"/>
+        <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2"/>
 
 
-        <Line type="monotone" dataKey="uv" stroke="#000000" />
+        	
       </ComposedChart>
               			</Grid.Column>
               			<Grid.Column width="1"></Grid.Column>

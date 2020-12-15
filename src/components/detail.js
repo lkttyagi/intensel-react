@@ -7,7 +7,7 @@ import {
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import {project,auth,dashboard} from '../actions';
 import {connect} from 'react-redux';
-
+import './detail.css';
 
 
 let data01=[];
@@ -149,7 +149,7 @@ class Detail extends Component {
       </defs>
         <CartesianGrid stroke="#ffffff" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'12px'}}/>
-        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'12px'}}  />
+        <YAxis label={{ value: '$ Mil Losses in 2030 vs 2020', angle: -90, position: 'insideLeft',textAnchor:'middle'  }} style={{stroke:'#3a3a33a',fontSize:'12px'}} className="yaxis" />
         <Tooltip />
         <Legend />
 
@@ -194,7 +194,7 @@ class Detail extends Component {
       </defs>
         <CartesianGrid stroke="#ffffff" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'12px'}}/>
-        <YAxis label={{ value: 'Value', angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'12px'}}  />
+        <YAxis label={{ value: '$ Mil Losses in 2050 vs 2020', angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'12px'}} className="yaxis" />
         <Tooltip />
         <Legend />
 
@@ -213,7 +213,7 @@ class Detail extends Component {
       <Grid.Column width="12" className="card">
              <ComposedChart
         width={1200}
-        height={400}
+        height={450}
         data={this.state.bar_data2}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
@@ -237,7 +237,7 @@ class Detail extends Component {
       </defs>
         <CartesianGrid stroke="#ffffff" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{stroke:'#3a3a33a',fontSize:'12px'}}/>
-        <YAxis label={{  value:'Value',angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'9px'}}  />
+        <YAxis label={{  value:'Estimated % Loss Relative to 2020 Property valuations (RCP 8.5)',angle: -90, position: 'insideLeft'  }} style={{stroke:'#3a3a33a',fontSize:'9px'}}  className="yaxis"/>
         <Tooltip />
         <Legend />
 
