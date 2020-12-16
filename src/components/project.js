@@ -8,7 +8,8 @@ import SideNavbar from './sidebar';
 import Spinner from './loader';
 import CsvDownload from 'react-json-to-csv';
 
-let options=[];
+let options=[];;
+
 const StatusOptions=[
 	{key:'active',value:'Active',text:'Active'},
 	{key:'finished',value:'Finished',text:'Finished'}
@@ -57,7 +58,8 @@ class Project extends Component{
 		year:'',
 		rcp:'',
 		modalloading:false,
-		lossmodalOpen:false
+		lossmodalOpen:false,
+		portfolios:''
 		
 	}
 
@@ -122,10 +124,10 @@ class Project extends Component{
 		
 
 		
-		if(this.props.locus.length>0){
+		if(this.props.locus && this.props.locus.length>0){
 		options=[];
 		const assets = this.props.locus.filter(location=>location.users_id==user_id)
-		
+		this.state.portfolios=assets
 		console.log("locations",assets[0].assets)
 		
 		for(let i=0;i<assets.length;i++){
@@ -226,22 +228,26 @@ class Project extends Component{
 					<Table.Header>
 						<Table.Row>
 							<Table.HeaderCell textAlign="center">Portfolio</Table.HeaderCell>
-							<Table.HeaderCell textAlign="center">Download</Table.HeaderCell>
-
+							<Table.HeaderCell textAlign="right">Download</Table.HeaderCell>
+							<Table.HeaderCell textAlign="center"></Table.HeaderCell>
+							<Table.HeaderCell textAlign="center"></Table.HeaderCell>
+							<Table.HeaderCell textAlign="center">Recommended for Global Analysis</Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
 					<Table.Body>
 
-					{this.props.locus.length>0?this.props.locus.reverse().map((portfolio,index)=>(
+					{this.state.portfolios && this.state.portfolios.length>0?this.state.portfolios.map((portfolio,index)=>(
       <Table.Row key={index}>
 
         <Table.Cell width="4" textAlign="center"><p>{portfolio.name}</p></Table.Cell>
        
         
         
-        <Table.Cell><Button className="csv" onClick={()=>this.handleOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black'}} primary>Download CSV</Button></Table.Cell>
-        <Table.Cell><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black'}} primary>Download Loss</Button></Table.Cell>
-        <Table.Cell><Button className="csv"  style={{backgroundColor:'white',border:'1px solid black',color:'black'}} primary>Download Summary</Button></Table.Cell>
+        <Table.Cell><Button className="csv" onClick={()=>this.handleOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download CSV</Button></Table.Cell>
+        <Table.Cell><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download Loss</Button></Table.Cell>
+        
+        <Table.Cell><Button className="csv"  style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download Summary</Button></Table.Cell>
+      	<Table.Cell width="4" textAlign="center">{portfolio.problematic_assets}</Table.Cell>
       </Table.Row>
       )):
 <Table.Row></Table.Row>}

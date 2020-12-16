@@ -3,9 +3,13 @@ input{
 	border:0px!important;
 	color:rgb(47,53,66)!important;
 }
-.ui.selection.dropdown{
+.ui.fluid.selection.dropdown {
 	background-color:rgb(241,242,246)!important;
 	border:0px!important;
+	
+}
+.divider.text{
+	color:#015edc!important;
 }
 label{
 	color:rgb(164,176,190)!important;

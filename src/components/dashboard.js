@@ -262,7 +262,7 @@ class Dashboard extends Component{
    		formdata.append('variable',this.state.variable)
    		formdata.append('year',this.state.year)
    		formdata.append('analysis',this.state.analysis)
-   		this.props.addDashboard(formdata);
+   		this.setState({project:this.props.location.state.project_name.project},()=>this.props.addDashboard(formdata));
    	}
 
 
