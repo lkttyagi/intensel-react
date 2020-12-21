@@ -7,7 +7,7 @@ import {
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import {project,auth,dashboard} from '../actions';
 import {connect} from 'react-redux';
-import  {CanvasJSChart } from  'canvasjs-react-charts';
+import {VictoryLine,VictoryChart,VictoryAxis,VictoryScatter} from 'victory';
 
 
 let data01=[];
@@ -51,6 +51,7 @@ class Building extends Component {
     stories:'1',
     occupancy:'res',
     per_sq_m_value:40000,
+    line:'',
     scatter:''
   }
 
@@ -92,54 +93,11 @@ class Building extends Component {
       y:this.props.building.mdr[i]
     })
   }
-  this.state.scatter=data01
+  this.state.scatter=this.props.building.dct_asset
+  this.state.line=data01
 
  }
- const options = {
-      animationEnabled: true,
-      exportEnabled: true,
-      theme: "light2", // "light1", "dark1", "dark2"
-      title:{
-        text: ""
-      },
-      axisY: {
-        title: "Loss in Million $",
-        suffix: ""
-      },
-      axisX: {
-        title: "Depth",
-        prefix: "W",
-        interval: 2
-      },
-      data: [{
-        type: "line",
-        toolTipContent: "{x}: {y}",
-        dataPoints:this.state.scatter
-      }]
-    }
-const options1 = {
-      animationEnabled: true,
-      exportEnabled: true,
-      theme: "light2", // "light1", "dark1", "dark2"
-      title:{
-        text: "Storm Surge Loss"
-      },
-      axisY: {
-        title: "Loss in Million $",
-        suffix: ""
-      },
-      axisX: {
-        title: "Depth",
-        prefix: "W",
-        interval: 2
-      },
-      data: [{
-        type: "line",
-        toolTipContent: "{x}: {y}",
-        dataPoints:this.state.scatter
-      }]
-    }
-
+ 
 
 
     return(
@@ -187,16 +145,49 @@ const options1 = {
                       
                     </Grid.Row>
                       <Grid.Row>
-                      <Grid.Column width="4"></Grid.Column>
-                    <Grid.Column width="8" className="card">
+                      <Grid.Column width="1"></Grid.Column>
+                    <Grid.Column width="6" className="card">
                                         
                                             <p>Analysis of Flood Damage</p>
-                                            <CanvasJSChart id="chartContainer1" options = {options} style={{padding:'5px'}}
+                                            <VictoryChart><VictoryLine style= {{ 
+                                                data:{
+                                                  stroke:'#015edc'
+                                                },
+                                              labels:{
+                                              fontSize:12,
+
+                                            }}}data={this.state.line}/>
+                                            <VictoryScatter
+                                              data={[
+                                                {x:0.5,y:this.state.scatter['f2.6'],size:5},
+                                                {x:0.5,y:this.state.scatter['f4.5'],size:5},
+                                                {x:0.7,y:this.state.scatter['f8.5'],size:5}
+
+                                                ]}
+                                            />
+                                            </VictoryChart>
     
-      />
+      
                        
                     </Grid.Column>
                     <Grid.Column width="1"></Grid.Column>
+                    <Grid.Column width="6" className="card">
+                    <p>Analysis of Storm Damage</p>
+                      <VictoryChart>
+                      <VictoryAxis label="Loss in Million $" dependentAxis/>
+                      <VictoryAxis label="Depth"/>
+                      <VictoryLine data={this.state.line}/>
+                      <VictoryScatter
+                                              data={[
+                                                {x:0.5,y:this.state.scatter['s2.6'],size:5},
+                                                {x:0.5,y:this.state.scatter['s4.5'],size:5},
+                                                {x:0.7,y:this.state.scatter['s8.5'],size:5}
+
+                                                ]}
+                                            />
+                      </VictoryChart>
+
+                    </Grid.Column>
                     
                   </Grid.Row>
 

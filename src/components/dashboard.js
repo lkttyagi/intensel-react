@@ -19,12 +19,19 @@ import './dashboard.css';
 
 import {Tabs,Tab,Row,Col} from 'react-bootstrap';
 import Detail from './detail';
-
+import Circle from 'react-circle';
+import Donut from './donut';
+import Heatmap from 'react-simple-heatmap';
+import RCPDonut from './rcpdonut';
+import YEARDonut from './yeardonut';
+import SingleDonut from './singledonut';
 
 let options=[];
 let Item=[];
 let singledata=[];
 let data01=[];
+let flat_data=[];
+let losses_data=[];
 
 const RcpOptions=[
 	{key:2.6,value:2.6,text:2.6},
@@ -104,7 +111,11 @@ class Dashboard extends Component{
 		per_sq_m_value:40000,
 		scatter:'',
 		yearDetail:'',
-		detailed:'false'
+		detailed:'false',
+		portfolio_losses:'',
+		portfolio_losses_flat:'',
+		overall:'',
+		heatmap:''
 	}
 
 
@@ -185,7 +196,7 @@ class Dashboard extends Component{
     };
     // Adding shapefile as a feature layer
     const povLayer = new FeatureLayer({
-        url: "https://services3.arcgis.com/U26uBjSD32d7xvm2/arcgis/rest/services/Hong_Kong_Shapefile/FeatureServer/0",
+        url: "https://services9.arcgis.com/VkScCoIvdvWoNy79/arcgis/rest/services/shapefiles/FeatureServer/0",
         renderer: renderer,
         title: "Flood in Hong Kong",
         popupTemplate: {
@@ -277,7 +288,11 @@ class Dashboard extends Component{
 			this.setState({feedback:this.props.feedback.overall.overall_bar_chart,
 				asset_table:this.props.feedback.overall.asset_table,
 				risk:this.props.feedback.overall.progress_bars,
-				single_asset:this.props.feedback.single_asset
+				single_asset:this.props.feedback.single_asset,
+				portfolio_losses:this.props.feedback.overall.portfolio_versus_losses,
+				portfolio_losses_flat:this.props.feedback.overall.portfolio_versus_losses_flat_adjusted,
+				overall:this.props.feedback.overall,
+				heatmap:this.props.feedback.overall.heatmap
 			})
 
 		}
@@ -419,6 +434,10 @@ handleComparison=()=>{
    		formdata.append('year',this.state.year)
    		formdata.append('analysis',this.state.analysis)
    		this.props.addDashboard(formdata);
+
+   		let formdata1=new FormData();
+   	formdata1.append('project',this.state.project)
+   	this.props.getDetailByYear(formdata1);
 	}
 
 	handleSubmit=(e)=>{
@@ -435,8 +454,50 @@ handleComparison=()=>{
 
 
  render(){
- 	console.log("dashbaord dta",this.state.feedback['2050_85'])
+ 	console.log("dashbaord dta",this.state.heatmap)
  	const {value,basement,construction,stories,occupancy,project,rcp,year}=this.state;
+
+ 	let heatmapdata=[];
+ 	let yLabels=[];
+ 	if(this.state.heatmap.length===undefined){
+ 	for(let i = 0; i < 3; i++){
+    let temp=[];
+    for(let j = 0; j <6; j++){
+    	console.log("value passing",i,j,this.state.heatmap.values[i][j])
+        temp.push(this.state.heatmap.values[i][j]);
+    }
+    console.log("temp",temp)
+    heatmapdata.push(temp)
+    console.log("heatmap",heatmapdata);
+
+}
+
+	for(let i=0;i<this.state.heatmap.values.length;i++){
+		yLabels.push(this.state.heatmap.names[i])
+	}
+   
+}
+{/*for(let i = 0; i < 6; i++){
+    const tempo = [];
+    for(let i = 0; i < 1; i++){
+        tempo.push(Math.round(Math.random() * 100));
+    }
+    console.log("tempo",tempo);
+    heatmapdata.push(tempo);
+    console.log("heatmap",heatmapdata)
+}*/}
+
+
+
+ 	if(this.state.portfolio_losses){
+ 		for(let i=0;i<this.state.portfolio_losses.x.length;i++){
+ 		losses_data.push({
+ 			name:this.state.portfolio_losses.x[i],
+ 			value:this.state.portfolio_losses.y[i]
+ 		})
+ 		console.log("proffsdfdd",losses_data)
+ 	}
+ }
  	
  	const data = [
   {
@@ -449,7 +510,7 @@ handleComparison=()=>{
   
 
   {
-    name: '2050-2070', 'RCP2.6':this.state.feedback['2050_26'], 'RCP4.5':this.state.feedback['2050_45'], 'RCP 8.5':this.state.feedback['2050_85'],
+    name: '2050-2070', 'RCP2.6':this.state.feedback['2050_26'], 'RCP4.5':this.state.feedback['2050_45'], 'RCP8.5':this.state.feedback['2050_85'],
   }
 ];
 	  	if(this.props.project.length>0)
@@ -468,7 +529,7 @@ handleComparison=()=>{
 
  			})
  		}
- 		console.log("option",options)
+ 		console.log("option",data)
 
  	}
 
@@ -518,6 +579,41 @@ handleComparison=()=>{
 
 			</Grid.Row>
 			</Grid>
+		<Grid>
+				<Grid.Row>
+					<Grid.Column width="3"></Grid.Column>
+					<Grid.Column width="13">
+						<Grid.Row>
+							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+								<p>Overall</p>
+								
+							<Donut data={this.state.overall}/>									
+									
+								
+							</Grid.Column>
+							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+								<p>Year</p>
+								
+							<YEARDonut data={this.state.yearDetail}/>
+																	
+							</Grid.Column>
+							<Grid.Column className="card" style={{width:'23.5%'}}>
+								<p>RCP</p>
+								
+								<RCPDonut data={this.state.yearDetail}/>
+									
+								
+							</Grid.Column>
+							<Grid.Column className="card" style={{width:'24.5%',marginLeft:'1%'}}>
+								<p> Climate Risk Per 10 Year Rise</p>
+								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
+							</Grid.Column>
+						</Grid.Row>
+
+					</Grid.Column>
+				</Grid.Row>
+
+		</Grid>
 			{this.state.detailed?
 				<Grid>
 				<Grid.Row>
@@ -526,13 +622,13 @@ handleComparison=()=>{
 			<Grid.Column width="4" className="card">
 			<p>Climate Risk Index</p>
 				   <ComposedChart
-        width={460}
+        width={500}
         height={400}
         data={data}
         margin={{
           top: 20, right: 80, bottom: 20, left: 20,
         }}
-        padding={5}
+        padding={0}
        
       >
       <defs>
@@ -687,6 +783,29 @@ handleComparison=()=>{
 				</Grid.Column>
 			</Grid.Row>
 			<Grid.Row>
+			<Grid.Column width="3"></Grid.Column>
+			<Grid.Column width="13">
+				 <div style={{height:'400px'}}> 
+				 {heatmapdata.length>0?<Heatmap
+                              	data={heatmapdata}
+                                
+                                xLabels={ ["Landslide", "Rainfall", "Flood", "Drought Index", "Storm Surge", "Extreme Heat"] }
+                                yLabels={ yLabels }
+                                showLegend={ true }
+                                xStepLabel={ 1 }
+                                yStepLabel={ 1 }
+                                showTicks={ "x" }
+                                xLabelsStyle={{ fontWeight: "bold", fontSize: "11px" }}
+                                yLabelsStyle={{ fontWeight: "bold" }}
+                                legendStyle={{ fontWeight: "bold" }}
+                                bordered={ false }
+                                borderRadius={ "4px" }
+                                
+                            />:null}
+                </div>
+             </Grid.Column>
+			</Grid.Row>
+			<Grid.Row>
 				<Grid.Column width="3"></Grid.Column>
 				<Grid.Column width="13" className="card">
 				<Table>
@@ -817,7 +936,7 @@ handleComparison=()=>{
 			<Grid.Column width="3"></Grid.Column>
 			<Grid.Column width="13"><Detail project={this.state.project}/></Grid.Column>
 			</Grid.Row>}
-			
+
 				<Modal
             open={this.state.modalOpen}
             onClose={this.handleClose}
@@ -828,6 +947,36 @@ handleComparison=()=>{
 
             <Modal.Header>Asset Analysis</Modal.Header>
             <Modal.Content scrolling>
+            	<Grid.Row>
+					
+					
+							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+								<p>Overall</p>
+								
+							<SingleDonut data={this.state.single_asset_overall}/>									
+									
+								
+							</Grid.Column>
+							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+								<p>Year</p>
+								
+							<YEARDonut data={this.state.yearDetail}/>
+																	
+							</Grid.Column>
+							<Grid.Column className="card" style={{width:'23.5%'}}>
+								<p>RCP</p>
+								
+								<RCPDonut data={this.state.yearDetail}/>
+									
+								
+							</Grid.Column>
+							<Grid.Column className="card" style={{width:'24.5%',marginLeft:'1%'}}>
+								<p> Climate Risk Per 10 Year Rise</p>
+								<Circle className="cricle" progress={this.state.single_asset_overall.per_10_years_rise}/>
+							</Grid.Column>
+						
+				</Grid.Row>
+				<br/>
             	<Row>
             		<Col>
             			<Tabs defaultActiveKey="Risk">
@@ -1038,6 +1187,93 @@ handleComparison=()=>{
               
             </Modal.Content>
           </Modal>
+          <Grid>
+          		<Grid.Row>
+				<Grid.Column width="3"></Grid.Column>
+				<Grid.Column width="6" className="card">
+				<p>Portfolio vs Losses(Building FootPrint)</p>
+						   <ComposedChart
+        width={450}
+        height={400}
+        data={losses_data}
+        margin={{
+          top: 20, right: 80, bottom: 20, left: 20,
+        }}
+        padding={5}
+       
+      >
+      <defs>
+      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
+        </linearGradient>
+      </defs>
+        <CartesianGrid stroke="#e5e5e5" />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <Tooltip />
+        <Legend />
+
+        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="value" barSize={20} fill="#6c85bd" />
+       
+
+
+        	
+      </ComposedChart>
+				</Grid.Column>
+				<Grid.Column width="1"></Grid.Column>
+				<Grid.Column width="6" className="card">
+				<p>Portfolio vs Losses(Flat Adjusted)</p>
+						   <ComposedChart
+        width={450}
+        height={400}
+        data={singledata}
+        margin={{
+          top: 20, right: 80, bottom: 20, left: 20,
+        }}
+        padding={5}
+       
+      >
+      <defs>
+      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
+        </linearGradient>
+      </defs>
+        <CartesianGrid stroke="#e5e5e5" />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <Tooltip />
+        <Legend />
+
+        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc"/>
+        <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2"/>
+
+
+        	
+      </ComposedChart>
+				</Grid.Column>
+			</Grid.Row>
+			</Grid>
 			</div>
 
  		)

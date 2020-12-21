@@ -223,7 +223,8 @@ class Location extends Component{
   		  	
   		  	console.log("Location company",LocationList);
   		  	
-  		  		console.log("chal raha hai ",i)
+  		  		console.log("chal raha hai ",LocationList[0].ADDRESS)
+  		  		if(LocationList[0].ADDRESS.length>0){
   		  		let a = JSON.parse(LocationList[0].ADDRESS.replace(/'/g,'"'));
   		  		console.log("working",a);
   		  		let b = JSON.parse(LocationList[0].coord.replace(/'/g,'"'));
@@ -233,6 +234,7 @@ class Location extends Component{
   		  			mapcards.push([a[j],b[j].split(',')[0].replace(/[()]/g,''),b[j].split(',')[1].replace(/[()]/g,'')])
   		  		}
   		  		this.setState({locations:mapcards},()=>console.log("comapnay",mapcards))
+  		  		}
   		  		
 
   		  	
