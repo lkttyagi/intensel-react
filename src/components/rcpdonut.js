@@ -67,11 +67,11 @@ const COLORS = ["#0088fe","#00c49f","#ffbb28"];
           </Pie>
       </PieChart>
       <div style={{display:'flex'}}>
-      <p style={{fontSize:'12px',display:'flex'}}>RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',padding:'5px'}}></div> $ {x} Billion </p>  
-      <p style={{fontSize:'12px',display:'flex'}}>RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',padding:'5px'}}></div> $ {x} Billion </p>  
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y} Billion</p>
       </div>
       <div>
-      <p style={{fontSize:'12px',display:'flex'}}>RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {y} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {y} Billion</p>
       </div>
       </div>
     

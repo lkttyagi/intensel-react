@@ -34,7 +34,7 @@ export default class Donut extends PureComponent {
     }
     
     const data = [
-  { name: 'Total Property Cost', value:y },
+  { name: 'Total Property Value', value:y },
   { name: 'Total Loss', value:x },
   
 
@@ -66,7 +66,7 @@ const COLORS = ["#0088fe","#00c49f"];
       </PieChart>
 
       <div style={{display:'flex'}}><p style={{fontSize:'12px',display:'flex'}}>Total Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',marginTop:'4px',marginLeft:'5px'}}></div> $ {x} Billion </p>  
-      <p style={{fontSize:'12px',display:'flex'}}>Property cost <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div> $ {y} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}>Property Value <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div> $ {y} Billion</p>
       </div>
       </div>
     

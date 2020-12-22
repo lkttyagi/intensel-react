@@ -247,7 +247,7 @@ class Project extends Component{
         <Table.Cell><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download Loss</Button></Table.Cell>
         
         <Table.Cell><Button className="csv"  style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download Summary</Button></Table.Cell>
-      	<Table.Cell width="4" textAlign="center">{portfolio.problematic_assets}</Table.Cell>
+      	<Table.Cell width="4" textAlign="center" style={{color:'red'}}>{portfolio.problematic_assets}</Table.Cell>
       </Table.Row>
       )):
 <Table.Row></Table.Row>}

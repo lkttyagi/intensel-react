@@ -32,6 +32,7 @@ let singledata=[];
 let data01=[];
 let flat_data=[];
 let losses_data=[];
+let losses_data_flat=[];
 
 const RcpOptions=[
 	{key:2.6,value:2.6,text:2.6},
@@ -115,7 +116,8 @@ class Dashboard extends Component{
 		portfolio_losses:'',
 		portfolio_losses_flat:'',
 		overall:'',
-		heatmap:''
+		heatmap:'',
+		losses:''
 	}
 
 
@@ -288,6 +290,7 @@ class Dashboard extends Component{
 			this.setState({feedback:this.props.feedback.overall.overall_bar_chart,
 				asset_table:this.props.feedback.overall.asset_table,
 				risk:this.props.feedback.overall.progress_bars,
+				losses:this.props.feedback.overall.loss_bars,
 				single_asset:this.props.feedback.single_asset,
 				portfolio_losses:this.props.feedback.overall.portfolio_versus_losses,
 				portfolio_losses_flat:this.props.feedback.overall.portfolio_versus_losses_flat_adjusted,
@@ -460,15 +463,15 @@ handleComparison=()=>{
  	let heatmapdata=[];
  	let yLabels=[];
  	if(this.state.heatmap.length===undefined){
- 	for(let i = 0; i < 3; i++){
+ 	for(let i = 0; i < this.state.heatmap.values.length; i++){
     let temp=[];
-    for(let j = 0; j <6; j++){
-    	console.log("value passing",i,j,this.state.heatmap.values[i][j])
+    for(let j = 0; j <3; j++){
+    	
         temp.push(this.state.heatmap.values[i][j]);
     }
-    console.log("temp",temp)
+    
     heatmapdata.push(temp)
-    console.log("heatmap",heatmapdata);
+    
 
 }
 
@@ -495,7 +498,16 @@ handleComparison=()=>{
  			name:this.state.portfolio_losses.x[i],
  			value:this.state.portfolio_losses.y[i]
  		})
- 		console.log("proffsdfdd",losses_data)
+ 	
+ 	}
+ }
+ if(this.state.portfolio_losses_flat){
+ 		for(let i=0;i<this.state.portfolio_losses_flat.x.length;i++){
+ 		losses_data_flat.push({
+ 			name:this.state.portfolio_losses_flat.x[i],
+ 			value:this.state.portfolio_losses_flat.y[i]
+ 		})
+ 		console.log("proffsdfdd",losses_data_flat)
  	}
  }
  	
@@ -584,6 +596,19 @@ handleComparison=()=>{
 					<Grid.Column width="3"></Grid.Column>
 					<Grid.Column width="13">
 						<Grid.Row>
+						<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+							<Grid.Row style={{padding:'10px'}}>
+							<p> Climate Risk Per 10 Year Rise</p>
+							<br/>
+								<Grid.Column style={{width:'50%'}}>
+								
+								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
+								</Grid.Column>
+								<Grid.Column style={{width:'50%'}}>
+								<p> Total Loss <br/><br/><i style={{color:'red',fontSize:'20px'}}>{this.state.overall.net_loss_value}</i></p>
+								</Grid.Column>
+							</Grid.Row>
+							</Grid.Column>
 							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
 								<p>Overall</p>
 								
@@ -604,10 +629,7 @@ handleComparison=()=>{
 									
 								
 							</Grid.Column>
-							<Grid.Column className="card" style={{width:'24.5%',marginLeft:'1%'}}>
-								<p> Climate Risk Per 10 Year Rise</p>
-								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
-							</Grid.Column>
+							
 						</Grid.Row>
 
 					</Grid.Column>
@@ -784,11 +806,42 @@ handleComparison=()=>{
 			</Grid.Row>
 			<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
-			<Grid.Column width="13">
-				 <div style={{height:'400px'}}> 
+			<Grid.Column width="4" className="card">
+				<br/>
+				<p>Portfolio Losses</p>
+
+					{this.state.losses['Asset Flood Damage']?<div>
+						
+						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}></i></p>
+						<Progress percent={this.state.risk.OVERALL}/>
+
+					    <p style={{fontSize:'12px'}}>Asset Flood Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][1]} Million</i></p>
+
+						<Progress percent={this.state.losses['Asset Flood Damage'][0]} color='green'/>
+						<p style={{fontSize:'12px'}}>Asset Storm Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Storm Damage'][1]} Million</i></p>
+
+						<Progress percent={this.state.losses['Asset Storm Damage'][0]} color='green'/>
+						<p style={{fontSize:'12px'}}>Operational Flood Loss <i style={{float:'right'}}>$ {this.state.losses['Operational Flood Loss'][1]} Million</i></p>
+
+						<Progress percent={this.state.losses['Operational Flood Loss'][0]} color='green'/>
+						<p style={{fontSize:'12px'}}>Operational Storm Surge Loss <i style={{float:'right'}}>$ {this.state.losses['Operational Storm Surge Loss'][1]} Million</i></p>
+
+						<Progress percent={this.state.losses['Operational Storm Surge Loss'][0]} color='green'/>
+						
+
+						
+
+						
+
+
+					</div>:null}
+				</Grid.Column>
+			<Grid.Column width="1"></Grid.Column>
+			<Grid.Column width="8" className="card">
+				 <div style={{height:'400px',padding:'10px'}}> 
 				 {heatmapdata.length>0?<Heatmap
                               	data={heatmapdata}
-                                
+                                bgColors={["rgb(235,102,40)","rgb(60,39,99)"]}
                                 xLabels={ ["Landslide", "Rainfall", "Flood", "Drought Index", "Storm Surge", "Extreme Heat"] }
                                 yLabels={ yLabels }
                                 showLegend={ true }
@@ -798,7 +851,7 @@ handleComparison=()=>{
                                 xLabelsStyle={{ fontWeight: "bold", fontSize: "11px" }}
                                 yLabelsStyle={{ fontWeight: "bold" }}
                                 legendStyle={{ fontWeight: "bold" }}
-                                bordered={ false }
+                                bordered={ true }
                                 borderRadius={ "4px" }
                                 
                             />:null}
@@ -931,6 +984,90 @@ handleComparison=()=>{
 
 				</Grid.Column>
 			</Grid.Row>
+			          		<Grid.Row>
+				<Grid.Column width="3"></Grid.Column>
+				<Grid.Column width="6" className="card">
+				<p>Portfolio vs Losses(Building FootPrint)</p>
+		{losses_data.length>0?				   <ComposedChart
+        width={450}
+        height={400}
+        data={losses_data}
+        margin={{
+          top: 20, right: 80, bottom: 20, left: 20,
+        }}
+        padding={5}
+       
+      >
+      <defs>
+      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
+        </linearGradient>
+      </defs>
+        <CartesianGrid stroke="#e5e5e5" />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <Tooltip />
+        <Legend />
+
+        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="value" barSize={20} fill="#6c85bd" />
+       
+
+
+        	
+      </ComposedChart>:null}
+				</Grid.Column>
+				<Grid.Column width="1"></Grid.Column>
+				<Grid.Column width="6" className="card">
+				<p>Portfolio vs Losses(Flat Adjusted)</p>
+			{losses_data_flat.length>0?			   <ComposedChart
+        width={450}
+        height={400}
+        data={losses_data_flat}
+        margin={{
+          top: 20, right: 80, bottom: 20, left: 20,
+        }}
+        padding={5}
+       
+      >
+      <defs>
+      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
+        </linearGradient>
+        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
+            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
+        </linearGradient>
+      </defs>
+        <CartesianGrid stroke="#e5e5e5" />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <Tooltip />
+        <Legend />
+
+        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="value" barSize={20} fill="#6c85bd" />
+        
+
+
+        	
+      </ComposedChart>:null}
+				</Grid.Column>
+			</Grid.Row>
 			</Grid>:
 			<Grid.Row>
 			<Grid.Column width="3"></Grid.Column>
@@ -947,10 +1084,35 @@ handleComparison=()=>{
 
             <Modal.Header>Asset Analysis</Modal.Header>
             <Modal.Content scrolling>
-            	<Grid.Row>
+            	
+				<br/>
+            	<Row>
+            		<Col>
+            			<Tabs defaultActiveKey="Risk">
+            				<Tab eventKey="Risk" title="Risk">
+            				<br/>
+            				<Grid>
+            				<Grid.Row>
+
+							<Grid.Column className="card" style={{width:'24.5%',marginleft:'0.5%'}}>
+							{this.state.single_asset_overall? 
+								<Grid.Row style={{padding:'10px'}}>
+							<p> Climate Risk Per 10 Year Rise</p>
+							<br/>
+								
+									<Grid.Column style={{width:'50%'}}>
+								
+								
+									<Circle className="cricle" progress={this.state.single_asset_overall[0].per_10_years_rise}/>
+								</Grid.Column>
+								<Grid.Column style={{width:'50%'}}>
+								<p> Total Loss <br/><br/><i style={{color:'red',fontSize:'20px'}}>{this.state.single_asset_overall[0].net_loss_value}</i></p>
+								</Grid.Column>
+								
+							</Grid.Row>:null}
+							</Grid.Column>
 					
-					
-							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%',marginLeft:'0.5%'}}>
 								<p>Overall</p>
 								
 							<SingleDonut data={this.state.single_asset_overall}/>									
@@ -970,19 +1132,9 @@ handleComparison=()=>{
 									
 								
 							</Grid.Column>
-							<Grid.Column className="card" style={{width:'24.5%',marginLeft:'1%'}}>
-								<p> Climate Risk Per 10 Year Rise</p>
-								<Circle className="cricle" progress={this.state.single_asset_overall.per_10_years_rise}/>
-							</Grid.Column>
+							
 						
 				</Grid.Row>
-				<br/>
-            	<Row>
-            		<Col>
-            			<Tabs defaultActiveKey="Risk">
-            				<Tab eventKey="Risk" title="Risk">
-            				<br/>
-            				<Grid>
             					          		<Grid.Row>
               			<Grid.Column width="1"></Grid.Column>
               			<Grid.Column width="4" className="card">
@@ -1188,91 +1340,7 @@ handleComparison=()=>{
             </Modal.Content>
           </Modal>
           <Grid>
-          		<Grid.Row>
-				<Grid.Column width="3"></Grid.Column>
-				<Grid.Column width="6" className="card">
-				<p>Portfolio vs Losses(Building FootPrint)</p>
-						   <ComposedChart
-        width={450}
-        height={400}
-        data={losses_data}
-        margin={{
-          top: 20, right: 80, bottom: 20, left: 20,
-        }}
-        padding={5}
-       
-      >
-      <defs>
-      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
-        </linearGradient>
-        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
-        </linearGradient>
-        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
-        </linearGradient>
-      </defs>
-        <CartesianGrid stroke="#e5e5e5" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
-        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
-        <Tooltip />
-        <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="value" barSize={20} fill="#6c85bd" />
-       
-
-
-        	
-      </ComposedChart>
-				</Grid.Column>
-				<Grid.Column width="1"></Grid.Column>
-				<Grid.Column width="6" className="card">
-				<p>Portfolio vs Losses(Flat Adjusted)</p>
-						   <ComposedChart
-        width={450}
-        height={400}
-        data={singledata}
-        margin={{
-          top: 20, right: 80, bottom: 20, left: 20,
-        }}
-        padding={5}
-       
-      >
-      <defs>
-      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
-        </linearGradient>
-        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
-        </linearGradient>
-        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
-        </linearGradient>
-      </defs>
-        <CartesianGrid stroke="#e5e5e5" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
-        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
-        <Tooltip />
-        <Legend />
-
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc"/>
-        <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2"/>
-
-
-        	
-      </ComposedChart>
-				</Grid.Column>
-			</Grid.Row>
 			</Grid>
 			</div>
 
