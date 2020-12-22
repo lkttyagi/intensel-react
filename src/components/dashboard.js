@@ -605,7 +605,7 @@ handleComparison=()=>{
 								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
-								<p> Total Loss <br/><br/><i style={{color:'red',fontSize:'20px'}}>{this.state.overall.net_loss_value}</i></p>
+								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
 								</Grid.Column>
 							</Grid.Row>
 							</Grid.Column>
@@ -1014,7 +1014,7 @@ handleComparison=()=>{
       </defs>
         <CartesianGrid stroke="#e5e5e5" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
-        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <YAxis label={{ value: 'miilion US $', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
 
@@ -1055,7 +1055,7 @@ handleComparison=()=>{
       </defs>
         <CartesianGrid stroke="#e5e5e5" />
         <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
-        <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
+        <YAxis label={{ value: 'million US $', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
 
@@ -1106,7 +1106,7 @@ handleComparison=()=>{
 									<Circle className="cricle" progress={this.state.single_asset_overall[0].per_10_years_rise}/>
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
-								<p> Total Loss <br/><br/><i style={{color:'red',fontSize:'20px'}}>{this.state.single_asset_overall[0].net_loss_value}</i></p>
+								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.single_asset_overall[0].net_loss_value}</b></p>
 								</Grid.Column>
 								
 							</Grid.Row>:null}

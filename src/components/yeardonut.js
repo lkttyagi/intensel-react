@@ -68,7 +68,7 @@ const COLORS = ["#0088fe","#00c49f","#ffbb28"];
       </PieChart>
       <div style={{display:'flex'}}>
       <p style={{fontSize:'12px',display:'flex'}}> 2020 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f'}}></div> $ {x} Billion </p>  
-      <p style={{fontSize:'12px',display:'flex'}}> 2030 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y} Billion</p>
+      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}> 2030 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y} Billion</p>
       </div>
       <div>
       <p style={{fontSize:'12px',display:'flex'}}> 2050 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {y} Billion</p>
