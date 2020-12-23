@@ -52,7 +52,8 @@ class Building extends Component {
     occupancy:'res',
     per_sq_m_value:40000,
     line:'',
-    scatter:''
+    scatter_y:'',
+    scatter_x:''
   }
 
   componentDidMount(){
@@ -93,7 +94,8 @@ class Building extends Component {
       y:this.props.building.mdr[i]
     })
   }
-  this.state.scatter=this.props.building.dct_asset
+  this.state.scatter_y=this.props.building.dct_asset
+  this.state.scatter_x=this.props.building.dct
   this.state.line=data01
 
  }
@@ -149,19 +151,12 @@ class Building extends Component {
                     <Grid.Column width="6" className="card">
                                         
                                             <p>Analysis of Flood Damage</p>
-                                            <VictoryChart><VictoryLine style= {{ 
-                                                data:{
-                                                  stroke:'#015edc'
-                                                },
-                                              labels:{
-                                              fontSize:12,
-
-                                            }}}data={this.state.line}/>
+                                            <VictoryChart>
                                             <VictoryScatter
                                               data={[
-                                                {x:0.5,y:this.state.scatter['f2.6'],size:5},
-                                                {x:0.5,y:this.state.scatter['f4.5'],size:5},
-                                                {x:0.7,y:this.state.scatter['f8.5'],size:5}
+                                                {x:this.state.scatter_x['FL2670'],y:this.state.scatter_y['f2.6'],size:5},
+                                                {x:this.state.scatter_x['FL4570'],y:this.state.scatter_y['f4.5'],size:5},
+                                                {x:this.state.scatter_x['FL8570'],y:this.state.scatter_y['f8.5'],size:5}
 
                                                 ]}
                                             />
@@ -176,12 +171,12 @@ class Building extends Component {
                       <VictoryChart>
                       <VictoryAxis label="Loss in Million $" dependentAxis/>
                       <VictoryAxis label="Depth"/>
-                      <VictoryLine data={this.state.line}/>
+                      
                       <VictoryScatter
-                                              data={[
-                                                {x:0.5,y:this.state.scatter['s2.6'],size:5},
-                                                {x:0.5,y:this.state.scatter['s4.5'],size:5},
-                                                {x:0.7,y:this.state.scatter['s8.5'],size:5}
+                                        data={[
+                                                {x:this.state.scatter_x['SS2670'],y:this.state.scatter_y['s2.6'],size:5},
+                                                {x:this.state.scatter_x['SS4570'],y:this.state.scatter_y['s4.5'],size:5},
+                                                {x:this.state.scatter_x['SS8570'],y:this.state.scatter_y['s8.5'],size:5}
 
                                                 ]}
                                             />

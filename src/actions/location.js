@@ -45,9 +45,13 @@ export const addLocations = (formdata) =>{
 export const getLocations = () =>{
 	return(dispatch,getState) =>{
 		let headers={}
+		let token = localStorage.getItem('token');
+		let id = localStorage.getItem('user_id');
+		if(token){
+			headers['Authorization']=`${token}`;
+		}
 		
-		
-		fetch('https://www.api-intensel.live/api/portfolio/',{headers,})
+		fetch('https://www.api-intensel.live/api/portfolio/'+id+'/',{headers,})
 			.then(res=>{
 				if(res.status < 500){
 					return res.json().then(data=>{

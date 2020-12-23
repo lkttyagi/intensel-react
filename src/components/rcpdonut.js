@@ -53,37 +53,41 @@ const COLORS = ["#0088fe","#00c49f","#ffbb28"];
 
     return (
       <div>
-         <ComposedChart
+      <Grid.Row>
+      <Grid.Column style={{width:'60%'}}>
+        <ComposedChart
             width={300}
             height={200}
             data={data}
             margin={{
             top: 20, right: 20, bottom: 20, left: 20,
             }}
-            style={{marginLeft:'60px'}}
+
+            
         >
             <CartesianGrid stroke="#f5f5f5" />
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
-            <Legend />
+            
             <Bar dataKey="value" barSize={20} fill="#413ea0">
-
-              {
+            {
             data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           }
-            
-
             </Bar>
             <Line type="monotone" dataKey="value" stroke="#ff7300" />
         </ComposedChart>
-      <div style={{display:'flex'}}>
-      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',padding:'5px'}}></div> $ {x.toFixed(3)} Billion </p>  
-      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y.toFixed(3)} Billion</p>
-      </div>
-      <div>
+      </Grid.Column>
+      <Grid.Column style={{width:'40%',marginTop:'10%'}}>
+      
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {x.toFixed(3)} Billion </p>  
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f'}}></div> $ {y.toFixed(3)} Billion</p>
+      
+      
       <p style={{fontSize:'12px',display:'flex'}}> RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {z.toFixed(3)} Billion</p>
-      </div>
+      
+      </Grid.Column>
+      </Grid.Row>
       </div>
     
     );
