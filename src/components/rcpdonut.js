@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector,Cell } from 'recharts';
+import {
+  ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  Legend,ScatterChart,Scatter,Cell
+} from 'recharts';
 import {Grid} from 'semantic-ui-react';
 
 
@@ -25,20 +28,23 @@ export default class RCPDonut extends PureComponent {
   render() {
     console.log("piemdkdsmks",this.props.data)
     this.state.piedata=this.props.data
-    let x=''
-    let y=''
-    let z=''
+    let x=0
+    let y=0
+    let z=0
 
     if(this.state.piedata){
-      x=this.state.piedata[0]['70']["Total Loss RCP 2.6"]
-      y=this.state.piedata[0]['70']["Total Loss RCP 4.5"]
-      z=this.state.piedata[0]['70']["Total Loss RCP 8.5"]
+      for(let i=0;i<this.state.piedata.length;i++){
+          x+=this.state.piedata[i]['70']["Total Loss RCP 2.6"]
+          y+=this.state.piedata[i]['70']["Total Loss RCP 4.5"]
+          z+=this.state.piedata[i]['70']["Total Loss RCP 8.5"]
+    }
+
     }
     
     const data = [
-  { name: 'RCP 2.6', value:x },
-  { name: 'RCP 4.5', value:y },
-  { name: 'RCP 8.5', value:z }
+  { name: 'RCP 2.6', value:x.toFixed(3) },
+  { name: 'RCP 4.5', value:y.toFixed(3) },
+  { name: 'RCP 8.5', value:z.toFixed(3) }
 
 ];
 console.log("xy",data);
@@ -47,31 +53,36 @@ const COLORS = ["#0088fe","#00c49f","#ffbb28"];
 
     return (
       <div>
-      <PieChart width={320} height={140}>
-        <Pie
-          
-          
-          data={data}
-          cx={160}
-          cy={50}
-          innerRadius={40}
-          outerRadius={50}
-          fill="#8884d8"
-          dataKey="value"
-          paddingAngle={5}
-          
+         <ComposedChart
+            width={300}
+            height={200}
+            data={data}
+            margin={{
+            top: 20, right: 20, bottom: 20, left: 20,
+            }}
+            style={{marginLeft:'60px'}}
         >
-      {
+            <CartesianGrid stroke="#f5f5f5" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" barSize={20} fill="#413ea0">
+
+              {
             data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
           }
-          </Pie>
-      </PieChart>
+            
+
+            </Bar>
+            <Line type="monotone" dataKey="value" stroke="#ff7300" />
+        </ComposedChart>
       <div style={{display:'flex'}}>
-      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',padding:'5px'}}></div> $ {x} Billion </p>  
-      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',padding:'5px'}}></div> $ {x.toFixed(3)} Billion </p>  
+      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {y.toFixed(3)} Billion</p>
       </div>
       <div>
-      <p style={{fontSize:'12px',display:'flex'}}> RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {y} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {z.toFixed(3)} Billion</p>
       </div>
       </div>
     

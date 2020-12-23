@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector,Cell } from 'recharts';
+import {
+  ComposedChart, Line, Area, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  Legend,ScatterChart,Scatter
+} from 'recharts';
 import {Grid} from 'semantic-ui-react';
 
 
@@ -45,25 +48,22 @@ const COLORS = ["#0088fe","#00c49f"];
 
     return (
       <div>
-      <PieChart width={320} height={140}>
-        <Pie
-          
-          
-          data={data}
-          cx={160}
-          cy={50}
-          innerRadius={40}
-          outerRadius={50}
-          fill="#8884d8"
-          dataKey="value"
-          paddingAngle={5}
-          
+          <ComposedChart
+            width={200}
+            height={200}
+            data={data}
+            margin={{
+            top: 20, right: 20, bottom: 20, left: 20,
+            }}
         >
-      {
-            data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-          }
-          </Pie>
-      </PieChart>
+            <CartesianGrid stroke="#f5f5f5" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="value" barSize={20} fill="#413ea0" />
+            <Line type="monotone" dataKey="value" stroke="#ff7300" />
+        </ComposedChart>
 
       <div style={{display:'flex'}}><p style={{fontSize:'12px',display:'flex'}}>Total Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',marginTop:'4px',marginLeft:'5px'}}></div> $ {x} Billion </p>  
       <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}>Property Value <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div> $ {y} Billion</p>

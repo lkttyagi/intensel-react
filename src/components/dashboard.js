@@ -596,7 +596,7 @@ handleComparison=()=>{
 					<Grid.Column width="3"></Grid.Column>
 					<Grid.Column width="13">
 						<Grid.Row>
-						<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+						<Grid.Column className="card" style={{width:'24.5%',marginRight:'3%'}}>
 							<Grid.Row style={{padding:'10px'}}>
 							<p> Climate Risk Per 10 Year Rise</p>
 							<br/>
@@ -605,24 +605,20 @@ handleComparison=()=>{
 								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
-								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
+								<p> Total Value at Risk <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
+								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ 0.12 Billion</b></p>
+
 								</Grid.Column>
 							</Grid.Row>
 							</Grid.Column>
-							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
-								<p>Overall</p>
-								
-							<Donut data={this.state.overall}/>									
-									
-								
-							</Grid.Column>
-							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+							
+							<Grid.Column className="card" style={{width:'32.5%',marginRight:'3%'}}>
 								<p>Year</p>
 								
 							<YEARDonut data={this.state.yearDetail}/>
 																	
 							</Grid.Column>
-							<Grid.Column className="card" style={{width:'23.5%'}}>
+							<Grid.Column className="card" style={{width:'32.5%'}}>
 								<p>RCP</p>
 								
 								<RCPDonut data={this.state.yearDetail}/>
@@ -733,23 +729,22 @@ handleComparison=()=>{
 						<p style={{fontSize:'12px'}}>OverAll  <i style={{float:'right'}}>{this.state.risk.OVERALL}%</i></p>
 						<Progress percent={this.state.risk.OVERALL}/>
 					    <p style={{fontSize:'12px'}}>Flood  <i style={{float:'right'}}>{this.state.risk.Flood}%</i></p>
-
 						<Progress percent={this.state.risk.Flood} color='green'/>
+
 						<p style={{fontSize:'12px'}}>Rainfall  <i style={{float:'right'}}>{this.state.risk.Rainfall}%</i></p>
-
 						<Progress percent={this.state.risk.Rainfall} color='yellow'/>
+
 						<p style={{fontSize:'12px'}}>Storm Surge  <i style={{float:'right'}}>{this.state.risk['Storm Surge']}%</i></p>
-
 						<Progress percent={this.state.risk['Storm Surge']} color='red'/>
+
 						<p style={{fontSize:'12px'}}>Drought  <i style={{float:'right'}}>{this.state.risk.Drought}%</i></p>
-
 						<Progress percent={this.state.risk.Drought} color='red'/>
+
 						<p style={{fontSize:'12px'}}>Extreme Heat  <i style={{float:'right'}}>{this.state.risk['Extreme Heat']}%</i></p>
-
 						<Progress percent={this.state.risk['Extreme Heat']} color='red'/>
-					    <p style={{fontSize:'12px'}}>LandSlide  <i style={{float:'right'}}>{this.state.risk.Landslide}%</i></p>
 
-						<Progress percent={this.state.risk['LandSlide']} color='red'/>
+					    <p style={{fontSize:'12px'}}>LandSlide  <i style={{float:'right'}}>{this.state.risk.Landslide}%</i></p>
+						<Progress percent={this.state.risk.Landslide} color='red'/>
 
 						
 						{/*				<p style={{color:"#015edc"}}>Portfolio Losses</p>
@@ -858,132 +853,7 @@ handleComparison=()=>{
                 </div>
              </Grid.Column>
 			</Grid.Row>
-			<Grid.Row>
-				<Grid.Column width="3"></Grid.Column>
-				<Grid.Column width="13" className="card">
-				<Table>
-					<Table.Header><p style={{padding:'5px'}}>Asset Loss Analysis (in million $) for year 2020</p></Table.Header>
-					<Table.Header>
-						<Table.HeaderCell>Name</Table.HeaderCell>
-						<Table.HeaderCell>Prop Value</Table.HeaderCell>
-						<Table.HeaderCell>Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell>Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell>Total Loss</Table.HeaderCell>
-
-					</Table.Header>
-					<Table.Body>
-						{this.state.yearDetail.length>0?this.state.yearDetail.map((asset,index)=>(
-      <Table.Row key={index}>
-
-        <Table.Cell>{asset.name}</Table.Cell>
-       
-        <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['20']['Asset Flood Damage RCP 0.0'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['20']['Asset Storm Damage RCP 0.0'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['20']['Total Loss RCP 0.0'].toFixed(2)}</Table.Cell>
-        
-      </Table.Row>
-      )):
-<Table.Row></Table.Row>}
-					</Table.Body>
-				</Table>
-				</Grid.Column>
-				</Grid.Row>
-				<Grid.Row>
-				<Grid.Column width="3"></Grid.Column>
-				<Grid.Column width="13" className="card">
-				<Table>
-					<Table.Header><p style={{padding:'5px'}}>Asset Loss Analysis (in million $) for year 2030</p></Table.Header>
-					<Table.Header>
-						<Table.HeaderCell>Name</Table.HeaderCell>
-						<Table.HeaderCell>Prop Value</Table.HeaderCell>
-						<Table.HeaderCell> RCP 2.6 Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 2.6 Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 2.6 Total Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 4.5 Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 4.5 Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 4.5 Total Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 8.5 Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 8.5 Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 8.5 Total Loss</Table.HeaderCell>
-
-					</Table.Header>
-					<Table.Body>
-						{this.state.yearDetail.length>0?this.state.yearDetail.map((asset,index)=>(
-      <Table.Row key={index}>
-
-        <Table.Cell>{asset.name}</Table.Cell>
-       
-        <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Asset Flood Damage RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Asset Storm Damage RCP 2.6'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['50']['Total Loss RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Asset Flood Damage RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Asset Storm Damage RCP 4.5'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['50']['Total Loss RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Asset Flood Damage RCP 8.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['50']['Asset Storm Damage RCP 8.5'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['50']['Total Loss RCP 8.5'].toFixed(2)}</Table.Cell>
-        
-      </Table.Row>
-      )):
-<Table.Row></Table.Row>}
-					</Table.Body>
-				</Table>
-				</Grid.Column>
-				</Grid.Row>
-				<Grid.Row>
-				<Grid.Column width="3"></Grid.Column>
-				<Grid.Column width="13" className="card">
-
-				<Table>
-					<Table.Header><p style={{padding:'5px'}}>Asset Loss Analysis (in million $) for year 2050</p></Table.Header>
-					<Table.Header>
-						<Table.HeaderCell>Name</Table.HeaderCell>
-						<Table.HeaderCell>Prop Value</Table.HeaderCell>
-						<Table.HeaderCell> RCP 2.6 Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 2.6 Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 2.6 Total Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 4.5 Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 4.5 Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 4.5 Total Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 8.5 Flood Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 8.5 Storm Damage Loss</Table.HeaderCell>
-						<Table.HeaderCell> RCP 8.5 Total Loss</Table.HeaderCell>
-
-					</Table.Header>
-					<Table.Body>
-						{this.state.yearDetail.length>0?this.state.yearDetail.map((asset,index)=>(
-      <Table.Row key={index}>
-
-        <Table.Cell>{asset.name}</Table.Cell>
-       
-        <Table.Cell style={{textTransform:'capitalize'}}>{asset.propvalue.toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Asset Flood Damage RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Asset Storm Damage RCP 2.6'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['70']['Total Loss RCP 2.6'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Asset Flood Damage RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Asset Storm Damage RCP 4.5'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['70']['Total Loss RCP 4.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Asset Flood Damage RCP 8.5'].toFixed(2)}</Table.Cell>
-        <Table.Cell>{asset['70']['Asset Storm Damage RCP 8.5'].toFixed(2)}</Table.Cell>
-        
-        <Table.Cell>{asset['70']['Total Loss RCP 8.5']}</Table.Cell>
-        
-      </Table.Row>
-      )):
-<Table.Row></Table.Row>}
-					</Table.Body>
-				</Table>
-
-				</Grid.Column>
-			</Grid.Row>
+			
 			          		<Grid.Row>
 				<Grid.Column width="3"></Grid.Column>
 				<Grid.Column width="6" className="card">
@@ -1027,46 +897,7 @@ handleComparison=()=>{
       </ComposedChart>:null}
 				</Grid.Column>
 				<Grid.Column width="1"></Grid.Column>
-				<Grid.Column width="6" className="card">
-				<p>Portfolio vs Losses(Flat Adjusted)</p>
-			{losses_data_flat.length>0?			   <ComposedChart
-        width={450}
-        height={400}
-        data={losses_data_flat}
-        margin={{
-          top: 20, right: 80, bottom: 20, left: 20,
-        }}
-        padding={5}
-       
-      >
-      <defs>
-      	<linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#00046" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#1cb5e0" stopOpacity={0.3}/>
-        </linearGradient>
-        <linearGradient id="colorVv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#56ccf2" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#2f80ed" stopOpacity={0.3}/>
-        </linearGradient>
-        <linearGradient id="colorWv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#9cecfb" stopOpacity={0.3}/>
-            <stop offset="95%" stopColor="#0052d4" stopOpacity={0.3}/>
-        </linearGradient>
-      </defs>
-        <CartesianGrid stroke="#e5e5e5" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
-        <YAxis label={{ value: 'million US $', angle: -90, position: 'insideLeft' }} />
-        <Tooltip />
-        <Legend />
-
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="value" barSize={20} fill="#6c85bd" />
-        
-
-
-        	
-      </ComposedChart>:null}
-				</Grid.Column>
+				
 			</Grid.Row>
 			</Grid>:
 			<Grid.Row>
