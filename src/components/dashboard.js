@@ -924,39 +924,29 @@ handleComparison=()=>{
             				<br/>
             				<Grid>
             				<Grid.Row>
-
-							<Grid.Column className="card" style={{width:'24.5%',marginleft:'0.5%'}}>
-							{this.state.single_asset_overall? 
-								<Grid.Row style={{padding:'10px'}}>
+						<Grid.Column className="card" style={{width:'25%',marginLeft:'4%',marginRight:'2%'}}>
+							<Grid.Row style={{padding:'10px'}}>
 							<p> Climate Risk Per 10 Year Rise</p>
 							<br/>
+								<Grid.Column style={{width:'50%',}}>
 								
-									<Grid.Column style={{width:'50%'}}>
-								
-								
-									<Circle className="cricle" progress={this.state.single_asset_overall[0].per_10_years_rise}/>
+								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
-								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.single_asset_overall[0].net_loss_value}</b></p>
+								<p> Total Value at Risk <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
+								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ 0.12 Billion</b></p>
+
 								</Grid.Column>
-								
-							</Grid.Row>:null}
+							</Grid.Row>
 							</Grid.Column>
-					
-							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%',marginLeft:'0.5%'}}>
-								<p>Overall</p>
-								
-							<SingleDonut data={this.state.single_asset_overall}/>									
-									
-								
-							</Grid.Column>
-							<Grid.Column className="card" style={{width:'24.5%',marginRight:'1%'}}>
+							
+							<Grid.Column className="card" style={{width:'30%',marginRight:'3%'}}>
 								<p>Year</p>
 								
 							<YEARDonut data={this.state.yearDetail}/>
 																	
 							</Grid.Column>
-							<Grid.Column className="card" style={{width:'23.5%'}}>
+							<Grid.Column className="card" style={{width:'32.5%'}}>
 								<p>RCP</p>
 								
 								<RCPDonut data={this.state.yearDetail}/>
@@ -964,8 +954,7 @@ handleComparison=()=>{
 								
 							</Grid.Column>
 							
-						
-				</Grid.Row>
+						</Grid.Row>
             					          		<Grid.Row>
               			<Grid.Column width="1"></Grid.Column>
               			<Grid.Column width="4" className="card">
