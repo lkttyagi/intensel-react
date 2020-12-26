@@ -493,6 +493,7 @@ handleComparison=()=>{
 
 
  	if(this.state.portfolio_losses){
+ 		losses_data=[];
  		for(let i=0;i<this.state.portfolio_losses.x.length;i++){
  		losses_data.push({
  			name:this.state.portfolio_losses.x[i],
@@ -1022,7 +1023,7 @@ handleComparison=()=>{
 						<Progress percent={this.state.single_asset_progress['Extreme Heat']} color='red'/>
 					    <p style={{fontSize:'12px'}}>LandSlide  <i style={{float:'right'}}>{this.state.single_asset_progress.Landslide}%</i></p>
 
-						<Progress percent={this.state.single_asset_progress['LandSlide']} color='red'/>
+						<Progress percent={this.state.single_asset_progress['Landslide']} color='red'/>
 						
 
 

@@ -127,7 +127,7 @@ class Project extends Component{
 		if(this.props.locus && this.props.locus.length>0){
 		options=[];
 		const assets = this.props.locus.filter(location=>location.users_id==user_id)
-		this.state.portfolios=assets
+		this.state.portfolios=assets.reverse()
 		console.log("locations",assets[0].assets)
 		
 		for(let i=0;i<assets.length;i++){

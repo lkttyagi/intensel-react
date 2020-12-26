@@ -34,8 +34,8 @@ export default class YEARDonut extends PureComponent {
 
     if(this.state.piedata){
        for(let i=0;i<this.state.piedata.length;i++){
-          x+=this.state.piedata[i]['70']["Total Loss RCP 2.6"]
-          y+=this.state.piedata[i]['70']["Total Loss RCP 4.5"]
+          x+=this.state.piedata[i]['20']["Total Loss RCP 0.0"]
+          y+=this.state.piedata[i]['50']["Total Loss RCP 8.5"]
           z+=this.state.piedata[i]['70']["Total Loss RCP 8.5"]
     }
     }

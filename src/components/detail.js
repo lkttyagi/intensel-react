@@ -67,7 +67,7 @@ class Detail extends Component {
     
     
     if(this.props.detail['2030_vs_2020']&&this.props.detail['2030_vs_2020'].length>0){
-        
+        data=[];
         let x=this.props.detail['2030_vs_2020']
         for(let j=0;j<x.length;j++){
             for(var i in x[j]){
@@ -82,6 +82,7 @@ class Detail extends Component {
             }
       }
       this.state.bar_data=data
+      data1=[];
       let y= this.props.detail['2050_vs_2020']
       for(let k=0;k<y.length;k++){
         for (var i in y[k]){
@@ -96,6 +97,7 @@ class Detail extends Component {
         }
       }
       this.state.bar_data1=data1
+      data2=[];
        let z= this.props.detail['year_chart']
       for(let l=0;l<y.length;l++){
         for (var i in z[l]){

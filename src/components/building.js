@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  LineChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,Line
+  ScatterChart, Scatter, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts';
 
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import {project,auth,dashboard} from '../actions';
 import {connect} from 'react-redux';
-import {VictoryLine,VictoryChart,VictoryAxis,VictoryScatter} from 'victory';
+import { scaleOrdinal } from 'd3-scale';
+import { schemeCategory10 } from 'd3-scale-chromatic';
 
 
 let data01=[];
@@ -99,7 +100,20 @@ class Building extends Component {
   this.state.line=data01
 
  }
- 
+ const data=[
+                                                    {x:this.state.scatter_x['FL2670'],y:this.state.scatter_y['f2.6']},
+                                                    {x:this.state.scatter_x['FL4570'],y:this.state.scatter_y['f4.5']},
+                                                    {x:this.state.scatter_x['FL8570'],y:this.state.scatter_y['f8.5']}
+
+                                                    ]
+const data1=[
+          {x:this.state.scatter_x['SS2670'],y:this.state.scatter_y['s2.6']},
+          {x:this.state.scatter_x['SS4570'],y:this.state.scatter_y['s4.5']},
+          {x:this.state.scatter_x['SS8570'],y:this.state.scatter_y['s8.5']}
+
+          ]
+ const colors = scaleOrdinal(schemeCategory10).range();
+
 
 
     return(
@@ -151,16 +165,24 @@ class Building extends Component {
                     <Grid.Column width="6" className="card">
                                         
                                             <p>Analysis of Flood Damage</p>
-                                            <VictoryChart>
-                                            <VictoryScatter
-                                              data={[
-                                                {x:this.state.scatter_x['FL2670'],y:this.state.scatter_y['f2.6'],size:5},
-                                                {x:this.state.scatter_x['FL4570'],y:this.state.scatter_y['f4.5'],size:5},
-                                                {x:this.state.scatter_x['FL8570'],y:this.state.scatter_y['f8.5'],size:5}
-
-                                                ]}
-                                            />
-                                            </VictoryChart>
+                                                                                                     <ScatterChart
+                                                  width={400}
+                                                  height={400}
+                                                  margin={{
+                                                    top: 20, right: 20, bottom: 20, left: 20,
+                                                  }}
+                                                >
+                                                  <CartesianGrid />
+                                                  <XAxis type="number" dataKey="x" name="Depth" value="Depth"/>
+                                                  <YAxis type="number" dataKey="y" name="Loss in Million $" value="Loss in Million $" unit="mn $" />
+                                                  <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                                                  <Scatter name="" data={data} fill="#8884d8">
+                                                   
+                                                   {
+            data.map((entry, index) => <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />)
+          }
+                                                  </Scatter>
+                                                </ScatterChart>
     
       
                        
@@ -168,19 +190,24 @@ class Building extends Component {
                     <Grid.Column width="1"></Grid.Column>
                     <Grid.Column width="6" className="card">
                     <p>Analysis of Storm Damage</p>
-                      <VictoryChart>
-                      <VictoryAxis label="Loss in Million $" dependentAxis/>
-                      <VictoryAxis label="Depth"/>
-                      
-                      <VictoryScatter
-                                        data={[
-                                                {x:this.state.scatter_x['SS2670'],y:this.state.scatter_y['s2.6'],size:5},
-                                                {x:this.state.scatter_x['SS4570'],y:this.state.scatter_y['s4.5'],size:5},
-                                                {x:this.state.scatter_x['SS8570'],y:this.state.scatter_y['s8.5'],size:5}
-
-                                                ]}
-                                            />
-                      </VictoryChart>
+                      <ScatterChart
+        width={400}
+        height={400}
+        margin={{
+          top: 20, right: 20, bottom: 20, left: 20,
+        }}
+      >
+        <CartesianGrid />
+        <XAxis type="number" dataKey="x" name="Depth" value="Depth"/>
+        <YAxis type="number" dataKey="y" name="Loss in Million $" value="Loss in Million $" unit="mn $" />
+        <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+        <Scatter name="" data={data1} fill="#8884d8">
+          
+          {
+            data1.map((entry, index) => <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />)
+          }
+        </Scatter>
+      </ScatterChart>
 
                     </Grid.Column>
                     
