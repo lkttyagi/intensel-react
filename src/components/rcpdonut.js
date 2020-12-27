@@ -80,11 +80,11 @@ const COLORS = ["#0088fe","#00c49f","#ffbb28"];
       </Grid.Column>
       <Grid.Column style={{width:'40%',marginTop:'10%'}}>
       
-      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {x.toFixed(3)} Billion </p>  
-      <p style={{fontSize:'12px',display:'flex'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f'}}></div> $ {y.toFixed(3)} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 2.6 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe'}}></div> $ {x.toFixed(2)} Million </p>  
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 4.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f'}}></div> $ {y.toFixed(2)} Million</p>
       
       
-      <p style={{fontSize:'12px',display:'flex'}}> RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {z.toFixed(3)} Billion</p>
+      <p style={{fontSize:'12px',display:'flex'}}> RCP 8.5 Loss <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#ffbb28'}}></div> $ {z.toFixed(2)} Million</p>
       
       </Grid.Column>
       </Grid.Row>

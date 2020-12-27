@@ -607,7 +607,7 @@ handleComparison=()=>{
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
 								<p> Total Value at Risk <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
-								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ 0.12 Billion</b></p>
+								{this.state.losses['Asset Storm Damage']?<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ {this.state.losses['Asset Flood Damage'][0]+this.state.losses['Asset Storm Damage'][0]+this.state.losses['Operational Flood Loss'][0]+this.state.losses['Operational Storm Surge Loss'][0]} Billion</b></p>:null}
 
 								</Grid.Column>
 							</Grid.Row>
@@ -808,21 +808,21 @@ handleComparison=()=>{
 
 					{this.state.losses['Asset Flood Damage']?<div>
 						
-						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}></i></p>
-						<Progress percent={this.state.risk.OVERALL}/>
+						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][0]+this.state.losses['Asset Storm Damage'][0]+this.state.losses['Operational Flood Loss'][0]+this.state.losses['Operational Storm Surge Loss'][0]} Billion</i></p>
+						<Progress percent={(this.state.losses['Asset Flood Damage'][1]+this.state.losses['Asset Storm Damage'][1]+this.state.losses['Operational Flood Loss'][1]+this.state.losses['Operational Storm Surge Loss'][1])/4}/>
 
-					    <p style={{fontSize:'12px'}}>Asset Flood Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][1]} Million</i></p>
+					    <p style={{fontSize:'12px'}}>Asset Flood Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][0]} Billion</i></p>
 
-						<Progress percent={this.state.losses['Asset Flood Damage'][0]} color='green'/>
-						<p style={{fontSize:'12px'}}>Asset Storm Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Storm Damage'][1]} Million</i></p>
+						<Progress percent={this.state.losses['Asset Flood Damage'][1]} color='green'/>
+						<p style={{fontSize:'12px'}}>Asset Storm Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Storm Damage'][0]} Billion</i></p>
 
-						<Progress percent={this.state.losses['Asset Storm Damage'][0]} color='green'/>
-						<p style={{fontSize:'12px'}}>Operational Flood Loss <i style={{float:'right'}}>$ {this.state.losses['Operational Flood Loss'][1]} Million</i></p>
+						<Progress percent={this.state.losses['Asset Storm Damage'][1]} color='green'/>
+						<p style={{fontSize:'12px'}}>Operational Flood Loss <i style={{float:'right'}}>$ {this.state.losses['Operational Flood Loss'][0]} Billion</i></p>
 
-						<Progress percent={this.state.losses['Operational Flood Loss'][0]} color='green'/>
-						<p style={{fontSize:'12px'}}>Operational Storm Surge Loss <i style={{float:'right'}}>$ {this.state.losses['Operational Storm Surge Loss'][1]} Million</i></p>
+						<Progress percent={this.state.losses['Operational Flood Loss'][1]} color='green'/>
+						<p style={{fontSize:'12px'}}>Operational Storm Surge Loss <i style={{float:'right'}}>$ {this.state.losses['Operational Storm Surge Loss'][0]} Billion</i></p>
 
-						<Progress percent={this.state.losses['Operational Storm Surge Loss'][0]} color='green'/>
+						<Progress percent={this.state.losses['Operational Storm Surge Loss'][1]} color='green'/>
 						
 
 						
