@@ -463,12 +463,14 @@ handleComparison=()=>{
  	let heatmapdata=[];
  	let yLabels=[];
  	if(this.state.heatmap.length===undefined){
- 	for(let i = 0; i < this.state.heatmap.values.length; i++){
+ 	for(let i = 0; i < 6; i++){
     let temp=[];
-    for(let j = 0; j <3; j++){
+    for(let j = 0; j <this.state.heatmap.values.length; j++){
     	
-        temp.push(this.state.heatmap.values[i][j]);
+        temp.push(parseInt(this.state.heatmap.values[j][i]/2));
+      
     }
+
     
     heatmapdata.push(temp)
     
@@ -476,7 +478,7 @@ handleComparison=()=>{
 }
 
 	for(let i=0;i<this.state.heatmap.values.length;i++){
-		yLabels.push(this.state.heatmap.names[i])
+		yLabels.push(this.state.heatmap.names[i].slice(0,10))
 	}
    
 }
@@ -808,8 +810,8 @@ handleComparison=()=>{
 
 					{this.state.losses['Asset Flood Damage']?<div>
 						
-						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][0]+this.state.losses['Asset Storm Damage'][0]+this.state.losses['Operational Flood Loss'][0]+this.state.losses['Operational Storm Surge Loss'][0]} Billion</i></p>
-						<Progress percent={(this.state.losses['Asset Flood Damage'][1]+this.state.losses['Asset Storm Damage'][1]+this.state.losses['Operational Flood Loss'][1]+this.state.losses['Operational Storm Surge Loss'][1])/4}/>
+						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}>$ {this.state.losses['Total Loss'][0]} Billion</i></p>
+						<Progress percent={this.state.losses['Total Loss'][1]}/>
 
 					    <p style={{fontSize:'12px'}}>Asset Flood Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][0]} Billion</i></p>
 
@@ -834,20 +836,22 @@ handleComparison=()=>{
 				</Grid.Column>
 			<Grid.Column width="1"></Grid.Column>
 			<Grid.Column width="8" className="card">
-				 <div style={{height:'400px',padding:'10px'}}> 
+				 <div style={{height:'400px',padding:'10px',color:'white'}}> 
 				 {heatmapdata.length>0?<Heatmap
                               	data={heatmapdata}
-                                bgColors={["rgb(235,102,40)","rgb(60,39,99)"]}
+                                bgColors={["rgb(255,11,11)","rgb(255,255,0)"]}
                                 xLabels={ ["Landslide", "Rainfall", "Flood", "Drought Index", "Storm Surge", "Extreme Heat"] }
                                 yLabels={ yLabels }
                                 showLegend={ true }
+                                showData={true}
                                 xStepLabel={ 1 }
                                 yStepLabel={ 1 }
-                                showTicks={ "x" }
-                                xLabelsStyle={{ fontWeight: "bold", fontSize: "11px" }}
-                                yLabelsStyle={{ fontWeight: "bold" }}
-                                legendStyle={{ fontWeight: "bold" }}
-                                bordered={ true }
+                                showTicks={ true }
+                                legendStyle={{color:'black'}}
+                                xLabelsStyle={{ fontWeight: "bold", fontSize: "10px",display:'flex',color:'black' }}
+                                yLabelsStyle={{ fontWeight: "bold" ,fontSize:'10px',display:'flex',textAlign:'left',color:'black'}}
+                                legendStyle={{ color:'black'}}
+                                bordered={ false }
                                 borderRadius={ "4px" }
                                 
                             />:null}

@@ -121,7 +121,7 @@ class Project extends Component{
 	render(){
 		const {value,others,variables,rcp,year,status} =this.state;
 		let user_id = localStorage.getItem('user_id');
-		
+		console.log("error",this.props.errors)
 
 		
 		if(this.props.locus && this.props.locus.length>0){
@@ -180,8 +180,8 @@ class Project extends Component{
 		 	
 		 	<br/>
 			<Form>
-				
-				<Form.Field 
+				{this.props.errors.Error?<p style={{color:'red'}}>{this.props.errors.Error}</p>:null}
+				<Form.Field required
 					 id="form-input-control-project"
 					 control={Input}
 
@@ -192,7 +192,7 @@ class Project extends Component{
 					 />
 				
 				<Form.Group widths='equal'>
-				<Form.Field 
+				<Form.Field
 					 id="form-input-control-project"
 					 control={Input}
 					 label='Description'
@@ -206,14 +206,14 @@ class Project extends Component{
 				
 
 				<label>Portfolio</label>
-				<Dropdown  placeholder="Portfolio" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
+				<Dropdown required placeholder="Portfolio" fluid   selection options={options} value={value} onChange={this.handleAssets}/>	
 				
 				<label>Status</label>
-				<Dropdown  placeholder="Status" fluid   selection options={StatusOptions} value={status} onChange={this.handleStatus}/>	
+				<Dropdown required placeholder="Status" fluid   selection options={StatusOptions} value={status} onChange={this.handleStatus}/>	
 			    <br/>
 			    <br/>
 
-				{(this.state.loading && this.props.errors.error==undefined)?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+				{(this.state.loading && this.props.errors.Error==undefined)?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
 				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>}
 			</Form>
 			
