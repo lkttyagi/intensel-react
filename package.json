@@ -29,6 +29,7 @@
     "react-scripts": "3.4.3",
     "react-semantic-ui-accordion-menu": "^1.2.4",
     "react-simple-heatmap": "^2.0.2",
+    "react-spinners": "^0.9.0",
     "reactjs-percentage-circle": "^1.0.0",
     "recharts": "^1.8.5",
     "redux": "^4.0.5",

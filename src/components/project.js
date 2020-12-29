@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Select,Dropdown,Icon,Table,Modal} from 'semantic-ui-react';
+import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header,Menu,Select,Dropdown,Icon,Table,Modal,Card} from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
@@ -224,37 +224,71 @@ class Project extends Component{
 		<Grid.Row>
 			<Grid.Column width="4"></Grid.Column>
 			<Grid.Column width="8">
-				<Table>
+				{/*<Table>
 					<Table.Header>
 						<Table.Row>
-							<Table.HeaderCell textAlign="center">Portfolio</Table.HeaderCell>
+							<Table.HeaderCell textAlign="left">Portfolio</Table.HeaderCell>
 							<Table.HeaderCell textAlign="right">Download</Table.HeaderCell>
 							<Table.HeaderCell textAlign="center"></Table.HeaderCell>
 							<Table.HeaderCell textAlign="center"></Table.HeaderCell>
 							<Table.HeaderCell textAlign="center">Recommended for Global Analysis</Table.HeaderCell>
 						</Table.Row>
 					</Table.Header>
+				
 					<Table.Body>
 
 					{this.state.portfolios && this.state.portfolios.length>0?this.state.portfolios.map((portfolio,index)=>(
       <Table.Row key={index}>
 
-        <Table.Cell width="4" textAlign="center"><p>{portfolio.name}</p></Table.Cell>
+        <Table.Cell width="4" textAlign="left" style={{fontSize:'14px'}}>{portfolio.name}</Table.Cell>
        
         
         
-        <Table.Cell><Button className="csv" onClick={()=>this.handleOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download CSV</Button></Table.Cell>
-        <Table.Cell><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)} style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download Loss</Button></Table.Cell>
+        <Table.Cell width="3"><Button className="csv" onClick={()=>this.handleOpen(portfolio.name)} primary>Download CSV</Button></Table.Cell>
+        <Table.Cell width="3"><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)}primary>Download Loss</Button></Table.Cell>
         
-        <Table.Cell><Button className="csv"  style={{backgroundColor:'white',border:'1px solid black',color:'black',fontSize:'12px'}} primary>Download Summary</Button></Table.Cell>
+        <Table.Cell width="3"><Button className="csv" primary>Download Summary</Button></Table.Cell>
       	<Table.Cell width="4" textAlign="center" style={{color:'red'}}>{portfolio.problematic_assets}</Table.Cell>
+
       </Table.Row>
+
       )):
 <Table.Row></Table.Row>}
 					
 					</Table.Body>
 
-				</Table>
+				</Table>*/}
+				<div class="table">
+  <div class="table__body">
+    <div class="table__row table__heading">
+      <div class="table__cell">Portfolio</div>
+      <div class="table__cell">CSV</div>
+      
+      <div class="table__cell">Loss</div>
+      <div class="table__cell">Summary</div>
+      <div class="table__cell">Recommended for Global Analysis</div>
+    </div>
+    {this.state.portfolios && this.state.portfolios.length>0?this.state.portfolios.map((portfolio,index)=>(
+    <div class="table__row" key={index}>
+      <div class="table__cell">
+       
+        <h5 class="table__crypto-name">{portfolio.name}
+          </h5>
+        
+        
+      </div>
+      <div class="table__cell"><button class="button button--primary buttons__comprar" onClick={()=>this.handleOpen(portfolio.name)}>Download</button></div>
+      <div class="table__cell"><button class="button button--outline buttons__ventar" onClick={()=>this.handleLossModalOpen(portfolio.name)}>Download</button></div>
+      <div class="table__cell"><button class="button button--primary buttons__comprar">Download</button></div>
+      <div class="table__cell" style={{color:'red'}}>
+        	{portfolio.problematic_assets}
+      </div>
+    </div>)):null}
+  
+  </div>
+</div>
+
+
 			</Grid.Column>
 			<Grid.Column width="4"></Grid.Column>
 		</Grid.Row>

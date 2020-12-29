@@ -65,8 +65,8 @@ const COLORS = ["#0088fe","#00c49f","#ffbb28"];
             
         >
             <CartesianGrid stroke="#f5f5f5" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} stroke="#3a3a3a" />
+            <YAxis label={{ value: 'Loss in Million($)', angle: -90, position: 'insideLeft'  }} stroke="#3a3a3a"  />
             <Tooltip />
             
             <Bar dataKey="value" barSize={20} fill="#413ea0">

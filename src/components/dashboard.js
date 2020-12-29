@@ -25,6 +25,7 @@ import Heatmap from 'react-simple-heatmap';
 import RCPDonut from './rcpdonut';
 import YEARDonut from './yeardonut';
 import SingleDonut from './singledonut';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 let options=[];
 let Item=[];
@@ -117,7 +118,9 @@ class Dashboard extends Component{
 		portfolio_losses_flat:'',
 		overall:'',
 		heatmap:'',
-		losses:''
+		losses:'',
+		loading:true
+		
 	}
 
 
@@ -295,7 +298,8 @@ class Dashboard extends Component{
 				portfolio_losses:this.props.feedback.overall.portfolio_versus_losses,
 				portfolio_losses_flat:this.props.feedback.overall.portfolio_versus_losses_flat_adjusted,
 				overall:this.props.feedback.overall,
-				heatmap:this.props.feedback.overall.heatmap
+				heatmap:this.props.feedback.overall.heatmap,
+				loading:false
 			})
 
 		}
@@ -366,28 +370,28 @@ handleComparison=()=>{
 	
 	 let RcpData=[
 			 {
-    name: 'OverAll', 'rcp2.6':this.state.single_asset_cone_chart.cone1_26['OVERALL'], 'rcp4.5':this.state.single_asset_cone_chart.cone1_45['OVERALL'], 'rcp8.5':this.state.single_asset_cone_chart.cone1_85['OVERALL'],
+    name: 'OverAll', 'RCP2.6':this.state.single_asset_cone_chart.cone1_26['OVERALL'], 'RCP4.5':this.state.single_asset_cone_chart.cone1_45['OVERALL'], 'RCP8.5':this.state.single_asset_cone_chart.cone1_85['OVERALL'],
   },
   
   {
-    name: 'Flood', 'rcp2.6':this.state.single_asset_cone_chart.cone1_26['Flood'], 'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Flood'], 'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Flood'],
+    name: 'Flood', 'RCP2.6':this.state.single_asset_cone_chart.cone1_26['Flood'], 'RCP4.5':this.state.single_asset_cone_chart.cone1_45['Flood'], 'RCP8.5':this.state.single_asset_cone_chart.cone1_85['Flood'],
   },
   
 
   {
-    name: 'Storm Surge', 'rcp2.6':this.state.single_asset_cone_chart.cone1_26['Storm Surge'], 'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Storm Surge'], 'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Storm Surge'],
+    name: 'Storm Surge', 'RCP2.6':this.state.single_asset_cone_chart.cone1_26['Storm Surge'], 'RCP4.5':this.state.single_asset_cone_chart.cone1_45['Storm Surge'], 'RCP8.5':this.state.single_asset_cone_chart.cone1_85['Storm Surge'],
   },
   {
-  	name:'LandSlide','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Landslide'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Landslide'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Landslide']
+  	name:'LandSlide','RCP2.6':this.state.single_asset_cone_chart.cone1_26['Landslide'],'RCP4.5':this.state.single_asset_cone_chart.cone1_45['Landslide'],'RCP8.5':this.state.single_asset_cone_chart.cone1_85['Landslide']
   },
   {
-  	name:'Rainfall','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Rainfall'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Rainfall'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Rainfall']
+  	name:'Rainfall','RCP2.6':this.state.single_asset_cone_chart.cone1_26['Rainfall'],'RCP4.5':this.state.single_asset_cone_chart.cone1_45['Rainfall'],'RCP8.5':this.state.single_asset_cone_chart.cone1_85['Rainfall']
   },
   {
-  	name:'Drought','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Drought'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Drought'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Drought']
+  	name:'Drought','RCP2.6':this.state.single_asset_cone_chart.cone1_26['Drought'],'RCP4.5':this.state.single_asset_cone_chart.cone1_45['Drought'],'RCP8.5':this.state.single_asset_cone_chart.cone1_85['Drought']
   },
   {
-  	name:'Extreme Heat','rcp2.6':this.state.single_asset_cone_chart.cone1_26['Extreme Heat'],'rcp4.5':this.state.single_asset_cone_chart.cone1_45['Extreme Heat'],'rcp8.5':this.state.single_asset_cone_chart.cone1_85['Extreme Heat']
+  	name:'Extreme Heat','RCP2.6':this.state.single_asset_cone_chart.cone1_26['Extreme Heat'],'RCP4.5':this.state.single_asset_cone_chart.cone1_45['Extreme Heat'],'RCP8.5':this.state.single_asset_cone_chart.cone1_85['Extreme Heat']
   }
 ]
 
@@ -555,10 +559,12 @@ handleComparison=()=>{
  		this.state.yearDetail=this.props.detailyear.success
  	}
  	 		
- 
+ 	{/*if(this.state.loading) return <BeatLoader style={{verticalAlign:'middle'}}/>;*/}
 
 
  	return(
+ 	
+
  		<div style={{backgroundColor:'#f7f7f7'}}>
 			<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
 			    
@@ -672,7 +678,7 @@ handleComparison=()=>{
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Area type="monotone" dataKey="RCP" fill="#ffffff" stroke="#ffffff" />
         <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
         <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc" />
         <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2" />
@@ -893,7 +899,7 @@ handleComparison=()=>{
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        
         <Bar dataKey="value" barSize={20} fill="#6c85bd" />
        
 
@@ -994,7 +1000,7 @@ handleComparison=()=>{
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
+        <Area type="monotone" dataKey="RCP" fill="#ffffff" stroke="#ffffff" />
         <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
         <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc"/>
         <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2"/>
@@ -1095,13 +1101,13 @@ handleComparison=()=>{
         <Tooltip />
         <Legend />
 
-        <Area type="monotone" dataKey="rcp" fill="#ffffff" stroke="#ffffff" />
-        <Bar dataKey="rcp2.6" barSize={20} fill="#6c85bd" />
-        <Bar dataKey="rcp4.5" barSize={20} fill="#60b1cc"/>
-        <Bar dataKey="rcp8.5" barSize={20} fill="#bac3d2"/>
+        <Area type="monotone" dataKey="RCP" fill="#ffffff" stroke="#ffffff" />
+        <Bar dataKey="RCP2.6" barSize={20} fill="#6c85bd" />
+        <Bar dataKey="RCP4.5" barSize={20} fill="#60b1cc"/>
+        <Bar dataKey="RCP8.5" barSize={20} fill="#bac3d2"/>
 
 
-        <Line type="monotone" dataKey="uv" stroke="#000000" />
+        
       </ComposedChart>
               			</Grid.Column>
               			<Grid.Column width="1"></Grid.Column>
@@ -1144,7 +1150,7 @@ handleComparison=()=>{
         <Bar dataKey="2050" barSize={20} fill="#bac3d2"/>
 
 
-        <Line type="monotone" dataKey="uv" stroke="#000000" />
+       
       </ComposedChart>
               			</Grid.Column>
               			

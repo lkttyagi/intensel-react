@@ -32,10 +32,21 @@ label{
 	width:25%;
 	padding:5px;
 }
-.csv:hover{
+.csv{
 	background-color:#015edc!important;
 	color:white!important;
 	border:1px solid white!important;
+	font-size:11px!important;
+	opacity:0.9;
+	padding:10px 15px 10px 15px !important;
+
+}
+.header{
+
+	font-size:16px!important;
+	font-weight:400!important;
+	padding-left:20px!important;
+
 }
 .ui.modal>.close{
 	margin-right:35px;
@@ -50,3 +61,164 @@ margin-right:35px;
 .ui.fullscreen.modal{
 	left:10!important;
 }
+
+
+
+
+
+
+
+
+
+
+ .table {
+	 max-width: 100%;
+	 width: 1024px;
+	 margin: 50px auto;
+}
+ .table__row {
+	 display: flex;
+	 align-items: center;
+	 background-color: #ecedf1;
+	 padding: 15px 0;
+	 transition: 0.2s ease;
+	 font-size: 10px;
+	 font-size: 1rem;
+}
+ @media screen and (max-width: 580px) {
+	 .table__row {
+		 flex-direction: column;
+		 justify-content: center;
+	}
+}
+ .table__row:hover {
+	 background-color: #e3e5eb;
+}
+ .table__row:nth-child(odd) {
+	 background-color: white;
+}
+ .table__row:nth-child(odd):hover {
+	 background-color: #f5f5f7;
+}
+ .table__heading {
+	 background-color: white;
+	 font-weight: bold;
+	 font-size: 16px;
+	 font-size: 1rem;
+}
+ @media screen and (max-width: 580px) {
+	 .table__heading {
+		 display: none;
+	}
+}
+ .table__heading:hover {
+	 background-color: transparent !important;
+}
+ .table__cell {
+	 display: flex;
+	 align-items: center;
+}
+ @media screen and (max-width: 580px) {
+	 .table__cell {
+		 justify-content: center;
+		 text-align: center;
+		 padding: 15px 0;
+	}
+}
+ .table__cell:first-child {
+	 width: 20%;
+	 padding-left: 20px;
+}
+ @media screen and (max-width: 580px) {
+	 .table__cell:first-child {
+		 padding-left: 0;
+		 width: 100%;
+	}
+}
+ .table__cell:nth-child(2) {
+	 width: calc(50%/3);
+}
+ @media screen and (max-width: 580px) {
+	 .table__cell:nth-child(2) {
+		 width: 100%;
+	}
+}
+ .table__cell:nth-child(3) {
+	 width: calc(50%/3);
+}
+ @media screen and (max-width: 580px) {
+	 .table__cell:nth-child(3) {
+		 width: 100%;
+	}
+}
+ .table__cell:nth-child(4) {
+	 width: calc(50%/3);
+}
+ @media screen and (max-width: 580px) {
+	 .table__cell:nth-child(4) {
+		 width: 100%;
+	}
+}
+ .table__cell:nth-child(5) {
+	 width: 30%;
+	 text-align: center;
+	 justify-content: center;
+	 padding-right: 20px;
+}
+ @media screen and (max-width: 580px) {
+	 .table__cell:nth-child(5) {
+		 padding-right: 0;
+		 width: 100%;
+	}
+}
+ .table__crypto-name {
+	 font-weight: bold;
+}
+ .table__crypto-image {
+	 margin-right: 10px;
+}
+ @media screen and (max-width: 580px) {
+	 .table__crypto-image {
+		 margin-right: 0;
+	}
+}
+ .button {
+	
+	 min-width: 100px;
+	 line-height: 28px;
+	 border-radius: 100px;
+	 font-size: 12px;
+	 font-size: 1rem;
+	 border: 0;
+	 background-color: transparent;
+	 cursor: pointer;
+	 transition: 0.3s ease;
+	 margin:;
+	 padding: 0 15px;
+}
+ @media screen and (max-width: 580px) {
+	 .button {
+		 height: 50px;
+		 font-size: 16px;
+		 font-size: 1.2rem;
+	}
+}
+ .button--outline {
+	 border: 1px solid #556fe7;
+	 color: black;
+}
+ .button--outline:hover {
+	 background-color: #015edc;
+	 color: white;
+}
+ .button--primary {
+	 color: white;
+	 background-color:#015edc;
+	 border: 1px solid transparent;
+}
+ .button--primary:hover {
+	 background-image: linear-gradient(to right, transparent, transparent);
+	 color: white;
+	 border: 1px solid #556fe7;
+}
+ 
