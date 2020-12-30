@@ -114,12 +114,13 @@ class Dashboard extends Component{
 		scatter:'',
 		yearDetail:'',
 		detailed:'false',
+		singleYearDetail:'',
 		portfolio_losses:'',
 		portfolio_losses_flat:'',
 		overall:'',
 		heatmap:'',
 		losses:'',
-		loading:true
+		
 		
 	}
 
@@ -299,7 +300,7 @@ class Dashboard extends Component{
 				portfolio_losses_flat:this.props.feedback.overall.portfolio_versus_losses_flat_adjusted,
 				overall:this.props.feedback.overall,
 				heatmap:this.props.feedback.overall.heatmap,
-				loading:false
+				
 			})
 
 		}
@@ -335,6 +336,11 @@ class Dashboard extends Component{
 
 
 
+
+		}
+		if(this.state.yearDetail.length>0){
+			let ItemYear=this.state.yearDetail.filter(asset=>asset.name==this.state.activeItemName)
+			this.setState({singleYearDetail:ItemYear},()=>console.log("single year",this.state.singleYearDetail))
 		}
 	}
 	handleSingleChart=()=>{
@@ -445,6 +451,7 @@ handleComparison=()=>{
    		let formdata1=new FormData();
    	formdata1.append('project',this.state.project)
    	this.props.getDetailByYear(formdata1);
+   	
 	}
 
 	handleSubmit=(e)=>{
@@ -461,7 +468,7 @@ handleComparison=()=>{
 
 
  render(){
- 	console.log("dashbaord dta",this.state.heatmap)
+ 	console.log("dashbaord dta",this.state.yearDetail)
  	const {value,basement,construction,stories,occupancy,project,rcp,year}=this.state;
 
  	let heatmapdata=[];
@@ -559,7 +566,7 @@ handleComparison=()=>{
  		this.state.yearDetail=this.props.detailyear.success
  	}
  	 		
- 	{/*if(this.state.loading) return <BeatLoader style={{verticalAlign:'middle'}}/>;*/}
+ 	if(this.state.loading) return <BeatLoader style={{verticalAlign:'middle'}}/>
 
 
  	return(
@@ -615,7 +622,7 @@ handleComparison=()=>{
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
 								<p> Total Value at Risk <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
-								{this.state.losses['Asset Storm Damage']?<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ {this.state.losses['Asset Flood Damage'][0]+this.state.losses['Asset Storm Damage'][0]+this.state.losses['Operational Flood Loss'][0]+this.state.losses['Operational Storm Surge Loss'][0]} Billion</b></p>:null}
+								{this.state.losses['Asset Storm Damage']?<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ {(this.state.losses['Asset Flood Damage'][0]+this.state.losses['Asset Storm Damage'][0]+this.state.losses['Operational Flood Loss'][0]+this.state.losses['Operational Storm Surge Loss'][0]).toFixed(2)} Billion</b></p>:null}
 
 								</Grid.Column>
 							</Grid.Row>
@@ -791,8 +798,8 @@ handleComparison=()=>{
         <Table.Cell>{asset.name}</Table.Cell>
        
         <Table.Cell style={{textTransform:'capitalize'}}>{asset.type}</Table.Cell>
-        <Table.Cell><Progress percent={(asset.climatic_score)} color="red"/></Table.Cell>
-        <Table.Cell>{asset.overall_loss}</Table.Cell>
+        <Table.Cell><Progress percent={asset.climatic_score}/></Table.Cell>
+        <Table.Cell>{asset.overall_loss.toFixed(2)}</Table.Cell>
         
         <Table.Cell><Button onClick={()=>this.handleOpen(asset)}><Icon name="chart line"/></Button></Table.Cell>
         <Table.Cell><Icon name="edit"/></Table.Cell>
@@ -954,13 +961,13 @@ handleComparison=()=>{
 							<Grid.Column className="card" style={{width:'30%',marginRight:'3%'}}>
 								<p>Year</p>
 								
-							<YEARDonut data={this.state.yearDetail}/>
+							<YEARDonut data={this.state.singleYearDetail}/>
 																	
 							</Grid.Column>
 							<Grid.Column className="card" style={{width:'32.5%'}}>
 								<p>RCP</p>
 								
-								<RCPDonut data={this.state.yearDetail}/>
+								<RCPDonut data={this.state.singleYearDetail}/>
 									
 								
 							</Grid.Column>
