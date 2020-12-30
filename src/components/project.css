@@ -182,9 +182,7 @@ margin-right:35px;
 		 margin-right: 0;
 	}
 }
- .button {
-	
-	 
+.button { 
 	 line-height: 28px;
 	 border-radius: 100px;
 	 font-size: 12px;
@@ -193,16 +191,10 @@ margin-right:35px;
 	 background-color: transparent;
 	 cursor: pointer;
 	 transition: 0.3s ease;
-	 margin:;
+	 
 	 padding: 0 15px;
 }
- @media screen and (max-width: 580px) {
-	 .button {
-		 height: 50px;
-		 font-size: 16px;
-		 font-size: 1.2rem;
-	}
-}
+
  .button--outline {
 	 border: 1px solid #556fe7;
 	 color: black;
@@ -221,4 +213,8 @@ margin-right:35px;
 	 color: white;
 	 border: 1px solid #556fe7;
 }
- 
+
+
+button:focus{
+	outline:none;
+ }

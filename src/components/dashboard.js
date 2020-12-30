@@ -566,7 +566,7 @@ handleComparison=()=>{
  		this.state.yearDetail=this.props.detailyear.success
  	}
  	 		
- 	if(this.state.loading) return <BeatLoader style={{verticalAlign:'middle'}}/>
+ 	
 
 
  	return(

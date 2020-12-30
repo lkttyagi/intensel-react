@@ -59,7 +59,8 @@ class Project extends Component{
 		rcp:'',
 		modalloading:false,
 		lossmodalOpen:false,
-		portfolios:''
+		portfolios:'',
+		summarymodalOpen:false,
 		
 	}
 
@@ -97,6 +98,14 @@ class Project extends Component{
 		this.setState({modalloading:true},()=>{this.props.getLoss(formdata)})
 	}
 
+
+	handleSummarySubmit=(e)=>{
+		e.preventDefault();
+		let formdata=new FormData();
+		formdata.append('portfolio',this.state.activeItemName)
+		this.setState({modalloading:true},()=>{this.props.getSummary(formdata)})
+	}
+
 	handleAssets=(e,{value})=>{
 		this.setState({assets:value},()=>console.log(this.state.assets))
 
@@ -117,6 +126,13 @@ class Project extends Component{
 	handleLossModalClose =()=>{
 		this.setState({lossmodalOpen:false})
 	}
+	handleSummaryModalOpen=(portfolio)=>this.setState({summarymodalOpen:true,
+		activeItemName:portfolio})
+
+	handleSummaryModalClose =()=>{
+		this.setState({summarymodalOpen:false})
+	}
+
 
 	render(){
 		const {value,others,variables,rcp,year,status} =this.state;
@@ -247,7 +263,7 @@ class Project extends Component{
         <Table.Cell width="3"><Button className="csv" onClick={()=>this.handleOpen(portfolio.name)} primary>Download CSV</Button></Table.Cell>
         <Table.Cell width="3"><Button className="csv" onClick={()=>this.handleLossModalOpen(portfolio.name)}primary>Download Loss</Button></Table.Cell>
         
-        <Table.Cell width="3"><Button className="csv" primary onClick={()=>this.handle}>Download Summary</Button></Table.Cell>
+        <Table.Cell width="3"><Button className="csv" primary onClick={()=>this.handleSummaryModalOpen(portfolio.name)}>Download Summary</Button></Table.Cell>
       	<Table.Cell width="4" textAlign="center" style={{color:'red'}}>{portfolio.problematic_assets}</Table.Cell>
 
       </Table.Row>
@@ -279,7 +295,7 @@ class Project extends Component{
       </div>
       <div class="table__cell"><button class="button button--primary buttons__comprar" onClick={()=>this.handleOpen(portfolio.name)}>Download</button></div>
       <div class="table__cell"><button class="button button--outline buttons__ventar" onClick={()=>this.handleLossModalOpen(portfolio.name)}>Download</button></div>
-      <div class="table__cell"><button class="button button--primary buttons__comprar">Download</button></div>
+      <div class="table__cell"><button class="button button--primary buttons__comprar" onClick={()=>this.handleSummaryModalOpen(portfolio.name)}>Download</button></div>
       <div class="table__cell" style={{color:'red'}}>
         	{portfolio.problematic_assets}
       </div>
@@ -345,7 +361,7 @@ class Project extends Component{
 		itemName={this.state.activeItemName}
 		>
 		<Modal.Header>
-			Download CSV 
+			Download Loss
 		</Modal.Header>
 		<Modal.Content scrolling>
 		<div style={{marginLeft:'20%',marginRight:'20%'}}>
@@ -360,6 +376,42 @@ class Project extends Component{
 
 		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
 				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleLossSubmit} primary>Submit</Button>}
+		
+		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
+		
+		</div>
+		</Modal.Content>
+		</Modal>
+
+		<Modal
+		open={this.state.summarymodalOpen}
+		onClose={this.handleSummaryModalClose}
+		closeIcon
+		itemName={this.state.activeItemName}
+		>
+		<Modal.Header>
+			Download Summary
+		</Modal.Header>
+		<Modal.Content scrolling>
+		<div style={{marginLeft:'20%',marginRight:'20%'}}>
+		
+		
+		
+		<Grid.Row>
+				<Form.Field 
+					 id="form-input-control-username"
+					 control={Input}
+					 label='Portfolio'
+					 placeholder={this.state.activeItemName}
+					 
+					 style={{width:'100%'}}
+					 />
+
+		</Grid.Row>	
+		<br/>
+
+		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleSummarySubmit} primary>Submit</Button>}
 		
 		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
 		
