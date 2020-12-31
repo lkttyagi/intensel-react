@@ -6,7 +6,7 @@ import {
 
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import {project,auth,dashboard} from '../actions';
-import {connect} from 'react-redux';
+import {connect} from 'react-redux';  
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';
 
@@ -176,14 +176,22 @@ const data1=[
                                                   <XAxis type="number" dataKey="x" name="Depth" value="Depth"/>
                                                   <YAxis type="number" dataKey="y" name="Loss in Million $" value="Loss in Million $" unit="mn $" />
                                                   <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                                                  
                                                   <Scatter name="" data={data} fill="#8884d8">
                                                    
                                                    {
             data.map((entry, index) => <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />)
           }
                                                   </Scatter>
+                                                  
+                                                  
                                                 </ScatterChart>
-    
+                           <div style={{display:'flex',marginLeft:'20%'}}>
+      <p style={{fontSize:'12px',display:'flex'}}>RCP 2.6 <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',marginTop:'4px',marginLeft:'5px'}}></div></p>  
+      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}>RCP 4.5 <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div></p>
+      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}>RCP 8.5 <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div></p>
+
+      </div>
       
                        
                     </Grid.Column>
@@ -201,14 +209,19 @@ const data1=[
         <XAxis type="number" dataKey="x" name="Depth" value="Depth"/>
         <YAxis type="number" dataKey="y" name="Loss in Million $" value="Loss in Million $" unit="mn $" />
         <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Scatter name="" data={data1} fill="#8884d8">
+        <Scatter name="RCP" data={data1} fill="#8884d8">
           
           {
             data1.map((entry, index) => <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />)
           }
         </Scatter>
       </ScatterChart>
+                     <div style={{display:'flex',marginLeft:'20%'}}>
+      <p style={{fontSize:'12px',display:'flex'}}>RCP 2.6 <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#00c49f',marginTop:'4px',marginLeft:'5px'}}></div></p>  
+      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}>RCP 4.5 <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div></p>
+      <p style={{fontSize:'12px',display:'flex',marginLeft:'5px'}}>RCP 8.5 <div class="box" style={{width:'10px',height:'10px',backgroundColor:'#0088fe',marginTop:'4px',marginLeft:'5px'}}></div></p>
 
+      </div>
                     </Grid.Column>
                     
                   </Grid.Row>

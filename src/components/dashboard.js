@@ -874,8 +874,8 @@ handleComparison=()=>{
 			
 			          		<Grid.Row>
 				<Grid.Column width="3"></Grid.Column>
-				<Grid.Column width="6" className="card">
-				<p>Portfolio vs Losses(Building FootPrint)</p>
+				<Grid.Column width="4" className="card">
+				<p>Portfolio vs Losses</p>
 		{losses_data.length>0?				   <ComposedChart
         width={450}
         height={400}
@@ -1047,24 +1047,25 @@ handleComparison=()=>{
 					</div>
               			</Grid.Column>
               			<Grid.Column width="1"></Grid.Column>
+              			{this.state.single_asset_loss['Total Loss']?
               			<Grid.Column width="5" className="card">
               							<p>Portfolio Losses</p>
-							<p style={{fontSize:'12px'}}>Total Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Total Loss']}</i></p>
-						<Progress percent={this.state.single_asset_loss['Total Loss']}/>
-					    <p style={{fontSize:'12px'}}>Asset Flood Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset Flood Damage']}</i></p>
+						<p style={{fontSize:'12px'}}>Total Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Total Loss'][0]}</i></p>
+						<Progress percent={this.state.single_asset_loss['Total Loss'][1]}/>
+					    <p style={{fontSize:'12px'}}>Asset Flood Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset Flood Damage'][0]}</i></p>
 
-						<Progress percent={this.state.single_asset_loss['Asset Flood Damage']} color='green'/>
-						<p style={{fontSize:'12px'}}>Asset Storm Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset storm Damage']}</i></p>
+						<Progress percent={this.state.single_asset_loss['Asset Flood Damage'][1]} color='green'/>
+						<p style={{fontSize:'12px'}}>Asset Storm Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset Storm Damage'][0]}</i></p>
 
-						<Progress percent={this.state.single_asset_loss['Asset Storm Damage']} color='yellow'/>
-						<p style={{fontSize:'12px'}}>Operational Flood Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Operational Flood Loss']}</i></p>
+						<Progress percent={this.state.single_asset_loss['Asset Storm Damage'][1]} color='yellow'/>
+						<p style={{fontSize:'12px'}}>Operational Flood Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Operational Flood Loss'][0]}</i></p>
 
-						<Progress percent={this.state.single_asset_loss['Operational Flood Loss']} color='red'/>
-						<p style={{fontSize:'12px'}}> Operational Storm Surge Loss <i style={{float:'right'}}>{this.state.single_asset_loss['Operational Storm Surge Loss']}</i></p>
+						<Progress percent={this.state.single_asset_loss['Operational Flood Loss'][1]} color='red'/>
+						<p style={{fontSize:'12px'}}> Operational Storm Surge Loss <i style={{float:'right'}}>{this.state.single_asset_loss['Operational Storm Surge Loss'][0]}</i></p>
 
-						<Progress percent={this.state.single_asset_loss['Operational Storm Surge Loss']} color='red'/>
+						<Progress percent={this.state.single_asset_loss['Operational Storm Surge Loss'][1]} color='red'/>
 						
-						</Grid.Column>
+						</Grid.Column>:null}
 
 
               		</Grid.Row>
@@ -1103,7 +1104,7 @@ handleComparison=()=>{
         </linearGradient>
       </defs>
         <CartesianGrid stroke="#e5e5e5" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }}  style={{padding:'10px'}} />
         <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />
@@ -1123,12 +1124,12 @@ handleComparison=()=>{
 
               						   <ComposedChart
         width={750}
-        height={400}
+        height={380}
         data={this.state.YearData}
         margin={{
-          top: 20, right: 80, bottom: 20, left: 20,
+          top: 20, right: 80, bottom: 0, left: 20,
         }}
-        padding={5}
+        padding={20}
        
       >
       <defs>
@@ -1146,7 +1147,7 @@ handleComparison=()=>{
         </linearGradient>
       </defs>
         <CartesianGrid stroke="#e5e5e5" />
-        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} />
+        <XAxis dataKey="name" label={{ value: 'Year', position: 'insideBottomRight', offset: 0 }} style={{marginBottom:'10px'}} />
         <YAxis label={{ value: 'value', angle: -90, position: 'insideLeft' }} />
         <Tooltip />
         <Legend />

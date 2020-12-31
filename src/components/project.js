@@ -274,7 +274,7 @@ class Project extends Component{
 					</Table.Body>
 
 				</Table>*/}
-				<div class="table">
+				<div class="table" style={{overflow:'auto',maxHeight:'220px'}}>
   <div class="table__body">
     <div class="table__row table__heading">
       <div class="table__cell">Portfolio</div>
@@ -294,7 +294,7 @@ class Project extends Component{
         
       </div>
       <div class="table__cell"><button class="button button--primary buttons__comprar" onClick={()=>this.handleOpen(portfolio.name)}>Download</button></div>
-      <div class="table__cell"><button class="button button--outline buttons__ventar" onClick={()=>this.handleLossModalOpen(portfolio.name)}>Download</button></div>
+      <div class="table__cell"><button class="button button--primary buttons__ventar" onClick={()=>this.handleLossModalOpen(portfolio.name)}>Download</button></div>
       <div class="table__cell"><button class="button button--primary buttons__comprar" onClick={()=>this.handleSummaryModalOpen(portfolio.name)}>Download</button></div>
       <div class="table__cell" style={{color:'red'}}>
         	{portfolio.problematic_assets}
