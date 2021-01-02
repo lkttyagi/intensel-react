@@ -26,6 +26,8 @@ import RCPDonut from './rcpdonut';
 import YEARDonut from './yeardonut';
 import SingleDonut from './singledonut';
 import BeatLoader from 'react-spinners/BeatLoader';
+import { ResponsiveHeatMap } from '@nivo/heatmap';
+
 
 let options=[];
 let Item=[];
@@ -478,7 +480,7 @@ handleComparison=()=>{
     let temp=[];
     for(let j = 0; j <this.state.heatmap.values.length; j++){
     	
-        temp.push(parseInt(this.state.heatmap.values[j][i]/2));
+        temp.push(parseInt(this.state.heatmap.values[j][i]));
       
     }
 
@@ -823,7 +825,7 @@ handleComparison=()=>{
 
 					{this.state.losses['Asset Flood Damage']?<div>
 						
-						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}>$ {this.state.losses['Total Loss'][0]} Billion</i></p>
+						<p style={{fontSize:'12px'}}>Total Loss <i style={{float:'right'}}>$ {this.state.losses['Total Loss'][0].toFixed(2)} Billion</i></p>
 						<Progress percent={this.state.losses['Total Loss'][1]}/>
 
 					    <p style={{fontSize:'12px'}}>Asset Flood Damage <i style={{float:'right'}}>$ {this.state.losses['Asset Flood Damage'][0]} Billion</i></p>
@@ -868,6 +870,50 @@ handleComparison=()=>{
                                 borderRadius={ "4px" }
                                 
                             />:null}
+                           
+                  {/* {heatmapdata.length>0?<ResponsiveHeatMap
+        data={heatmapdata}
+        keys={[
+            
+        ]}
+        indexBy="country"
+        margin={{ top: 100, right: 60, bottom: 60, left: 60 }}
+        forceSquare={true}
+        axisTop={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
+        axisRight={null}
+        axisBottom={null}
+        axisLeft={{
+            orient: 'left',
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+            legend: 'country',
+            legendPosition: 'middle',
+            legendOffset: -40
+        }}
+        cellOpacity={1}
+        cellBorderColor={{ from: 'color', modifiers: [ [ 'darker', 0.4 ] ] }}
+        labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.8 ] ] }}
+        defs={[
+            {
+                id: 'lines',
+                type: 'patternLines',
+                background: 'inherit',
+                color: 'rgba(0, 0, 0, 0.1)',
+                rotation: -45,
+                lineWidth: 4,
+                spacing: 7
+            }
+        ]}
+        fill={[ { id: 'lines' } ]}
+        animate={true}
+        motionConfig="wobbly"
+        motionStiffness={80}
+        motionDamping={9}
+        hoverTarget="cell"
+        cellHoverOthersOpacity={0.25}
+    />
+:null}*/}
                 </div>
              </Grid.Column>
 			</Grid.Row>

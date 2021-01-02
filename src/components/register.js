@@ -9,6 +9,7 @@ import {auth} from '../actions';
 import Zoom from 'react-reveal/Zoom';
 import PropTypes from 'prop-types';
 import Spinner from './loader';
+import './register.css';
 
 
 
@@ -92,15 +93,15 @@ onLoadRecaptcha(){
 				}
 			console.log(this.props.errors)	
 		return(
-		<Grid style={{ height:'100vh' }} verticalAlign='middle' padded>	
-		<Grid.Row>	
-		<Grid.Column width={2}></Grid.Column>
-		<Grid.Column width={6}>
+		<Grid style={{ height:'100vh' }} verticalAlign='middle'>	
+		<Grid.Row style={{ padding:'0em'}}>	
+		
+		<Grid.Column width={8}>
 			<Image src={signup}/>
 		</Grid.Column> 	
-		 <Grid.Column width={6}>
+		 <Grid.Column width={8}>
 		 	<Image src={logo} size='medium' centered/>
-		 	<Header as='h2' textAlign='center'>Welcome to Intensel</Header>
+		 	
 		 	<h5>Please fill in details to create an account</h5>
 		 	{ (this.props.errors.length>0) ?  <div className="row" style={{textAlign:"center"}}>
                   <span style={{color:'red'}}>{this.props.errors[0].message}</span>
@@ -112,17 +113,18 @@ onLoadRecaptcha(){
 
 					 id="form-input-control-first-name"
 					 control={Input}
-					 label='First Name'
+					 
 					 placeholder='First Name'
 					 value={this.state.first_name}
 					 onChange={e=>this.setState({first_name:e.target.value})}
+
 					 />
 					 <span class="enter"></span>
 
 					<Form.Field 
 					 id="form-input-control-last-name"
 					 control={Input}
-					 label='Last Name'
+					 
 					 placeholder='Last Name'
 					 value={this.state.last_name}
 					 onChange={e=>this.setState({last_name:e.target.value})}
@@ -131,7 +133,7 @@ onLoadRecaptcha(){
 				<Form.Field 
 					 id="form-input-control-username"
 					 control={Input}
-					 label='Username'
+					 
 					 placeholder='Username'
 					 value={this.state.username}
 					 onChange={e=>this.setState({username:e.target.value})}
@@ -139,7 +141,7 @@ onLoadRecaptcha(){
 				<Form.Field 
 					 id="form-input-control-email"
 					 control={Input}
-					 label='Email'
+					 
 					 placeholder='Email'
 					 value={this.state.email}
 					 onChange={e=>this.setState({email:e.target.value})}
@@ -150,7 +152,7 @@ onLoadRecaptcha(){
 				<Form.Field 
 					 id="form-input-control-password"
 					 control={Input}
-					 label='Password'
+					 
 					 type="password"
 					 placeholder='Password'
 					 value={this.state.password}
@@ -159,7 +161,7 @@ onLoadRecaptcha(){
 				<Form.Field 
 					 id="form-input-control-confirm-password"
 					 control={Input}
-					 label='Confirm Password'
+					 
 					 type="password"
 					 placeholder='Confirm Password'
 					 value={this.state.confirm_password}
@@ -170,8 +172,8 @@ onLoadRecaptcha(){
 				<Form.Field 
 					 id="form-input-control-company"
 					 control={Input}
-					 label='Company Code'
-					 placeholder='Company Code'
+					 
+					 placeholder='Company Name'
 					 value={this.state.company_code}
 					 onChange={(e)=>this.setState({company_code:e.target.value})}
 					 />
@@ -183,8 +185,8 @@ onLoadRecaptcha(){
             onloadCallback={this.onLoadRecaptcha}
             
         />
-        	{(this.state.loading && this.props.errors.length==0)?<Button style={{backgroundColor:'#015edc'}}><Spinner/></Button>:
-				<Button style={{backgroundColor:'#015edc'}} disabled={!this.state.formValid} onClick={this.onSubmit} primary>Register</Button>
+        	{(this.state.loading && this.props.errors.length==0)?<Button style={{backgroundColor:'#fdb827'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#fdb827',fontSize:'18px',color:'black'}} disabled={!this.state.formValid} onClick={this.onSubmit} primary>Register</Button>
         	}
 			</Form>
 

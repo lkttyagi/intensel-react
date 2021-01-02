@@ -229,8 +229,8 @@ class Project extends Component{
 			    <br/>
 			    <br/>
 
-				{(this.state.loading && this.props.errors.Error==undefined)?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
-				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>}
+				{(this.state.loading && this.props.errors.Error==undefined)?<Button style={{backgroundColor:'#fdb827',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#fdb827',marginLeft:'45%',color:'black'}} onClick={this.onSubmit} primary>Submit</Button>}
 			</Form>
 			
 		</Grid.Column>
@@ -344,10 +344,10 @@ class Project extends Component{
 		</Grid.Row>
 		<br/>
 
-		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
-				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleSubmit} primary>Submit</Button>}
+		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#fdb827',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#fdb827',color:'black',marginLeft:'45%'}} onClick={this.handleSubmit} primary>Submit</Button>}
 		
-		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
+		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#fdb827',color:'black',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
 		
 		</div>
 		</Modal.Content>
@@ -374,10 +374,10 @@ class Project extends Component{
 		</Grid.Row>	
 		<br/>
 
-		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
-				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleLossSubmit} primary>Submit</Button>}
+		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#fdb827',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#fdb827',color:'black',marginLeft:'45%'}} onClick={this.handleLossSubmit} primary>Submit</Button>}
 		
-		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
+		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#fdb827',color:'black',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
 		
 		</div>
 		</Modal.Content>
@@ -403,17 +403,17 @@ class Project extends Component{
 					 control={Input}
 					 label='Portfolio'
 					 placeholder={this.state.activeItemName}
-					 
+					 disabled	
 					 style={{width:'100%'}}
 					 />
 
 		</Grid.Row>	
 		<br/>
 
-		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
-				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.handleSummarySubmit} primary>Submit</Button>}
+		{(this.state.modalloading && (!this.props.csv.length===undefined))?<Button style={{backgroundColor:'#fdb827',marginLeft:'45%'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#fdb827',color:'black',marginLeft:'40%'}} onClick={this.handleSummarySubmit} primary>Submit</Button>}
 		
-		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#015edc',color:'white',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
+		{(this.props.csv.length===undefined)?<CsvDownload data={this.props.csv.success} style={{backgroundColor:'#fdb827',color:'black',border:'0px solid white',padding:'10px',float:'right',borderRadius:'5%',fontWeight:'bold'}}/>:null}
 		
 		</div>
 		</Modal.Content>

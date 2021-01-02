@@ -514,7 +514,7 @@ class Location extends Component{
 			<br/>
 			
 
-			<Button primary onClick={this.handleOpen}style={{borderRadius:5,backgroundColor:'#015edc',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
+			<Button primary onClick={this.handleOpen}style={{borderRadius:5,backgroundColor:'#fdb827',color:'black',float:'right',marginTop:'30px',marginRight:'30px',marginBottom:'30px'}}>SUBMIT</Button>
 
 			</Grid.Column>
 
@@ -537,7 +537,7 @@ class Location extends Component{
 				<Form.Field 
 					 id="form-input-control-name"
 					 control={Input}
-					 label='Portfolio Name'
+					 placeholder="Portfolio Name"
 					 value={this.state.portfolio}
 					 onChange={e=>this.setState({portfolio:e.target.value})}
 					 
@@ -551,8 +551,8 @@ class Location extends Component{
 			    <br/>
 			    <br/>
 
-				{(this.state.loading && this.props.errors.error==undefined)?<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}}><Spinner/></Button>:
-				<Button style={{backgroundColor:'#015edc',marginLeft:'45%'}} onClick={this.onSubmit} primary>Submit</Button>}
+				{(this.state.loading && this.props.errors.error==undefined)?<Button style={{backgroundColor:'#0fdb827',marginLeft:'40%',color:'black'}}><Spinner/></Button>:
+				<Button style={{backgroundColor:'#fdb827',marginLeft:'40%',color:'black'}} onClick={this.onSubmit} primary>Submit</Button>}
 			</Form>
             </Modal.Content>
           </Modal>

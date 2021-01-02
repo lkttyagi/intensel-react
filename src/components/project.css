@@ -1,10 +1,13 @@
 input{
-	background-color:rgb(241,242,246)!important;
+	background-color:#fff!important;
 	border:0px!important;
 	color:rgb(47,53,66)!important;
+	border-bottom:1px solid #005edc!important;
+	border-radius:0px!important;
+
 }
 .ui.fluid.selection.dropdown {
-	background-color:rgb(241,242,246)!important;
+	background-color:white!important;
 	border:0px!important;
 	
 }
@@ -33,8 +36,8 @@ label{
 	padding:5px;
 }
 .csv{
-	background-color:#015edc!important;
-	color:white!important;
+	background-color:#fdb827!important;
+	color:black!important;
 	border:1px solid white!important;
 	font-size:11px!important;
 	opacity:0.9;
@@ -200,18 +203,18 @@ margin-right:35px;
 	 color: black;
 }
  .button--outline:hover {
-	 background-color: #015edc;
-	 color: white;
+	 background-color: #fdb827;
+	 color: black;
 }
  .button--primary {
-	 color: white;
-	 background-color:#015edc;
+	 color: black;
+	 background-color:#fdb827;
 	 border: 1px solid transparent;
 }
  .button--primary:hover {
 	 background-image: linear-gradient(to right, transparent, transparent);
-	 color: white;
-	 border: 1px solid #556fe7;
+	 color: black;
+	 border: 1px solid black;
 }
 
 

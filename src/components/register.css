@@ -8,11 +8,17 @@
 }
 	
 
-.input:hover {
-	animation:mymove 2s;
-	border:0px;
-	
+.field{
+	margin-bottom:2em!important;
 }
-@keyframes mymove{
-	50% {box-shadow:10px 20px 30px #015EDC;}
+
+
+::placeholder{
+	font-size:16px;
+	color:#005edc!important;
+	text-transform:uppercase!important;
+}
+
+body{
+	font-family:'Poppins' !important;
 }

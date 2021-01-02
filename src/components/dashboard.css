@@ -21,7 +21,7 @@ td{
 	color:#3a3a3a;
 	font-weight: 600;
 }
-line{
+.recharts-cartesian-axis-line{
 	stroke:white;
 }
 circle{
