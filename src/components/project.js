@@ -399,7 +399,7 @@ class Project extends Component{
 		
 		<Grid.Row>
 				<Form.Field 
-					 id="form-input-control-username"
+					 id="form-input-control-project"
 					 control={Input}
 					 label='Portfolio'
 					 placeholder={this.state.activeItemName}

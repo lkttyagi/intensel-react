@@ -470,40 +470,26 @@ handleComparison=()=>{
 
 
  render(){
- 	console.log("dashbaord dta",this.state.yearDetail)
+ 	console.log("dashbaord dta",this.state.single_asset_loss)
  	const {value,basement,construction,stories,occupancy,project,rcp,year}=this.state;
 
  	let heatmapdata=[];
  	let yLabels=[];
  	if(this.state.heatmap.length===undefined){
- 	for(let i = 0; i < 6; i++){
-    let temp=[];
-    for(let j = 0; j <this.state.heatmap.values.length; j++){
-    	
-        temp.push(parseInt(this.state.heatmap.values[j][i]));
-      
-    }
-
-    
-    heatmapdata.push(temp)
-    
-
-}
-
-	for(let i=0;i<this.state.heatmap.values.length;i++){
-		yLabels.push(this.state.heatmap.names[i].slice(0,10))
-	}
-   
-}
-{/*for(let i = 0; i < 6; i++){
-    const tempo = [];
-    for(let i = 0; i < 1; i++){
-        tempo.push(Math.round(Math.random() * 100));
-    }
-    console.log("tempo",tempo);
-    heatmapdata.push(tempo);
-    console.log("heatmap",heatmapdata)
-}*/}
+ 		for(let i=0;i<this.state.heatmap.names.length;i++){
+ 		console.log("new heatmap",this.state.heatmap)
+ 		heatmapdata.push({
+ 			"asset":this.state.heatmap.names[i],
+ 			"Landslide":this.state.heatmap.values[i]['Landslide'],
+ 			"Rainfall":this.state.heatmap.values[i]['Rainfall'],
+ 			"Flood":this.state.heatmap.values[i]['Flood'],
+ 			"Drought Index":this.state.heatmap.values[i]['Drought Index'],
+ 			"Storm Surge":this.state.heatmap.values[i]['Storm Surge'],
+ 			"Extreme Heat":this.state.heatmap.values[i]['Extreme Heat']
+ 		})
+ 	}
+ 		console.log("new Heat map Data",heatmapdata)
+ 	}
 
 
 
@@ -851,8 +837,8 @@ handleComparison=()=>{
 				</Grid.Column>
 			<Grid.Column width="1"></Grid.Column>
 			<Grid.Column width="8" className="card">
-				 <div style={{height:'400px',padding:'10px',color:'white'}}> 
-				 {heatmapdata.length>0?<Heatmap
+				 <div style={{padding:'10px',color:'white',height:'100%'}}> 
+				 {/*{heatmapdata.length>0?<Heatmap
                               	data={heatmapdata}
                                 bgColors={["rgb(255,11,11)","rgb(255,255,0)"]}
                                 xLabels={ ["Landslide", "Rainfall", "Flood", "Drought Index", "Storm Surge", "Extreme Heat"] }
@@ -869,31 +855,38 @@ handleComparison=()=>{
                                 bordered={ false }
                                 borderRadius={ "4px" }
                                 
-                            />:null}
+                            />:null}*/}
                            
-                  {/* {heatmapdata.length>0?<ResponsiveHeatMap
+                   {heatmapdata.length>0?<ResponsiveHeatMap
         data={heatmapdata}
         keys={[
-            
+            'Landslide',
+            'Rainfall',
+            'Flood',
+            'Drought Index',
+            'Storm Surge',
+            'Extreme Heat'
         ]}
-        indexBy="country"
-        margin={{ top: 100, right: 60, bottom: 60, left: 60 }}
-        forceSquare={true}
-        axisTop={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
+        indexBy="asset"
+        margin={{ top: 0, right: 0, bottom: 80, left: 160 }}
+        forceSquare={false}
+        axisBottom={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
         axisRight={null}
-        axisBottom={null}
+        axisTop={null}
         axisLeft={{
             orient: 'left',
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'country',
+            
             legendPosition: 'middle',
             legendOffset: -40
         }}
         cellOpacity={1}
-        cellBorderColor={{ from: 'color', modifiers: [ [ 'darker', 0.4 ] ] }}
-        labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 1.8 ] ] }}
+        cellBorderWidth={2}
+
+        cellBorderColor="#ffffff"
+        labelTextColor={{ from: 'color', modifiers: [ [ 'darker', 2.4 ] ] }}
         defs={[
             {
                 id: 'lines',
@@ -913,7 +906,7 @@ handleComparison=()=>{
         hoverTarget="cell"
         cellHoverOthersOpacity={0.25}
     />
-:null}*/}
+:null}
                 </div>
              </Grid.Column>
 			</Grid.Row>
@@ -989,19 +982,19 @@ handleComparison=()=>{
             				<Grid>
             				<Grid.Row>
 						<Grid.Column className="card" style={{width:'25%',marginLeft:'4%',marginRight:'2%'}}>
-							<Grid.Row style={{padding:'10px'}}>
+							{this.state.single_asset_overall.length>0?<Grid.Row style={{padding:'10px'}}>
 							<p> Climate Risk Per 10 Year Rise</p>
 							<br/>
 								<Grid.Column style={{width:'50%',}}>
 								
-								<Circle className="cricle" progress={this.state.overall.per_10_years_rise}/>
+								<Circle className="cricle" progress={this.state.single_asset_overall[0].per_10_years_rise}/>
 								</Grid.Column>
 								<Grid.Column style={{width:'50%'}}>
-								<p> Total Value at Risk <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.overall.net_loss_value}</b></p>
-								<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}>$ 0.12 Billion</b></p>
+								<p> Total Value at Risk <br/><br/><b style={{color:'red',fontSize:'30px'}}>{this.state.single_asset_overall[0].net_loss_value}</b></p>
+								{this.state.single_asset_loss['Total Loss']?<p> Total Loss <br/><br/><b style={{color:'red',fontSize:'30px'}}> $ {this.state.single_asset_loss['Total Loss'][0]} million</b></p>:null}
 
 								</Grid.Column>
-							</Grid.Row>
+							</Grid.Row>:null}
 							</Grid.Column>
 							
 							<Grid.Column className="card" style={{width:'30%',marginRight:'3%'}}>
@@ -1095,7 +1088,7 @@ handleComparison=()=>{
               			<Grid.Column width="1"></Grid.Column>
               			{this.state.single_asset_loss['Total Loss']?
               			<Grid.Column width="5" className="card">
-              							<p>Portfolio Losses</p>
+              							<p>Asset Losses</p>
 						<p style={{fontSize:'12px'}}>Total Loss  <i style={{float:'right'}}>{this.state.single_asset_loss['Total Loss'][0]}</i></p>
 						<Progress percent={this.state.single_asset_loss['Total Loss'][1]}/>
 					    <p style={{fontSize:'12px'}}>Asset Flood Damage  <i style={{float:'right'}}>{this.state.single_asset_loss['Asset Flood Damage'][0]}</i></p>

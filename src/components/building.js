@@ -45,6 +45,22 @@ const occupancyOptions=[
   {key:'unknown',value:'unknown',text:'unknown'}
 ]
 
+const per_sql_m_options=[
+  {key:'0-5000',value:5000,text:'0-5000'},
+  {key:'5000-10000',value:10000,text:'5000-10000'},
+  {key:'10000-15000',value:15000,text:'10000-15000'},
+  {key:'15000-20000',value:20000,text:'15000-20000'},
+  {key:'20000-25000',value:25000,text:'20000-25000'},
+  {key:'25000-30000',value:30000,text:'25000-30000'},
+  {key:'30000-350000',value:35000,text:'30000-35000'},
+  {key:'35000-40000',value:40000,text:'35000-40000'},
+  {key:'40000-45000',value:45000,text:'40000-45000'},
+  {key:'45000-50000',value:50000,text:'45000-50000'}
+  
+
+]
+
+
 class Building extends Component {
   constructor(props){
     super(props);
@@ -54,7 +70,7 @@ class Building extends Component {
     construction:'wood',
     stories:'1',
     occupancy:'res',
-    per_sq_m_value:40000,
+    per_sq_m_value:5000,
     line:'',
     scatter_y:'',
     scatter_x:'',
@@ -100,7 +116,7 @@ class Building extends Component {
     this.props.getBuilding(formdata)
   }
   render(){
-  const {value,basement,construction,stories,occupancy}=this.state;
+  const {value,basement,construction,stories,occupancy,per_sq_m_value}=this.state;
 
   console.log("building",this.props.building,this.props.name);
   if(this.props.building.length===undefined){
@@ -194,9 +210,12 @@ class Building extends Component {
                           value={occupancy}
                           options={occupancyOptions}/></Grid.Column>
                           
-                          <Grid.Column width="2"><Form.Input placeholder="Area"value={this.state.per_sq_m_value}
-                          onChange={(e)=>this.setState({per_sq_m_value:e.target.value})}
-                          /></Grid.Column>
+                          <Grid.Column width="2">
+                          <Form.Select placeholder="per_sq_m"
+                          onChange={(e,{value})=>this.handleChange(value,'per_sq_m_value')}
+                          value={per_sq_m_value}
+                          options={per_sql_m_options}/>
+                          </Grid.Column>
 
                           
                           <Grid.Column width="2"></Grid.Column>
@@ -212,9 +231,9 @@ class Building extends Component {
         data={data}
         margin={{ top: 40, right: 140, bottom: 80, left: 90 }}
         xScale={{ type: 'linear', min: 0, max: 'auto' }}
-        xFormat={function(e){return e+""}}
+        xFormat={function(e){return e.toFixed(2)+""}}
         yScale={{ type: 'linear', min: 0, max: 'auto' }}
-        yFormat={function(e){return e+"$"}}
+        yFormat={function(e){return "$"+e.toFixed(2)}}
         colors={{ scheme: 'category10' }}
         nodeSize={15}
         axisTop={null}
