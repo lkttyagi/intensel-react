@@ -1,5 +1,4 @@
 import React ,{Component} from 'react';
-import SideNavbar from './oldsidebar';
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Select,Progress,Table,Checkbox,Accordion,Dropdown} from 'semantic-ui-react';
 import logo from '../assets/logo.png';
 import home from '../assets/home.png';
@@ -561,23 +560,6 @@ handleComparison=()=>{
  	
 
  		<div style={{backgroundColor:'#f7f7f7'}}>
-			<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
-			    
-				<Menu.Item>
-			    <Image src={logo} size='small' style={{marginLeft:'5%'}}/>		
-			    </Menu.Item>
-			    <Menu.Item style={{marginLeft:'40%'}}><p style={{fontSize:'18px'}}>Dashboard</p></Menu.Item>
-				<Menu.Item
-				 
-				 position="right"
-				 
-				 >
-				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f7f7',float:'right'}}><Icon name="power" size="big"/></Button>
-
-				 </Menu.Item>
-			</Menu>
-			<SideNavbar/>
-			<br/><br/><br/><br/><br/>
 		<Grid  padded>
 			<Grid.Row>
 			

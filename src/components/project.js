@@ -4,7 +4,6 @@ import logo from '../assets/logo.png';
 import './project.css';
 import {connect} from 'react-redux';
 import {locus,auth,project} from '../actions';
-import SideNavbar from './sidebar';
 import Spinner from './loader';
 import CsvDownload from 'react-json-to-csv';
 
@@ -168,23 +167,6 @@ class Project extends Component{
 		
 		return(	
 			<div>
-				<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
-			    
-				<Menu.Item>
-			    <Image src={logo} size='small' style={{marginLeft:'5%'}}/>		
-			    </Menu.Item>
-			    <Menu.Item style={{marginLeft:'40%'}}><p style={{fontSize:'18px'}}>Project</p></Menu.Item>
-				<Menu.Item
-				 
-				 position="right"
-				 
-				 >
-				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power" size="big"/></Button>
-
-				 </Menu.Item>
-			</Menu>
-			<SideNavbar/>
-			<br/><br/><br/><br/><br/>
 			<Grid style={{ height:'90vh' }} verticalAlign='middle' padded centered>	
 		<Grid.Row>	
 		

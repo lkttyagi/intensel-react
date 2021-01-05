@@ -5,7 +5,7 @@ import Register from './components/register';
 import Login from './components/login';
 import Location from './components/location';
 import Home from './components/home';
-import store from './store';
+import { configureStore } from './redux/store';
 import { loadReCaptcha } from 'react-recaptcha-google'; 
 import Project  from './components/project';
 import Dashboard from './components/dashboard';
@@ -13,6 +13,7 @@ import Asset from './components/assets';
 import PrivateRoute from './private-route';
 import {history} from './_helpers/history';
 import Building from './components/building';
+import AppLayout from './components/AppLayout';
 
 class RootContainerComponent extends Component{
 
@@ -31,10 +32,12 @@ class RootContainerComponent extends Component{
           
             <Route  path="/login" component={Login}/>
             <Route  path="/register" component={Register}/>
-            <PrivateRoute path="/location" component={Location}/>
+            {/* <PrivateRoute path="/location" component={Location}/>
             <PrivateRoute  path="/project" component={Project}/>
-            <PrivateRoute  path="/dashboard" component={Dashboard}/>
+            <PrivateRoute  path="/dashboard" component={Dashboard}/> */}
             <Route path="/detail" component={Building}/>
+
+            <PrivateRoute path="/" component={AppLayout}/>
             
             
         </Switch>
@@ -49,7 +52,7 @@ let RootContainer=RootContainerComponent
 class App extends Component{
   render(){
     return(
-      <Provider store={store}>
+      <Provider store={configureStore()}>
         <RootContainer/>
       </Provider>
     )

@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import SideNavbar from './oldsidebar';
 import {Header,Icon,Menu,Label,Button,Grid,Radio,Image,Form,Input,Modal,Popup,Dropdown,Accordion,Checkbox} from 'semantic-ui-react';
 import './location.css';
 import 	{ loadModules } from 'esri-loader';
@@ -361,28 +360,10 @@ class Location extends Component{
 		
 		return(
 			<div>
-			<Menu style={{minHeight:'4.00em',margin:'0rem 0',backgroundColor:'#f7f6f6'}} fixed="top">
-			    
-				<Menu.Item>
-			    <Image src={logo} size='small' style={{marginLeft:'5%'}}/>		
-			    </Menu.Item>
-			    <Menu.Item style={{marginLeft:'40%'}}><p style={{fontSize:'18px'}}>Add Assets</p></Menu.Item>
-				<Menu.Item
-				 
-				 position="right"
-				 
-				 >
-				<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power" size="big"/></Button>
-
-				 </Menu.Item>
-			</Menu>
-
-			<SideNavbar/>
-		<br/><br/><br/><br/><br/>
 		<Grid  padded>
 			<Grid.Row className="mapRow" style={{height:'650px'}}>
 			
-			<Grid.Column width="4"></Grid.Column>
+			<Grid.Column width="3"></Grid.Column>
 			<Grid.Column width="11" className="map">
 			<br/>
 			<Header className="asset" as="h5" style={{color:'#6a6952'}}>Select on Map using Marker <Icon style={{float:'right'}}name="caret down" size="mini"/></Header>
@@ -393,7 +374,7 @@ class Location extends Component{
 			</Grid.Row>
 				
 			<Grid.Row>
-			<Grid.Column width="4"></Grid.Column>
+			<Grid.Column width="3"></Grid.Column>
 			<Grid.Column width="11">
 			
 			<br/>
