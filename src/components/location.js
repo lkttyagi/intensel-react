@@ -274,7 +274,7 @@ class Location extends Component{
 
 
 	render(){
-		console.log("state clear",this.props.errors.error)
+		// console.log("state clear",this.props.errors.error)
 		const {activeIndex} = this.state
 
 		if(this.props.location.state)
