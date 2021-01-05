@@ -3,7 +3,8 @@ import {
     MENU_CONTAINER_ADD_CLASSNAME,
     MENU_CLICK_MOBILE_MENU,
     MENU_CHANGE_DEFAULT_CLASSES,
-    MENU_CHANGE_HAS_SUB_ITEM_STATUS
+    MENU_CHANGE_HAS_SUB_ITEM_STATUS,
+    MENU_CHANGE_TITLE
 } from '../actions';
 
 export const changeSelectedMenuHasSubItems = (payload) => {
@@ -117,6 +118,15 @@ export const setContainerClassnames = (clickIndex, strCurrentClasses,selectedMen
         {
             type: MENU_SET_CLASSNAMES,
             payload: { containerClassnames: nextClasses, menuClickCount: clickIndex }
+        }
+    )
+}
+
+export const changeTitle = (title) => {
+    return (
+        {
+            type: MENU_CHANGE_TITLE,
+            payload: title
         }
     )
 }

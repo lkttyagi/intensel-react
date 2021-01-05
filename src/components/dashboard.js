@@ -27,6 +27,9 @@ import SingleDonut from './singledonut';
 import BeatLoader from 'react-spinners/BeatLoader';
 import { ResponsiveHeatMap } from '@nivo/heatmap';
 
+import {
+	changeTitle,
+} from "../redux/actions";
 
 let options=[];
 let Item=[];
@@ -127,6 +130,7 @@ class Dashboard extends Component{
 
 
 	componentDidMount(){
+		this.props.changeTitle("Dashboard")
 		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search'], { css: true })
     .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search]) => {
     let that =this;
@@ -1229,7 +1233,10 @@ const mapDispatchToProps = dispatch =>{
 		},
 		getDetailByYear:(formdata)=>{
 			dispatch(dashboard.getDetailByYear(formdata))
-		}
+		},
+		changeTitle:(title) => {
+			dispatch(changeTitle(title))
+		},
 	}
 }
 

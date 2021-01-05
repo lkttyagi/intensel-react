@@ -54,7 +54,7 @@ class NavMenu extends Component{
                     </Menu.Item>
                     <Menu.Item style={{margin:"0 auto"}}><p style={{fontSize:'18px'}}>{this.props.title}</p></Menu.Item>
                     <Menu.Item>
-					<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon style={{padding: 0}} name="power" size="big"/></Button>
+					<Button  onClick={this.handleLogout}style={{borderRadius:5,backgroundColor:'#f7f6f6',float:'right'}}><Icon name="power" size="big"/></Button>
                     </Menu.Item>
                 </Menu>
                 <SideNavbar navButtonClicks={this.state.navButtonClicks}/>
@@ -68,11 +68,12 @@ class NavMenu extends Component{
 }
 
 const mapStateToProps = ({ menu }) => {
-	let { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
+	let { containerClassnames, menuClickCount, selectedMenuHasSubItems, title } = menu;
 	return {
 	  containerClassnames,
 	  menuClickCount,
 	  selectedMenuHasSubItems,
+	  title
 	};
 };
 

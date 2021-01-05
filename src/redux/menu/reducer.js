@@ -4,7 +4,8 @@ import {
 	MENU_CONTAINER_ADD_CLASSNAME,
 	MENU_CLICK_MOBILE_MENU,
 	MENU_CHANGE_DEFAULT_CLASSES,
-	MENU_CHANGE_HAS_SUB_ITEM_STATUS
+	MENU_CHANGE_HAS_SUB_ITEM_STATUS,
+	MENU_CHANGE_TITLE
 } from '../actions';
 
 import {defaultMenuType,  subHiddenBreakpoint, menuHiddenBreakpoint } from '../../constants/defaultValues'
@@ -15,7 +16,8 @@ const INIT_STATE = {
 	subHiddenBreakpoint,
 	menuHiddenBreakpoint,
 	menuClickCount: 0,
-	selectedMenuHasSubItems: defaultMenuType==="menu-default" //if you use menu-sub-hidden as default menu type, set value of this variable to false
+	selectedMenuHasSubItems: defaultMenuType==="menu-default", //if you use menu-sub-hidden as default menu type, set value of this variable to false
+	title: "",
 };
 
 export default (state = INIT_STATE, action) => {
@@ -46,6 +48,11 @@ export default (state = INIT_STATE, action) => {
 		case MENU_CHANGE_DEFAULT_CLASSES:
 			return Object.assign({}, state, {
 				containerClassnames: action.payload
+			})
+
+		case MENU_CHANGE_TITLE:
+			return Object.assign({}, state, {
+				title: action.payload
 			})
 			
 		default: return { ...state };

@@ -9,7 +9,7 @@ import {auth} from '../actions';
 
 import Spinner from './loader';
 
-import './login.css'
+import styles from './login.css'
 
 class Login extends Component{
 	state={
@@ -68,7 +68,7 @@ onLoadRecaptcha(){
                   <span style={{color:'red'}}>{this.props.errors[0].message}</span>
                 </div> : null}
 		 	<br/>
-			<Form>
+			<Form id="login">
 				<Form.Group widths='equal'>
 				<Icon name="user"/>
 				<Form.Field 

@@ -1,14 +1,14 @@
-.icon {
+#login .icon {
     color: #005EDC;
     margin: auto!important;
     padding-bottom: 2em;
     height: 100%!important;
 }
 
-.checkbox {
+#login .checkbox {
     padding: 0px!important;
 }
 
-.form-group {
+#login .form-group {
     margin-bottom: 1000px!important;
 }

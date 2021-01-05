@@ -7,6 +7,11 @@ import {locus,auth,project} from '../actions';
 import Spinner from './loader';
 import CsvDownload from 'react-json-to-csv';
 
+import {
+	changeTitle,
+} from "../redux/actions";
+
+
 let options=[];;
 
 const StatusOptions=[
@@ -61,6 +66,10 @@ class Project extends Component{
 		portfolios:'',
 		summarymodalOpen:false,
 		
+	}
+	
+	componentDidMount(){
+		this.props.changeTitle("Project")
 	}
 
 	onSubmit=(e)=>{
@@ -434,7 +443,10 @@ const mapDispatchToProps = dispatch =>{
 		},
 		getSummary:(formdata)=>{
 			dispatch(project.getSummary(formdata))
-		}
+		},
+		changeTitle:(title) => {
+			dispatch(changeTitle(title))
+		},
 	}
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Project);

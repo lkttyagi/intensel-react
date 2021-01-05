@@ -16,6 +16,10 @@ import {company} from '../actions';
 import 	Suggestion from './suggestion';
 import Spinner from './loader';
 
+import {
+	changeTitle,
+} from "../redux/actions";
+
 const buttonRef = React.createRef();
 let mapcards=[];
 let selectList='';
@@ -91,6 +95,7 @@ class Location extends Component{
 	handleMap =() =>this.setState({upload:'map'});
 
 	componentDidMount(){
+		this.props.changeTitle("Add Assets")
 		loadModules(['esri/Map', 'esri/views/MapView','esri/layers/FeatureLayer','esri/widgets/Legend','esri/Graphic','esri/widgets/Search','esri/tasks/Locator'], { css: true })
     .then(([ArcGISMap, MapView,FeatureLayer,Legend,Graphic,Search,Locator]) => {
     let that =this;
@@ -562,7 +567,10 @@ const mapDispatchToPros = dispatch =>{
 		},
 		logout:()=>{
 			dispatch(auth.logout());
-		}
+		},
+		changeTitle:(title) => {
+			dispatch(changeTitle(title))
+		},
 	}
 }
 
