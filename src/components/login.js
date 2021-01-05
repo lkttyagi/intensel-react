@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import { ReCaptcha } from 'react-recaptcha-google'; 
-import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header} from 'semantic-ui-react';
+import {Form,Button,Input,TextArea,Grid,Container,Message,Image,Header, Icon, Checkbox} from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import login from '../assets/login.png';
 import logo from '../assets/logo.png';
@@ -9,12 +9,15 @@ import {auth} from '../actions';
 
 import Spinner from './loader';
 
+import './login.css'
+
 class Login extends Component{
 	state={
 		username:'',
 		password:'',
 		company_code:'',
-		loading:false
+		loading:false,
+		remember: true
 	}
 
 		componentDidMount(){
@@ -66,7 +69,8 @@ onLoadRecaptcha(){
                 </div> : null}
 		 	<br/>
 			<Form>
-				
+				<Form.Group widths='equal'>
+				<Icon name="user"/>
 				<Form.Field 
 					 id="form-input-control-username"
 					 control={Input}
@@ -75,8 +79,10 @@ onLoadRecaptcha(){
 					 value={this.state.username}
 					 onChange={e=>this.setState({username:e.target.value})}
 					 />
-				
+				</Form.Group>
+
 				<Form.Group widths='equal'>
+				<Icon name="lock"/>
 				<Form.Field 
 					 id="form-input-control-password"
 					 control={Input}
@@ -88,6 +94,9 @@ onLoadRecaptcha(){
 					 />
 				
 				</Form.Group>
+				
+				<Form.Group widths='equal'>
+				<Icon name="location arrow"/>
 				<Form.Field 
 					 id="form-input-control-company"
 					 control={Input}
@@ -96,6 +105,17 @@ onLoadRecaptcha(){
 					 value={this.state.company_code}
 					 onChange={e=>this.setState({company_code:e.target.value})}
 					 />
+				</Form.Group>
+
+				<Form.Field 
+					 id="form-input-control-remember"
+					 control={Checkbox}
+					 label='Remember Me'
+					 checked={this.state.remember}
+					 onChange={e=>this.setState({remember:e.target.checked})}
+					 style={{width: "100%"}}
+				/>
+
 					<ReCaptcha
             ref={(el) => {this.captchaDemo = el;}}
             size="normal"
