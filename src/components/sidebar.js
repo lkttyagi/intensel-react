@@ -282,6 +282,13 @@ class SideNavbar extends Component{
 		const selectedParent = menuItem.id;
 		const hasSubMenu = menuItem.subs && menuItem.subs.length > 0;
 		this.props.changeSelectedMenuHasSubItems(hasSubMenu);
+
+		if(selectedParent == "My Assets"){
+			for(let i = 1; i < document.getElementsByClassName("rotate-arrow-icon opacity-50").length; i++){
+				document.getElementsByClassName("rotate-arrow-icon opacity-50")[i].click()
+			}
+		}
+
 		if (!hasSubMenu) {
 		  this.setState({
 			viewingParentMenu: selectedParent,
@@ -558,7 +565,7 @@ const {
                                       this.toggleMenuCollapse(
                                         e,
                                         `${item.id}_${index}`
-                                      )
+									  )
                                     }
                                   >
                                     <i className="simple-icon-arrow-down" />{' '}
@@ -592,7 +599,7 @@ const {
                                                 >{thirdSub.label}</span>
                                               </a>
                                             ) : thirdSub.label == "Add" ? (
-												<a onClick={thirdSub.onClick} style={{cursor:'pointer', float: "right", marginRight: "10%"}}>
+												<a onClick={thirdSub.onClick} style={{cursor:'pointer', marginLeft: "70%", width: "100%"}}>
 													<i className={thirdSub.icon} />
 												</a>
 											) : (
