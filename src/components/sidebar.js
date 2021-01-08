@@ -284,9 +284,13 @@ class SideNavbar extends Component{
 		this.props.changeSelectedMenuHasSubItems(hasSubMenu);
 
 		if(selectedParent == "My Assets"){
+			let collapsedMenus = this.state.collapsedMenus;
 			for(let i = 1; i < document.getElementsByClassName("rotate-arrow-icon opacity-50").length; i++){
-				document.getElementsByClassName("rotate-arrow-icon opacity-50")[i].click()
+				collapsedMenus.push(document.getElementsByClassName("rotate-arrow-icon opacity-50")[i].getAttribute("id"));
 			}
+			this.setState({
+				collapsedMenus
+			});
 		}
 
 		if (!hasSubMenu) {
