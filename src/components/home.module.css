@@ -1,0 +1,196 @@
+.navbar {
+    padding-left: 10%!important;
+    padding-right: 10%!important;
+}
+
+.navlink {
+    color: black!important;
+    font-weight: bold;
+}
+
+
+.navbar button, .navbar button:hover {
+    border-radius: 10px;
+    color: black;
+    border-color: #F3B94A;
+    background-color: #F3B94A;
+    font-weight: bold;
+}
+
+.signInButton {
+    padding: 10px 45px;
+    font-size: 17px;
+    margin-right: 30px;
+    border: 4px solid #F3B94A!important;
+}
+
+.signUpButton {
+    padding: 10px 45px;
+    font-size: 17px;
+    border: 4px solid #F3B94A!important;
+    background-color: #FFFFFF;
+}
+
+.sectionBody {
+    font-size: 19px;
+    margin-bottom: 100px;
+}
+
+.customers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #F3B94A;
+}
+
+.customers > li {
+   list-style-type: none;
+}
+
+.whyIntensel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.whyIntensel :global(.card) {
+    width: 20%;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.text > p {
+    font-size: 19px;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: space-around;
+}
+
+.features :global(.card) {
+    text-align: center;
+    width: 30%;
+    box-shadow: 0px 0px 300px -96px rgba(0,0,255,0.2);
+}
+
+.features :global(.card-title) {
+    color: #005EDC;
+    font-weight: bold;
+}
+
+.features :global(.card-text) ul {
+    width: 100%;
+    text-align: left;
+    margin-top: 30px;
+}
+
+.features :global(.card-text) li {
+    padding-left: 2em;
+    margin-bottom: 10px;
+}
+
+.features :global(.card-text) li:before {
+    color: #005EDC;
+    content: "\e096";
+    font-family: simple-line-icons;
+    display: inline-block;
+    margin-left: -2em;
+    width: 2em;
+}
+
+.features :global(.btn), .features :global(.btn):hover {
+    border-color: #F3B94A;
+    background-color: #F3B94A;
+    border-radius: 10px;
+}
+
+.intenselSaasAdvantage {
+    display: flex;
+    flex-direction: row;
+}
+
+.intenselSaasAdvantage > div {
+    width: 50%;
+}
+
+.intenselSaasAdvantageItem {
+    display: table-row;
+    width: 50%!important;
+    height: 100px;
+}
+
+.intenselSaasAdvantageItem > :global(.icon) {
+    width: 40px;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+.intenselSaasAdvantageItem > p {
+    font-size: 20px;
+    font-weight: bold;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.climateRiskItem {
+    display: grid;
+    grid-template-columns: 150px auto;    
+    grid-template-rows: 150px 50px;   
+    margin-bottom: 50px;
+}
+
+.climateRiskItemDescription {
+    grid-column-start: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+.climateRiskItemDescription > a {
+    margin-top: 5px;
+    color: #F3B94A;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}
+
+.climateRiskItemName {
+    text-align: center;
+    font-weight: bold;
+    font-size: 19px;
+    margin-top: 3px;
+}
+
+footer {
+    height: 100px;
+    background-color: #005EDC;
+    color: white;
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+footer i {
+    font-size: 39px;
+    margin-right: 17px;
+}
+
+footer > :global(#address) {
+    width: 50%;
+}
+
+footer > :global(#email) a {
+    color: unset;
+}

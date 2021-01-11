@@ -111,12 +111,12 @@ p {
   margin: 0px; }
 
 .bg_cover {
-  background:url('../images/banner-bg.png');
+  /* background:url('../images/banner-bg.png');
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 100%;
+  height: 100%; */
    }
 
 /*===== All Slick Slide Outline Style =====*/
@@ -139,7 +139,7 @@ p {
   line-height: 48px;
   border-radius: 8px;
   border: 0;
-  color: #fff;
+  color: #000;
   cursor: pointer;
   z-index: 5;
   -webkit-transition: all 0.4s ease-out 0s;
@@ -147,12 +147,13 @@ p {
   -ms-transition: all 0.4s ease-out 0s;
   -o-transition: all 0.4s ease-out 0s;
   transition: all 0.4s ease-out 0s;
-  background: -webkit-linear-gradient(left, #33c8c1 0%, #119bd2 50%, #33c8c1 100%);
+  /* background: -webkit-linear-gradient(left, #33c8c1 0%, #119bd2 50%, #33c8c1 100%);
   background: -o-linear-gradient(left, #33c8c1 0%, #119bd2 50%, #33c8c1 100%);
-  background: linear-gradient(to right, #33c8c1 0%, #119bd2 50%, #33c8c1 100%);
+  background: linear-gradient(to right, #33c8c1 0%, #119bd2 50%, #33c8c1 100%); */
+  background-color: #F3B94A;
   background-size: 200%; }
   .main-btn:hover {
-    color: #fff;
+    color: #000;
     background-position: right center; }
 
 /*===== All SECTION TITLE Style =====*/
@@ -778,7 +779,7 @@ p {
   .header-hero-content .header-sub-title {
     font-size: 38px;
     font-weight: 300;
-    color: #fff; }
+    color: #000; }
     @media (max-width: 767px) {
       .header-hero-content .header-sub-title {
         font-size: 24px; } }
@@ -788,7 +789,7 @@ p {
   .header-hero-content .header-title {
     font-size: 38px;
     font-weight: 700;
-    color: #fff; }
+    color: #000; }
     @media (max-width: 767px) {
       .header-hero-content .header-title {
         font-size: 24px; } }
@@ -796,7 +797,7 @@ p {
       .header-hero-content .header-title {
         font-size: 30px; } }
   .header-hero-content .text {
-    color: #fff;
+    color: #000;
     margin-top: 30px; }
   .header-hero-content .main-btn {
     margin-top: 40px; }
