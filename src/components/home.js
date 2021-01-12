@@ -12,7 +12,7 @@ import shape from '../assets/images/services-shape.svg';
 import shape1 from '../assets/images/services-shape-1.svg';
 import shape2 from '../assets/images/services-shape-2.svg';
 import shape3 from '../assets/images/services-shape-3.svg';
-import intenselSaasAdvantage from '../assets/images/intensel-saas-advantage.png';
+import saasGraphics from '../assets/images/saas graphics.png';
 import extremeheat from '../assets/images/extreme-heat.png';
 import flood from '../assets/images/flood.png';
 import typhoons from '../assets/images/typhoons.png';
@@ -75,7 +75,7 @@ class Home extends Component{
         <div className="container">
             <div className="justify-content-center">
                 <div className="section-title text-center pb-40">
-                    <h3 className="title">Who we <span style={{color: "#005EDC", fontWeight: "inherit"}}>serve?</span></h3>
+                    <h3 className="title">Who we <span className={styles.intenselBlue} style={{fontWeight: "inherit"}}>serve?</span></h3>
                 </div>
                 <div className={styles.sectionBody}>
                     <ul className={styles.customers}>
@@ -89,7 +89,7 @@ class Home extends Component{
 
             <div className="justify-content-center">
                 <div className="section-title text-center pb-40">
-                    <h3 className="title">Why Intensel is <span style={{color: "#F3B94A", fontWeight: "inherit"}}>better product?</span></h3>
+                    <h3 className="title">Why Intensel is <span className={styles.intenselOrange} style={{fontWeight: "inherit"}}>better product?</span></h3>
                 </div> 
                 <div className={`${styles.sectionBody} ${styles.whyIntensel}`}>
                     <Card>
@@ -129,7 +129,7 @@ class Home extends Component{
 
             <div className="justify-content-center">
                 <div className="section-title text-center pb-40">
-                    <h3 className="title">INTENSEL <span style={{color: "#005EDC", fontWeight: "inherit"}}>Climate Solutions</span></h3>
+                    <h3 className="title">INTENSEL <span className={styles.intenselBlue} style={{fontWeight: "inherit"}}>Climate Solutions</span></h3>
                 </div>
                 <div className={`${styles.text} ${styles.sectionBody}`}>
                     <p>As businesses, investors and governments explore the transition to a net-zero world,</p>
@@ -236,7 +236,7 @@ class Home extends Component{
 
             <div className="justify-content-center">
                 <div className="section-title text-center pb-40">
-                    <h3 className="title"><span style={{color: "#F3B94A", fontWeight: "inherit"}}>Intensel</span> SaaS advantage</h3>
+                    <h3 className="title"><span className={styles.intenselOrange} style={{fontWeight: "inherit"}}>Intensel</span> SaaS advantage</h3>
                 </div> 
                 <div className={`${styles.sectionBody} ${styles.text}`}>
                     <p>Our solution is a Cloud-based SAAS Product. We have real</p>
@@ -262,7 +262,7 @@ class Home extends Component{
                         </div>
                     </div>
                     <div>
-                        <img src={intenselSaasAdvantage}/>
+                        <img src={saasGraphics}/>
                     </div>
                 </div>
             </div> 
