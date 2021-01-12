@@ -57,7 +57,7 @@ class Home extends Component{
                     </div>
                     <div className="col-lg-6">
                         <div className="header-hero-image text-center wow fadeIn" data-wow-duration="1.3s" data-wow-delay="1.4s">
-                            <img src={hero} alt="hero"/>
+                            <img src={hero} alt="hero" className={styles.hero} />
                         </div> 
                     </div>
                 </div> 

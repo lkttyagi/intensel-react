@@ -48,6 +48,19 @@
     background-color: #FFFFFF;
 }
 
+.hero {
+    top: 50px;
+    left: 100px;
+    width: 500px;
+    position: relative;
+}
+
+@media only screen and (max-width: 991px){
+    .hero {
+        left: auto;
+    }
+}
+
 .sectionBody {
     font-size: 19px;
     margin-bottom: 100px;
