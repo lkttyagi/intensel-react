@@ -13,9 +13,9 @@ import shape1 from '../assets/images/services-shape-1.svg';
 import shape2 from '../assets/images/services-shape-2.svg';
 import shape3 from '../assets/images/services-shape-3.svg';
 import intenselSaasAdvantage from '../assets/images/intensel-saas-advantage.png';
-import extremeheat from '../assets/images/extremeheat.png';
+import extremeheat from '../assets/images/extreme-heat.png';
 import flood from '../assets/images/flood.png';
-import typhoon from '../assets/images/typhoon.png';
+import typhoons from '../assets/images/typhoons.png';
 import {Navbar, Nav, Button, Card} from 'react-bootstrap';
 import { Icon } from 'semantic-ui-react'
 import styles from './home.module.css'
@@ -284,7 +284,7 @@ class Home extends Component{
                             <p class={styles.climateRiskItemName}>FLOOD</p>
                         </div>
                         <div className={styles.climateRiskItem}>
-                            <img src={typhoon}/>
+                            <img src={typhoons}/>
                             <p class={styles.climateRiskItemDescription}>A typhoon is a mature tropical cyclone that develops between 180° and 100°E in the Northern Hemisphere. It is the most active tropical cyclone basin on Earth, accounting for almost one-third of the world's annual tropical cyclones.<br/><a href="http://google.com">Learn more</a></p>
                             <p class={styles.climateRiskItemName}>TYPHOONS</p>
                         </div>
