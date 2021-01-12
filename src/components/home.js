@@ -30,30 +30,14 @@ class Home extends Component{
         <>
 			<div>
 				  <header className="header-area">
-        {/* <div className="navbar-area">
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-12">
-                        <nav className="navbar navbar-expand-lg">
-                            <a className="navbar-brand" href="index.html">
-                                <img src={logo} alt="Intensel" height="50" width="150"/>
-                            </a>
-                        </nav> 
-                        <nav>
-                            <a>Who we serve</a>
-                        </nav>
-                    </div>
-                </div> 
-            </div> 
-        </div>  */}
-        <Navbar className={styles.navbar}>
+        <Navbar className={`container ${styles.navbar}`}>
             <Navbar.Brand href="index.html"><img src={logo} alt="Intensel" height="50" width="150"/></Navbar.Brand>
             <Nav className="ml-auto">
                 <Nav.Link href="" className={styles.navlink}>Who we serve</Nav.Link>
                 <Nav.Link href="" className={styles.navlink}>Services</Nav.Link>
                 <Nav.Link href="" className={styles.navlink}>Product</Nav.Link>
                 <Nav.Link href="" className={styles.navlink}>Saas</Nav.Link>
-                <Button variant="outline-success">Request a demo</Button>
+                <Nav.Link href="" className={styles.navlink}><Button>Request a demo</Button></Nav.Link>
             </Nav>
         </Navbar>
         
@@ -95,10 +79,10 @@ class Home extends Component{
                 </div>
                 <div className={styles.sectionBody}>
                     <ul className={styles.customers}>
-                        <li>CORPORATIONS</li>
-                        <li>FINANCIAL INSTITUTIONS</li>
-                        <li>REAL ESTATE INVESTORS</li>
-                        <li>COMMUNTIES</li>
+                        <li><i class="simple-icon-plane"/> CORPORATIONS</li>
+                        <li><i class="simple-icon-plane"/> FINANCIAL INSTITUTIONS</li>
+                        <li><i class="simple-icon-plane"/> REAL ESTATE INVESTORS</li>
+                        <li><i class="simple-icon-plane"/> COMMUNTIES</li>
                     </ul>
                 </div>
             </div> 
@@ -110,7 +94,7 @@ class Home extends Component{
                 <div className={`${styles.sectionBody} ${styles.whyIntensel}`}>
                     <Card>
                         <Card.Body>
-                            <Card.Title>1</Card.Title>
+                            <Card.Title className={styles.whyIntenselCardTitleOdd}>1</Card.Title>
                             <Card.Text>
                             Granular & Accurate
                             </Card.Text>
@@ -118,7 +102,7 @@ class Home extends Component{
                     </Card>
                     <Card>
                         <Card.Body>
-                            <Card.Title>2</Card.Title>
+                            <Card.Title className={styles.whyIntenselCardTitleEven}>2</Card.Title>
                             <Card.Text>
                             Versatile & Comprehensive Product
                             </Card.Text>
@@ -126,7 +110,7 @@ class Home extends Component{
                     </Card>
                     <Card>
                         <Card.Body>
-                            <Card.Title>3</Card.Title>
+                            <Card.Title className={styles.whyIntenselCardTitleOdd}>3</Card.Title>
                             <Card.Text>
                             Real-time Analytics
                             </Card.Text>
@@ -134,7 +118,7 @@ class Home extends Component{
                     </Card>
                     <Card>
                         <Card.Body>
-                            <Card.Title>4</Card.Title>
+                            <Card.Title className={styles.whyIntenselCardTitleEven}>4</Card.Title>
                             <Card.Text>
                             Interactive
                             </Card.Text>
@@ -210,8 +194,6 @@ class Home extends Component{
                             <Card.Link href="http://google.com" className="mt-auto"><Button>Explore more</Button></Card.Link>
                         </Card.Body>
                     </Card>
-                </div>
-                <div className={`${styles.features} ${styles.sectionBody}`}>
                     <Card>
                         <Card.Body className="d-flex flex-column">
                             <Card.Title>SCENARIO ANALYSIS</Card.Title>
@@ -315,14 +297,16 @@ class Home extends Component{
     </section>
     </div>
     <footer>
-        <div id="address">
-            <i class="simple-icon-location-pin"/>
-            <span>Intensel Limited, Unit 517, 5/F Building 19W, No.19 Science Park<br/>
-            West Avenue, Hong Kong Science Park, Hong Kong</span>
-        </div>
-        <div id="email">
-            <i class="simple-icon-envelope"/>
-            <span><span style={{fontWeight: "bold"}}>Email Us</span><br/><a href="http://google.com">info@intensel.com</a></span>
+        <div className="container">
+            <div>
+                <i class="simple-icon-location-pin"/>
+                <span>Intensel Limited, Unit 517, 5/F Building 19W, No.19 Science Park<br/>
+                West Avenue, Hong Kong Science Park, Hong Kong</span>
+            </div>
+            <div>
+                <i class="simple-icon-envelope"/>
+                <span><span style={{fontWeight: "bold"}}>Email Us</span><br/><a href="http://google.com">info@intensel.com</a></span>
+            </div>
         </div>
     </footer>
     </>
